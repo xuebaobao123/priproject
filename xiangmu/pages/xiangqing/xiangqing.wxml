@@ -1,0 +1,27 @@
+<view class="xiangqing">
+   <image src="https://images.unsplash.com/photo-1551334787-21e6bd3ab135?w=640"></image>
+</view>
+<view class="xiangQi">
+   <view class="top">
+      <view class="top1">项目名称写在这里,字体是思源黑体简体中无,字号是30px。字数不宜过多,控制在量行内即可。</view>
+      <view class="top2">
+         <view>
+            金额(元)<text>￥5000.00</text>
+         </view>
+         <view>
+            <text>截止日期 2019/07/31</text>
+         </view>
+         <view>
+            <text>剩余3份</text>
+         </view>
+      </view>
+   </view>
+   <view class="bottom">
+      <view>参伙权益</view>
+      <text>此处开始为项目的运营进度的详细介绍,字体是思源黑体字号控制在25px,可以图文并茂介绍。</text>
+   </view>
+   <view class="heji">
+      <view>合计:<text>￥5000.00</text></view>
+      <view>去支付></view>
+   </view>
+</view>

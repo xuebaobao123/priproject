@@ -1,0 +1,121 @@
+page{
+  background:#eeeeee;
+} 
+.youhuijuan1{
+  background:white;
+  padding:20rpx;
+  margin-bottom:30rpx;
+}
+.youhuijuan{
+  width:94%;
+  margin:20rpx auto;
+}
+.youhuijuan1 .top .left{
+  float:left;
+  width:40%;
+  position: relative
+}
+.youhuijuan1 .top .right{
+  float:left;
+  width:56%;
+  margin-left:4%;
+}
+.youhuijuan1 .top .left .img1{
+  width:100%;
+  height:230rpx;
+}
+.youhuijuan1 .top .left .dingwei image{
+  width:100%;
+  height:126rpx;
+}
+.youhuijuan1 .top .left .dingwei1{
+  position:relative;
+  width:126rpx;
+}
+.youhuijuan1 .top .left .dingwei1 text{
+  position: absolute;
+  right:20rpx;
+  top:40rpx;
+  font-size:30rpx;
+  color:white;
+}
+.youhuijuan1 .top .left .dingwei{
+  position: absolute;
+  left:-30rpx;
+  top:-30rpx;
+}
+.clearfloat{
+  clear:both;
+}
+.youhuijuan1 .right{
+  overflow: hidden;
+}
+.youhuijuan1 .right .zuo{
+  float:left;
+  font-size:30rpx;
+  width:62%;
+}
+.youhuijuan1 .right .you{
+  float:right;
+  width:38%;
+  font-size:30rpx;
+  text-align: right;
+}
+.youhuijuan1 .right .zuo view:nth-child(2),.youhuijuan1 .right .you view:nth-child(2){
+  color:#f47a27;
+  font-size:32rpx;
+  padding:30rpx 0 44rpx;
+}
+.youhuijuan1 .right .you view:nth-child(1) image{
+  width:46rpx;
+  height:62rpx;
+}
+.youhuijuan1 .right .you view:nth-child(2){
+  padding:40rpx 0 38rpx;
+}
+.pic{
+  font-size:30rpx;
+}
+.pic view text{
+  display: block;
+}
+.pic view text:nth-child(2){
+  text-indent: 60rpx;
+  padding-left: 0rpx;
+  display: inline-block;
+  text-align: left;
+  line-height:50rpx;
+  color:#797979;
+}
+.pic view text:nth-child(1){
+  font-weight: bold;
+  padding-top:10rpx;
+}
+.youhuijuan1 .top{
+  border-bottom:1rpx solid #eeeeee;
+  padding-bottom:30rpx;
+}
+.youhuijuan{
+  margin-bottom:200rpx;
+}
+.fixed{
+  overflow: hidden;
+  position: fixed;
+  left:0;
+  bottom:0;
+  width:92%;
+  height:100rpx;
+  line-height:100rpx;
+  background:white;
+  padding:0 4%;
+  border-top:1px solid #eeee;
+}
+.fixed view:nth-child(1){
+  float:left;
+}
+.fixed view:nth-child(1) text{
+    color:#de7534;
+}
+.fixed view:nth-child(2){
+  float:right;
+}

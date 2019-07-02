@@ -1,0 +1,75 @@
+.xiangqing image{
+  width:100%;
+  height:500rpx;
+}
+.xiangQi{
+  width:96%;
+  margin:0 auto;
+  position: relative;
+  top:-100rpx;
+}
+.xiangQi .top{
+  padding:20rpx 4% 0;
+  background:white;
+  border-radius: 20rpx 20rpx 0 0;
+  font-size:30rpx;
+  margin-bottom:20rpx;
+}
+.xiangQi .bottom{
+  padding:20rpx 4% 0;
+  background:white;
+  border-radius: 20rpx 20rpx 0 0;
+  font-size:38rpx;
+  margin-bottom:20rpx;
+  height:400rpx;
+}
+page{
+  background:#f8f8f8;
+}
+.xiangQi .top1{
+  line-height:50rpx;
+  border-bottom:6rpx solid #d07a3f;
+  padding-bottom:20rpx;
+}
+.xiangQi .top2{
+  overflow: hidden;
+  height:80rpx;
+  line-height:80rpx;
+}
+.xiangQi .top2 view{
+  float:left;
+  font-size:26rpx;
+  color:#757575;
+}
+.xiangQi .top2 view:nth-child(2){
+  padding:0 50rpx;
+}
+.xiangQi .top2 view text{
+  color:#dd7037;
+}
+.xiangQi .bottom text{
+  font-size:30rpx;
+  text-indent: 60rpx;
+  padding-left: 0rpx;
+  display: inline-block;
+  text-align: left;
+  margin-top:10rpx;
+}
+.heji{
+  overflow: hidden;
+  position: fixed;
+  bottom:0;
+  left:0;
+  width:92%;
+  padding:0 4% 30rpx;
+  font-size:32rpx;
+}
+.heji view:nth-child(1){
+  float:left;
+}
+.heji view:nth-child(2){
+  float:right;
+}
+.heji view text{
+  color:#dd7037;
+}
