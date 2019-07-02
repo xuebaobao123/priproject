@@ -75,6 +75,10 @@ page{
 }
 .pic{
   font-size:30rpx;
+  display: block;
+}
+.hidden{
+  display: none;
 }
 .pic view text{
   display: block;

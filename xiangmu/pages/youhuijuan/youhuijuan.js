@@ -27,7 +27,9 @@ Page({
   },
   //查看详情
   chakanxiangqing:function(e){
-
+    this.setData({
+      hidden:!!!this.data.hidden
+    })
   }, 
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -76,5 +78,10 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+
+  //我的会员
+  wodehuiyuan:function(){
+    console.log('我的会员')
   }
 })
