@@ -6,7 +6,8 @@
       <view class="top1">{{projectName}}</view>
       <view class="top2">
          <view>
-            金额(元)<text>￥{{money}}</text>
+            金额(元)
+            <text>￥{{money}}</text>
          </view>
          <view>
             <text>截止日期 {{endDate}}</text>
@@ -21,7 +22,12 @@
       <text>{{projectSpeed.projectDesc}}</text>
    </view>
    <view class="heji">
-      <view>合计:<text>￥{{total}}</text></view>
+      <view>
+         合计:
+         <text>￥{{total}}</text>
+      </view>
       <view>去支付></view>
    </view>
 </view>
+<import src="../tabbar/tabbar.wxml" />
+<template is="tabbar" data="{{tabbar}}" />

@@ -1,3 +1,4 @@
+const app = getApp();
 // pages/xiangqing/xiangqing.js
 Page({
 
@@ -11,11 +12,11 @@ Page({
     endDate: '',//截至日期
     surNumber: '',//剩余
     //项目进度
-    projectSpeed:{
+    projectSpeed: {
       //文字描述
-      projectDesc:'',
+      projectDesc: '',
       //图片
-      projectImage:''
+      projectImage: ''
     },
     total: ''//合计
   },
@@ -25,6 +26,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    app.changeTabBar();
     this.initData();
   },
 
@@ -88,9 +90,9 @@ Page({
       money: '5000.00',//金额
       endDate: '2019/07/31',//截至日期
       surNumber: '3',//剩余
-      projectSpeed:{projectDesc:'此处开始为项目的运营进度的详细介绍,字体是思源黑体字号控制在25px,可以图文并茂介绍。'},//项目进度
+      projectSpeed: { projectDesc: '此处开始为项目的运营进度的详细介绍,字体是思源黑体字号控制在25px,可以图文并茂介绍。' },//项目进度
       total: '5000.00'//合计
     })
   },
-  
+
 })

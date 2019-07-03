@@ -26,7 +26,7 @@ App({
   tabbar: {
     "color": "black",
     "selectedColor": "#666",
-    "backgroundColor":"#f8f8f8",
+    "backgroundColor": "#f8f8f8",
     "list": [
       {
         "pagePath": "../index/index",
@@ -41,7 +41,7 @@ App({
         "selectedIconPath": "../images/hb1.png"
       },
       {
-        "pagePath": "../index/index",
+        "pagePath": "../youhuijuan/youhuijuan",
         "text": "优惠卷包",
         "iconPath": "../images/wode.png",
         "selectedIconPath": "../images/wode1.png"
@@ -59,7 +59,7 @@ App({
         "selectedIconPath": "../images/wode1.png"
       }
     ],
-     position: "bottom"
+    position: "bottom"
   },
   changeTabBar: function () {
     var _curPageArr = getCurrentPages();
@@ -83,6 +83,6 @@ App({
   onLaunch: function () {
   },
   globalData: {
-    
+
   }
 })
