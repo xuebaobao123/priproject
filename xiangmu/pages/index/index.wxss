@@ -14,7 +14,7 @@
 .space view{
   text-align: center;
   width:32%;
-  padding:60rpx 0;
+  padding:30rpx 0;
   font-size:30rpx;
   color:#333;
   float:left;

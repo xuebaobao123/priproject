@@ -14,7 +14,7 @@
             <view class="zuo">
                <view>{{item.text}}</view>
                <view>满200元减100元</view>
-               <view bindtap="chakanxiangqing" data-index="{{index}}" data-current="{{item.sVisible}}">查看详情 ></view>
+               <view bindtap="onToggle" data-index="{{index}}">查看详情 ></view>
             </view>
             <view class="you">
                <view>
@@ -30,7 +30,7 @@
          </view>
          <view class="clearfloat"></view> 
       </view>
-      <view class='pic {{hidden?"hidden":""}}'>
+      <view class="pic {{activeIndex == index ? 'show' : 'hide'}}">
          <view>
              <text>优惠说明：</text>
              <text>优惠说明优惠说明优惠说明优惠说明优惠说明优惠说明优惠说明优惠说明优惠说明优惠说明优惠说明</text>

@@ -1,8 +1,10 @@
 {
   "pages": [
+    "pages/wode/wode",
+    "pages/index/index",
     "pages/youhuijuan/youhuijuan",
     "pages/xiangqing/xiangqing",
-    "pages/index/index",
+    "pages/tabbar/tabbar",
     "pages/logs/logs"
   ],
   "window": {
@@ -12,4 +14,5 @@
     "navigationBarTextStyle": "black"
   },
   "sitemapLocation": "sitemap.json"
+  
 }
