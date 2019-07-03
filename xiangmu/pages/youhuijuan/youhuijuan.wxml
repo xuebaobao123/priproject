@@ -14,7 +14,7 @@
             <view class="zuo">
                <view>{{item.text}}</view>
                <view>满200元减100元</view>
-               <view bindtap="chakanxiangqing" data-index="{{index}}">查看详情 ></view>
+               <view bindtap="chakanxiangqing" data-index="{{index}}" data-current="{{item.sVisible}}">查看详情 ></view>
             </view>
             <view class="you">
                <view>

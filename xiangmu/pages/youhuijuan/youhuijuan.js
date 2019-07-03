@@ -7,18 +7,19 @@ Page({
   data: {
     neirong:[
       {
-        text:"此处写名字,字体是思源黑体"
+        text:"此处写名字,字体是思源黑体",
+        sVisible: false
       },
       {
-        text: "此处写名字,字体是思源黑体"
+        text: "此处写名字,字体是思源黑体",
+        sVisible: false
       },
       {
-        text: "此处写名字,字体是思源黑体"
+        text: "此处写名字,字体是思源黑体",
+        sVisible: false
       },
     ],
-    hidden:true
   },
-
   /**
    * 生命周期函数--监听页面加载
    */
@@ -84,4 +85,5 @@ Page({
   wodehuiyuan:function(){
     console.log('我的会员')
   }
+
 })
