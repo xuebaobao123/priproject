@@ -1,7 +1,8 @@
 {
   "pages": [
-    "pages/kaituan/kaituan",
     "pages/index/index",
+    "pages/kaituan/kaituan",
+    
     "pages/lijiduihuan/lijiduihuan",
     "pages/tixianjine/tixianjine",
     "pages/canhuohongbao/canhuohongbao",
