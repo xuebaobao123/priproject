@@ -1,0 +1,42 @@
+<view class="partners">
+   <view class="partners-top">
+      <view class="left">
+         <image src="../images/hb1.png"></image>
+         <view>参伙红包<text class="text1">￥<text class="text2">200</text>.00</text></view>
+      </view>
+      <view class="right">申请提现</view>
+   </view>
+   <view class="partners-bottom">
+      <view class="chaxun">账单查询</view>
+      <view class="chaxun-riqi">
+         <view>
+            <picker mode="date" value="" start="2015-09-01" end="2017-09-01" bindchange="bindDateChange">
+              <view class="picker">
+                {{date}}
+              </view>
+            </picker>
+            <text>至</text>
+            <picker mode="date" value="" start="2015-09-01" end="2017-09-01" bindchange="bindDateChange1">
+              <view class="picker">
+                {{date1}}
+              </view>
+            </picker>
+         </view>
+         <view>确定</view>
+      </view>
+   </view>
+   <view class="partners-liebiao">
+      <view class="liebiao">
+         <view class="left">2019-06-20</view>
+         <view class="right">-￥<text>50.</text>00</view>
+      </view>
+      <view class="liebiao">
+         <view class="left">2019-06-20</view>
+         <view class="right" style="color:#de7534;">+￥<text>50.</text>00</view>
+      </view>
+      <view class="liebiao">
+         <view class="left">2019-06-20</view>
+         <view class="right">-￥<text>50.</text>00</view>
+      </view>
+   </view>
+</view>

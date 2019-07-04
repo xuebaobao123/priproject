@@ -22,6 +22,7 @@
       <text>{{projectSpeed.projectDesc}}</text>
    </view>
    <view class="heji">
+      <view bindtap="fanhui">{{fanhui}}</view>
       <view>
          合计:
          <text>￥{{total}}</text>
@@ -29,5 +30,3 @@
       <view>去支付></view>
    </view>
 </view>
-<import src="../tabbar/tabbar.wxml" />
-<template is="tabbar" data="{{tabbar}}" />

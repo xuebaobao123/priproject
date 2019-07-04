@@ -18,7 +18,8 @@ Page({
       //图片
       projectImage: ''
     },
-    total: ''//合计
+    total: '',//合计
+    fanhui:"< 返回"//返回
   },
 
 
@@ -30,60 +31,9 @@ Page({
     this.initData();
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  },
-
   //初始化数据
   initData: function () {
-
     //请求数据
-
     //创建模拟数据
     this.setData({
       projectName: '项目名称写在这里,字体是思源黑体简体中无,字号是30px。字数不宜过多,控制在量行内即可。',
@@ -94,5 +44,13 @@ Page({
       total: '5000.00'//合计
     })
   },
-
+  // 返回
+  fanhui:function(){
+    // wx.navigateBack({ 
+    //   changed: true 
+    // })
+    wx.redirectTo({
+      url: '../index/index',
+    })
+  }
 })

@@ -1,0 +1,11 @@
+<view class="amount">
+   <view class="amount-nr">
+       <view class="amount-jine">申请提现金额</view>
+       <view class="amount-shuru">￥<text>100</text>.00</view>
+       <view class="amount-shenqing">申 请</view>
+       <view class="amount-xz">
+           <view>提现须知:</view>
+           <view>提现须知提现须知提现须知提现须知提现须知提现须知提现须知</view>
+       </view>
+   </view>
+</view>

@@ -1,0 +1,26 @@
+    <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" class="swiper1" indicator-color="#db7231" indicator-active-color="white">
+        <block wx:for="{{imgUrls}}">
+              <swiper-item>
+                <image src="{{item}}" class="slide-image" />
+              </swiper-item>
+        </block>
+    </swiper>
+    <!-- 广告位 -->
+    <view class="space">
+        <view>
+            <image src="../images/huiyuan.png"></image>
+        </view>
+        <view>
+            <image src="../images/canhuo.png"></image>
+        </view>
+        <view>
+            <image src="../images/weixinzhifu.png"></image>
+        </view>
+        <view>
+            <image src="../images/youhuijuan.png"></image>
+        </view>
+        <view>
+            <image src="../images/hongbao.png"></image>
+        </view>
+    </view>
+    <view class="support">技术支持</view>

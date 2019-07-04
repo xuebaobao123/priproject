@@ -1,5 +1,6 @@
 //app.js
 App({
+  isShow: false,
   tabbar: {
     color: "#515151",
     selectedColor: "#fa8582",
@@ -27,24 +28,25 @@ App({
     "color": "black",
     "selectedColor": "#666",
     "backgroundColor": "#f8f8f8",
+    
     "list": [
       {
         "pagePath": "../index/index",
         "text": "首页",
         "iconPath": "../images/index.png",
-        "selectedIconPath": "../images/index1.png"
+        "selectedIconPath": "../images/index1.png",
       },
       {
         "pagePath": "../xiangqing/xiangqing",
         "text": "参伙",
-        "iconPath": "../images/hb.png",
-        "selectedIconPath": "../images/hb1.png"
+        "iconPath": "../images/ch.png",
+        "selectedIconPath": "../images/ch1.png"
       },
       {
         "pagePath": "../youhuijuan/youhuijuan",
         "text": "优惠卷包",
-        "iconPath": "../images/wode.png",
-        "selectedIconPath": "../images/wode1.png"
+        "iconPath": "../images/yhq.png",
+        "selectedIconPath": "../images/yhq1.png"
       },
       {
         "pagePath": "../index/index",
@@ -70,7 +72,7 @@ App({
     }
     var tabBar = this.tabbar;
     for (var i = 0; i < tabBar.list.length; i++) {
-      console.log(_pagePath + '--' + tabBar.list[i].pagePath)
+      console.log(tabBar.list)
       tabBar.list[i].selected = false;
       if (tabBar.list[i].pagePath == _pagePath) {
         tabBar.list[i].selected = true;//根据页面地址设置当前页面状态  

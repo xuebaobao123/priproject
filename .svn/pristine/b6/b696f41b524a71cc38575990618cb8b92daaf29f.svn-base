@@ -1,0 +1,76 @@
+<view class="wode">
+   <view class="wode-xinxi">
+      <view class="wode-xinxi1">
+        <image src="../images/xinxi.png" class="tu"></image>
+        <view class="xinxi">
+           <view class="left">
+              <image src="../images/touxiang.png"></image>
+           </view>
+           <view class="right">
+               <view>微信名称</view>
+               <view style="margin-top:6rpx;">累计积分:2000</view>
+           </view>
+        </view>
+      </view>
+      <view class="wode-xinxi2">
+          <view class="left"><image src="../images/logo.png"></image></view>
+          <view class="right">进入优惠卷包 ></view>
+      </view>
+   </view>
+   <view class="wode-center">
+      <view class="wode-top">
+         <view  class="wode-top1">
+             <image src="../images/jifen.png"></image>
+             <view><text>300</text></view>
+         </view>
+         <view  class="wode-top1">
+             <image src="../images/yhj.png"></image>
+             <view><text>5 </text>张</view>
+         </view>
+      </view>
+      <view class="wode-bottom">
+         <view style="overflow:hidden;margin-bottom:20rpx;" bindtap="onToggle">
+              <view class="left">
+                  <image src="../images/tubiao.png"></image>
+                  <view>
+                    ￥<text>5000.</text>00
+                  </view>
+              </view>
+              <view class="right">
+                  消费查询 >
+              </view>
+         </view>
+         <view class="pic {{activeIndex == 1 ? 'show' : 'hide'}}">
+            <view>近一月</view>
+            <view class="liebiao">
+               <view>2019-06-12</view>
+               <view>￥<text>2000.</text>00</view>
+            </view>
+         </view>
+      </view>
+   </view>
+   <view class="wode-dibu">
+      <view class="wode-bottom1">
+         <text>我参与的团</text>
+         <image src="../images/jiantou-2_03.png"></image>
+      </view>  
+      <view class="wode-bottom1">
+         <text>红包获取规则</text>
+         <image src="../images/jiantou-2_03.png"></image>
+      </view>  
+      <view class="wode-bottom1">
+         <text>积分获取规则</text>
+         <image src="../images/jiantou-2_03.png"></image>
+      </view>  
+      <view class="wode-bottom1">
+         <text>积分使用规则</text>
+         <image src="../images/jiantou-2_03.png"></image>
+      </view>  
+      <view class="wode-bottom1">
+         <text>隐私权政策</text>
+         <image src="../images/jiantou-2_03.png"></image>
+      </view>  
+   </view>
+</view>
+<import src="../tabbar/tabbar.wxml" />
+<template is="tabbar" data="{{tabbar}}"/>

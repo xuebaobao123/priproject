@@ -68,8 +68,16 @@ page{
   float:left;
 }
 .heji view:nth-child(2){
+  float:left;
+  text-align: center;
+}
+.heji view:nth-child(3){
   float:right;
+  text-align: right;
 }
 .heji view text{
   color:#dd7037;
+}
+.heji view{
+  width:33.3%;
 }

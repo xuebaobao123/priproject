@@ -21,7 +21,7 @@
                   <image src="../images/zhuanzeng.png"></image>
                </view>
                <view>X{{item.number}}</view>
-               <view>立即兑换 ></view>
+               <view bindtap="exchange">立即兑换 ></view>
             </view>
          </view>
          <view class="clearfloat"></view>
@@ -43,6 +43,7 @@
    </view>
 </view>
 <view class="fixed">
+    <view bindtap="fanhui">{{fanhui}}</view>
    <view>
       可用积分
       <text>{{usableIntegral}}</text>

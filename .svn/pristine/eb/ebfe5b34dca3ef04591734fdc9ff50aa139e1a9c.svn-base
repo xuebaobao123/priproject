@@ -1,0 +1,31 @@
+    <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" class="swiper1" indicator-color="#db7231" indicator-active-color="white">
+        <block wx:for="{{imgUrls}}">
+              <swiper-item>
+                <image src="{{item}}" class="slide-image" />
+              </swiper-item>
+        </block>
+    </swiper>
+    <!-- 广告位 -->
+    <view class="space">
+        <view>
+            <image src="../images/huowu2x.png"></image>
+            <text>我的会员</text>
+        </view>
+        <view>
+            <image src="../images/huowu2x.png"></image>
+            <text>参伙</text>
+        </view>
+        <view>
+            <image src="../images/huowu2x.png"></image>
+            <text>我的会员</text>
+        </view>
+        <view>
+            <image src="../images/huowu2x.png"></image>
+            <text>我的会员</text>
+        </view>
+        <view>
+            <image src="../images/huowu2x.png"></image>
+            <text>我的会员</text>
+        </view>
+    </view>
+    <view class="support">技术支持</view>

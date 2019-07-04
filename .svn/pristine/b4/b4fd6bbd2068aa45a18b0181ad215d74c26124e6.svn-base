@@ -1,0 +1,18 @@
+{
+  "pages": [
+    "pages/wode/wode",
+    "pages/index/index",
+    "pages/youhuijuan/youhuijuan",
+    "pages/xiangqing/xiangqing",
+    "pages/tabbar/tabbar",
+    "pages/logs/logs"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "小程序",
+    "navigationBarTextStyle": "black"
+  },
+  "sitemapLocation": "sitemap.json"
+  
+}

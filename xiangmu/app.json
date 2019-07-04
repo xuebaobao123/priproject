@@ -1,10 +1,15 @@
 {
   "pages": [
-    "pages/wode/wode",
+    "pages/kaituan/kaituan",
     "pages/index/index",
+    "pages/lijiduihuan/lijiduihuan",
+    "pages/tixianjine/tixianjine",
+    "pages/canhuohongbao/canhuohongbao",
+    "pages/wode/wode",
     "pages/youhuijuan/youhuijuan",
     "pages/xiangqing/xiangqing",
     "pages/tabbar/tabbar",
+    
     "pages/logs/logs"
   ],
   "window": {

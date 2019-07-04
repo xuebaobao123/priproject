@@ -1,0 +1,50 @@
+<view class="youhuijuan">
+   <view class="youhuijuan1" wx:for="{{couponArray}}">
+      <view class="top">
+         <view class="left">
+            <image src="../images/youhui.png" class="img1"></image>
+            <view class="dingwei">
+               <view class="dingwei1">
+                  <image src="{{item.imgUrl}}"></image>
+                  <text>{{item.needIntegral}}积分</text>
+               </view>
+            </view>
+         </view>
+         <view class="right">
+            <view class="zuo">
+               <view>{{item.integralName}}</view>
+               <view>{{item.content}}</view>
+
+            </view>
+            <view class="you">
+               <view>
+                  <image src="../images/zhuanzeng.png"></image>
+               </view>
+            </view>
+         </view>
+         <view class="clearfloat"></view>
+      </view>
+      <view class="pic">
+         <view>
+            <text>优惠说明：</text>
+            <text>{{item.integralExplain}}</text>
+         </view>
+         <view>
+            <text>可用时段：</text>
+            <text style="text-indent:0rpx;">{{item.validityDate.desc}}</text>
+         </view>
+         <view>
+            <text>使用须知：</text>
+            <text>{{item.useRequire}}</text>
+         </view>
+      </view>
+   </view>
+</view>
+<view class="fixed">
+    <view bindtap="fanhui">{{fanhui}}</view>
+   <view>
+      可用积分
+      <text>{{usableIntegral}}</text>
+   </view>
+   <view bindtap="goMyMember">我的会员 ></view>
+</view>

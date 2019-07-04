@@ -39,6 +39,7 @@ Page({
     //优惠券详情展开标志
     activeIndex: 0,
     //可用积分
+    fanhui: "< 返回",//返回
     usableIntegral:300
   },
   /**
@@ -120,17 +121,29 @@ Page({
         imgUrl: '../images/youhuijuan1.png'
       }
     )
-
     this.setData({
       couponArray: couponArray
     })
   },
-
-
+  // 返回
+  fanhui: function () {
+    // wx.navigateBack({ 
+    //   changed: true 
+    // })
+    wx.redirectTo({
+      url: '../index/index',
+    })
+  },
   //我的会员
   goMyMember: function () {
     wx.redirectTo({
       url: '../wode/wode'
+    })
+  },
+  // 立即兑换
+  exchange:function(){
+    wx.navigateTo({
+      url: '../lijiduihuan/lijiduihuan',
     })
   }
 })

@@ -1,0 +1,31 @@
+.show{
+  display: block;
+}
+.hide{
+  display: none;
+}
+.tabbar_box{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 999;
+    height: 120rpx;
+    border-top: 1rpx solid #d7d7d7; 
+    width:100%;
+}
+.tabbar_nav{
+    display: flex;
+    width:25% !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 24rpx;
+    height: 100%;
+}
+.tabbar_box image{
+  width:50rpx;
+  height:50rpx;
+}
