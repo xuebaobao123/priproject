@@ -6,11 +6,11 @@ Page({
    * 页面的初始数据
    */
   data: {
+    headImg:'https://images.unsplash.com/photo-1551334787-21e6bd3ab135?w=640',
     //项目名称
     projectName: '',
-    money: '',//金额
+    content: '',//内容
     endDate: '',//截至日期
-    surNumber: '',//剩余
     //项目进度
     projectSpeed: {
       //文字描述
@@ -18,8 +18,6 @@ Page({
       //图片
       projectImage: ''
     },
-    total: '',//合计
-    fanhui: "< 返回"//返回
   },
 
 
@@ -37,11 +35,9 @@ Page({
     //创建模拟数据
     this.setData({
       projectName: '项目名称写在这里,字体是思源黑体简体中无,字号是30px。',
-      money: '5000.00',//金额
+      content: '满100减50元',//内容
       endDate: '2019/07/31',//截至日期
-      surNumber: '3',//剩余
       projectSpeed: { projectDesc: '此处开始为项目的运营进度的详细介绍,字体是思源黑体字号控制在25px,可以图文并茂介绍。' },//项目进度
-      total: '5000.00'//合计
     })
   },
   // 返回

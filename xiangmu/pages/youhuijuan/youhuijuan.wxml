@@ -6,7 +6,7 @@
             <view class="dingwei">
                <view class="dingwei1">
                   <image src="{{item.imgUrl}}"></image>
-                  <text>{{item.needIntegral}}积分</text>
+                  <text>{{item.couponType==COUPONTYPE.DISCOUNT?item.needIntegral+'积分':'团'}}</text>
                </view>
             </view>
          </view>
@@ -17,11 +17,15 @@
                <view bindtap="onToggle" data-index="{{index}}">查看详情 ></view>
             </view>
             <view class="you">
-               <view>
+               <view wx:if="{{item.couponType==COUPONTYPE.DISCOUNT}}">
+                  
                   <image src="../images/zhuanzeng.png"></image>
                </view>
-               <view>X{{item.number}}</view>
-               <view bindtap="exchange">立即兑换 ></view>
+               <view wx:if="{{item.couponType==COUPONTYPE.DISCOUNT}}">X{{item.number}}</view>
+               <view wx:if="{{item.couponType==COUPONTYPE.DISCOUNT}}" bindtap="exchange">立即兑换 ></view>
+               
+               <view wx:if="{{item.couponType==COUPONTYPE.GROUP}}">111</view>
+               <view wx:if="{{item.couponType==COUPONTYPE.GROUP}}" bindtap="organGroup">我要开团 ></view>
             </view>
          </view>
          <view class="clearfloat"></view>

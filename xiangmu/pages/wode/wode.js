@@ -46,7 +46,7 @@ Page({
     ],
     //详细列表
     detailArray: [
-      { text: '我参与的团', img: '../images/jiantou-2_03.png', fowardUrl: '../woyaocantuan/woyaocantuan' },
+      { text: '我参与的团', img: '../images/jiantou-2_03.png', fowardUrl: '../youhuijuan/youhuijuan' },
       { text: '红包获取规则', img: '../images/jiantou-2_03.png', fowardUrl: '22' },
       { text: '积分获取规则', img: '../images/jiantou-2_03.png', fowardUrl: '3' },
       { text: '积分使用规则', img: '../images/jiantou-2_03.png', fowardUrl: '3' },

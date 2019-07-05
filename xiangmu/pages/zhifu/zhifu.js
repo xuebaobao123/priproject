@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    hidden:true,//弹框
+    hidden:false,//弹框
     //优惠券数组
     couponArray: [
       {

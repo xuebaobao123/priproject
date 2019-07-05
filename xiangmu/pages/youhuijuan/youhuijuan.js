@@ -5,6 +5,13 @@ Page({
    * 页面的初始数据
    */
   data: {
+    //券类型
+    COUPONTYPE:{
+      //开团券
+      GROUP:0,
+      //优惠券
+      DISCOUNT:1,
+    },
     //优惠券数组
     couponArray: [
       {
@@ -34,6 +41,8 @@ Page({
         owner: '',
         //优惠券图片
         imgUrl: '',
+        //优惠券类型 开团券和优惠券
+        couponType:''
       }
     ],
     //优惠券详情展开标志
@@ -88,7 +97,8 @@ Page({
         useRequire: '使用须知1',
         //优惠券所有者
         owner: '',
-        imgUrl: '../images/youhuijuan1.png'
+        imgUrl: '../images/youhuijuan1.png',
+        couponType:this.data.COUPONTYPE.GROUP
       }
     )
 
@@ -118,7 +128,8 @@ Page({
         useRequire: '使用须知2',
         //优惠券所有者
         owner: '',
-        imgUrl: '../images/youhuijuan1.png'
+        imgUrl: '../images/youhuijuan1.png',
+        couponType:this.data.COUPONTYPE.DISCOUNT
       }
     )
     this.setData({
@@ -136,5 +147,11 @@ Page({
     wx.navigateTo({
       url: '../lijiduihuan/lijiduihuan',
     })
+  },
+
+  //开团
+  organGroup:function(){
+    //
+    console.log(222);
   }
 })
