@@ -27,7 +27,7 @@
                <text>300</text>
             </view>
          </view>
-         <view class="wode-top1">
+         <view class="wode-top1" bindtap="goCouponPage">
             <image src="../images/yhj.png"></image>
             <view>
                <text>{{couponCount}}</text>
@@ -47,14 +47,14 @@
             </view>
             <view class="right">消费查询 ></view>
          </view>
-         <view class="pic {{activeIndex == 1 ? 'show' : 'hide'}}">
-            <view>{{consumeRecord[0].lateDesc}}</view>
+         <view class="pic {{activeIndex == 1 ? 'show' : 'hide'}}" wx:for="{{consumeRecord}}">
+            <view>{{item.lateDesc}}</view>
             <view class="liebiao">
-               <view>{{consumeRecord[0].date}}</view>
+               <view>{{item.date}}</view>
                <view>
                   ￥
-                  <text>{{consumeRecord[0].consume.numDigits}}.</text>
-                  {{consumeRecord[0].consume.decimalDigits}}
+                  <text>{{item.consume.numDigits}}.</text>
+                  {{item.consume.decimalDigits}}
                </view>
             </view>
          </view>

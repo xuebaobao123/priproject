@@ -5,6 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    hidden:true,//弹框
     //优惠券数组
     couponArray: [
       {
@@ -39,8 +40,7 @@ Page({
     //优惠券详情展开标志
     activeIndex: 0,
     //可用积分
-    fanhui: "< 返回",//返回
-    usableIntegral:300
+    usableIntegral: 300
   },
   /**
    * 生命周期函数--监听页面加载
@@ -48,15 +48,6 @@ Page({
   onLoad: function (options) {
     this.initData();
   },
-  //查看详情
-  onToggle(e) {
-    const index = this.data.activeIndex;
-    this.setData({
-      //控制查看详情的展开和关闭
-      activeIndex: index === e.currentTarget.dataset.index ? -1 : e.currentTarget.dataset.index
-    })
-  },
-
   //初始化
   initData: function () {
 
@@ -125,6 +116,15 @@ Page({
       couponArray: couponArray
     })
   },
+  // 返回
+  fanhui: function () {
+    // wx.navigateBack({ 
+    //   changed: true 
+    // })
+    wx.redirectTo({
+      url: '../index/index',
+    })
+  },
   //我的会员
   goMyMember: function () {
     wx.redirectTo({
@@ -132,9 +132,19 @@ Page({
     })
   },
   // 立即兑换
-  exchange:function(){
+  exchange: function () {
     wx.navigateTo({
       url: '../lijiduihuan/lijiduihuan',
+    })
+  },
+  zhifu:function(){
+    this.setData({
+      hidden:false
+    })
+  },
+  guanbi:function(){
+    this.setData({
+      hidden: true
     })
   }
 })

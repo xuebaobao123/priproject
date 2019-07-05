@@ -136,7 +136,7 @@ page{
   background:white;
   font-size:30rpx;
   color:#666;
-  margin-bottom:30rpx;
+  margin-bottom:140rpx;
 }
 .wode-bottom1{
   padding:0 30rpx;

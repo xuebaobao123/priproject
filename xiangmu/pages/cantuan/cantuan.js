@@ -35,7 +35,7 @@ Page({
     //请求数据
     //创建模拟数据
     this.setData({
-      projectName: '项目名称写在这里,字体是思源黑体简体中无,字号是30px。字数不宜过多,控制在量行内即可。',
+      projectName: '项目名称写在这里,字体是思源黑体简体中无,字号是30px。',
       money: '5000.00',//金额
       endDate: '2019/07/31',//截至日期
       surNumber: '3',//剩余
@@ -43,4 +43,10 @@ Page({
       total: '5000.00'//合计
     })
   },
+  // 开团
+  // group: function () {
+  //   wx.navigateTo({
+  //     url: '../cantuan/cantuan',
+  //   })
+  // }
 })

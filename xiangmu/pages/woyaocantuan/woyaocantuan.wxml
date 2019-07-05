@@ -6,7 +6,7 @@
             <view class="dingwei">
                <view class="dingwei1">
                   <image src="{{item.imgUrl}}"></image>
-                  <text>{{item.needIntegral}}积分</text>
+                  <text>{{item.needIntegral}}</text>
                </view>
             </view>
          </view>
@@ -21,7 +21,7 @@
                   <image src="../images/zhuanzeng.png"></image>
                </view>
                <view>X{{item.number}}</view>
-               <view bindtap="exchange">立即兑换 ></view>
+               <view bindtap="exchange">立即开团 ></view>
             </view>
          </view>
          <view class="clearfloat"></view>
@@ -41,11 +41,4 @@
          </view>
       </view>
    </view>
-</view>
-<view class="fixed">
-   <view>
-      可用积分
-      <text>{{usableIntegral}}</text>
-   </view>
-   <view bindtap="goMyMember">我的会员 ></view>
 </view>

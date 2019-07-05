@@ -1,0 +1,27 @@
+@import "../kaituan/kaituan.wxss";
+.cantuan1 image{
+  width:60rpx;
+  height:60rpx;
+}
+.cantuan-title{
+  font-size:30rpx;
+  margin:0 0 20rpx;
+}
+.xiangQi .bottom{
+  padding-top:0;
+
+}
+.cantuan-touxiang{
+  overflow: hidden;
+}
+.cantuan1{
+  float:left;
+  width:11.1%;
+  margin:10rpx 0;
+}
+.xiangQi{
+  background:white;
+}
+.cantuan{
+  margin-bottom:20rpx;
+}

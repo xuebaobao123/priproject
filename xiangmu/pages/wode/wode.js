@@ -18,10 +18,21 @@ Page({
       decimalDigits: 20,
     },
     //消费记录
+    
     consumeRecord: [
       {
-        //时间描述
         lateDesc: '近一月',
+        //日期
+        date: '2019-06-12',
+        //消费金额
+        consume: {
+          //整数值
+          numDigits: 2000,
+          //小数位数值
+          decimalDigits: 21,
+        }
+      },
+      {
         //日期
         date: '2019-06-12',
         //消费金额
@@ -35,7 +46,7 @@ Page({
     ],
     //详细列表
     detailArray: [
-      { text: '我参与的团', img: '../images/jiantou-2_03.png', fowardUrl: '11' },
+      { text: '我参与的团', img: '../images/jiantou-2_03.png', fowardUrl: '../woyaocantuan/woyaocantuan' },
       { text: '红包获取规则', img: '../images/jiantou-2_03.png', fowardUrl: '22' },
       { text: '积分获取规则', img: '../images/jiantou-2_03.png', fowardUrl: '3' },
       { text: '积分使用规则', img: '../images/jiantou-2_03.png', fowardUrl: '3' },
@@ -47,7 +58,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    app.tabbar.isJoin = true;
     app.changeTabBar();
   },
   onToggle(e) {
@@ -70,9 +80,9 @@ Page({
     //单个
     const detail = this.data.detailArray[e.currentTarget.dataset.index];
     //跳转页面
-    // wx.redirectTo({
-    //   url:detail.fowardUrl
-    // })
+    wx.redirectTo({
+      url:detail.fowardUrl
+    })
   },
   //进入优惠券包
   goCouponPage: function (e) {

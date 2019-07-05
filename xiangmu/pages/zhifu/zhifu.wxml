@@ -1,0 +1,41 @@
+<view class="zhifu">
+   <view class="zhifu-title">天津XX管理有限公司</view>
+   <view class="zhufu-nr">
+      <view class="nr-title">支付</view>
+      <view class="money">￥<text>500.</text>00</view>
+      <view class="nr-title">参伙余额￥500.00</view>
+      <view class="mony" bindtap="zhifu">支付</view>
+   </view>
+</view>
+<view class="tanchuang" hidden="{{hidden}}">
+   <view class="tanchuang1">
+      <image src="../images/cha_03.jpg" class="cha" bindtap="guanbi"></image>
+      <view class="youhuijuan">
+          <view class="youhuijuan1" wx:for="{{couponArray}}">
+              <view class="top">
+                <view class="left">
+                    <image src="../images/youhui.png" class="img1"></image>
+                    <view class="dingwei">
+                      <view class="dingwei1">
+                          <image src="{{item.imgUrl}}"></image>
+                          <text>{{item.needIntegral}}积分</text>
+                      </view>
+                    </view>
+                </view>
+                <view class="right">
+                    <view class="zuo">
+                      <view>{{item.integralName}}</view>
+                      <view>{{item.content}}</view>
+                    </view>
+                    <view class="you">
+                      <view>
+                          <image src="../images/zhuanzeng.png"></image>
+                      </view>
+                    </view>
+                </view>
+                <view class="clearfloat"></view>
+              </view>
+          </view>
+        </view>
+   </view>
+</view>

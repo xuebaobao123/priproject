@@ -115,24 +115,12 @@ page{
   border-top:1px solid #eeee;
   font-size:30rpx;
 }
-.fixed view:nth-child(1){
-  float:left;
-}
-.fixed view:nth-child(2) text{
+.fixed view:nth-child(1) text{
     color:#de7534;
 }
-.fixed view{
-  width:33.3%;
-}
 .fixed view:nth-child(1){
   float:left;
-  width:30%;
 }
 .fixed view:nth-child(2){
-  float:left;
-  text-align: center;
-}
-.fixed view:nth-child(3){
   float:right;
-  text-align: right;
 }

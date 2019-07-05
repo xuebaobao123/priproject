@@ -16,9 +16,9 @@ Page({
     advertPlaceArray: [
       { img: "../images/huiyuan.png", fowardUrl: '../wode/wode' },
       { img: "../images/canhuo.png", fowardUrl: '../xiangqing/xiangqing' },
-      { img: "../images/weixinzhifu.png", fowardUrl: '33' },
+      { img: "../images/weixinzhifu.png", fowardUrl: '../zhifu/zhifu'},
       { img: "../images/youhuijuan.png", fowardUrl: '../youhuijuan/youhuijuan' },
-      { img: "../images/hongbao.png", fowardUrl: '55' },
+      { img: "../images/hongbao.png", fowardUrl: '../canhuohongbao/canhuohongbao' },
     ]
   },
   onLoad: function () {
@@ -26,9 +26,8 @@ Page({
   //点击跳转
   foward: function (e) {
     const advertPlace = this.data.advertPlaceArray[e.currentTarget.dataset.index];
-    console.log(advertPlace)
     //跳转页面
-    wx.redirectTo({
+    wx.navigateTo({
       url: advertPlace.fowardUrl
     })
   }

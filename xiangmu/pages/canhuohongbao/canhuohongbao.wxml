@@ -40,3 +40,5 @@
       </view>
    </view>
 </view>
+<import src="../tabbar/tabbar.wxml" />
+<template is="tabbar" data="{{tabbar}}" />

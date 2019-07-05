@@ -68,10 +68,6 @@ page{
   float:left;
 }
 .heji view:nth-child(2){
-  float:left;
-  text-align: center;
-}
-.heji view:nth-child(3){
   float:right;
   text-align: right;
 }

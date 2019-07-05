@@ -21,7 +21,7 @@ App({
         "selectedIconPath": "../images/ch1.png"
       },
       {
-        "pagePath": "../index/index",
+        "pagePath": "../canhuohongbao/canhuohongbao",
         "text": "红包",
         "iconPath": "../images/hb.png",
         "selectedIconPath": "../images/hb1.png"
@@ -47,7 +47,7 @@ App({
         "selectedIconPath": "../images/yhq1.png"
       },
       {
-        "pagePath": "../index/index",
+        "pagePath": "../canhuohongbao/canhuohongbao",
         "text": "红包",
         "iconPath": "../images/hb.png",
         "selectedIconPath": "../images/hb1.png"

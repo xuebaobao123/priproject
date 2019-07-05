@@ -22,7 +22,6 @@
       <text>{{projectSpeed.projectDesc}}</text>
    </view>
    <view class="heji">
-      <view bindtap="fanhui">{{fanhui}}</view>
       <view>
          合计:
          <text>￥{{total}}</text>
