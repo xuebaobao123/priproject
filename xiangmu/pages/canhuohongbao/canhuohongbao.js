@@ -116,5 +116,20 @@ Page({
         },
       ]
     })
+  },
+
+  //申请体现
+  onCashOut:function(){
+
+  },
+
+  //账单查询
+  findBillRecord:function(){
+
+  },
+
+  //查询余额
+  findBalance:function(){
+
   }
 })

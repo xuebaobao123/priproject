@@ -5,11 +5,12 @@ Page({
    * 页面的初始数据
    */
   data: {
-    zhi: 1,
-    //积分
-    integral: 2000,
+    //累计积分
+    cumIntegral: 2000,
     //优惠券数量
     couponCount: 2,
+    //可用积分
+    usableIntegral:300,
     //余额
     surplus: {
       //整数值
@@ -60,19 +61,30 @@ Page({
   onLoad: function (options) {
     app.changeTabBar();
   },
-  onToggle(e) {
-    if (this.data.zhi == 1) {
-      this.setData({
-        activeIndex: 1,
-        zhi: 2
-      })
-    }
-    else {
-      this.setData({
-        activeIndex: 2,
-        zhi: 1
-      })
-    }
+
+  //消费查询
+  findConsumeRecord:function(){
+
+    //消费记录展示判断条件
+    let activeIndex = this.data.activeIndex||false;
+    this.setData({
+      activeIndex: !!!activeIndex,
+    })
+  },
+
+  //查询累计积分
+  findCumIntegral:function(){
+
+  },
+
+  //查询优惠券个数
+  findCouponCount:function(){
+
+  },
+  
+  //查询可用积分
+  findUsableIntegral:function(){
+
   },
 
   //跳转

@@ -8,7 +8,7 @@
             </view>
             <view class="right">
                <view>微信名称</view>
-               <view style="margin-top:6rpx;">累计积分:{{integral}}</view>
+               <view style="margin-top:6rpx;">累计积分:{{cumIntegral}}</view>
             </view>
          </view>
       </view>
@@ -24,7 +24,7 @@
          <view class="wode-top1">
             <image src="../images/jifen.png"></image>
             <view>
-               <text>300</text>
+               <text>{{usableIntegral}}</text>
             </view>
          </view>
          <view class="wode-top1" bindtap="goCouponPage">
@@ -36,7 +36,7 @@
          </view>
       </view>
       <view class="wode-bottom">
-         <view style="overflow:hidden;margin-bottom:20rpx;" bindtap="onToggle">
+         <view style="overflow:hidden;margin-bottom:20rpx;" bindtap="findConsumeRecord">
             <view class="left">
                <image src="../images/tubiao.png"></image>
                <view>
@@ -47,7 +47,7 @@
             </view>
             <view class="right">消费查询 ></view>
          </view>
-         <view class="pic {{activeIndex == 1 ? 'show' : 'hide'}}" wx:for="{{consumeRecord}}">
+         <view class="pic {{activeIndex ? 'show' : 'hide'}}" wx:for="{{consumeRecord}}">
             <view>{{item.lateDesc}}</view>
             <view class="liebiao">
                <view>{{item.date}}</view>

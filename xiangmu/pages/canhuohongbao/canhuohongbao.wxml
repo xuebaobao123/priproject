@@ -4,7 +4,7 @@
          <image src="../images/hb1.png"></image>
          <view>参伙红包<text class="text1">￥<text class="text2">{{balance.numDigits}}</text>.{{balance.decimalDigits}}</text></view>
       </view>
-      <view class="right">申请提现</view>
+      <view class="right" bindtap="onCashOut">申请提现</view>
    </view>
    <view class="partners-bottom">
       <view class="chaxun">账单查询</view>
@@ -22,7 +22,7 @@
               </view>
             </picker>
          </view>
-         <view>确定</view>
+         <view bindtap="findBillRecord">确定</view>
       </view>
    </view>
    <view class="partners-liebiao">
