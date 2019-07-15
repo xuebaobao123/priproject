@@ -82,6 +82,6 @@ App({
   onLaunch: function () {
   },
   globalData: {
-
+    url:'https://c.cityzht.com/'
   }
 })

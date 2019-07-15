@@ -4,10 +4,10 @@
          <image src="../images/xinxi.png" class="tu"></image>
          <view class="xinxi">
             <view class="left">
-               <image src="../images/touxiang.png"></image>
+               <image src="{{avatarurl}}"></image>
             </view>
             <view class="right">
-               <view>微信名称</view>
+               <view>{{nickname}}</view>
                <view style="margin-top:6rpx;">累计积分:{{cumIntegral}}</view>
             </view>
          </view>
@@ -47,9 +47,9 @@
             </view>
             <view class="right">消费查询 ></view>
          </view>
-         <view class="pic {{activeIndex ? 'show' : 'hide'}}" wx:for="{{consumeRecord}}">
-            <view>{{item.lateDesc}}</view>
-            <view class="liebiao">
+         <view class="pic {{activeIndex ? 'show' : 'hide'}}">
+            <view>近一月</view>
+            <view class="liebiao" wx:for="{{consumeRecord}}">
                <view>{{item.date}}</view>
                <view>
                   ￥

@@ -1,16 +1,22 @@
 const app = getApp();
+var util = require('../../utils/fengzhuang.js');
+import regeneratorRuntime from '../../regenerator-runtime/runtime.js';
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    //头像
+    avatarurl:null,
+    //昵称
+    nickname: '',
     //累计积分
     cumIntegral: 2000,
     //优惠券数量
     couponCount: 2,
     //可用积分
-    usableIntegral:300,
+    usableIntegral: 300,
     //余额
     surplus: {
       //整数值
@@ -19,7 +25,7 @@ Page({
       decimalDigits: 20,
     },
     //消费记录
-    
+
     consumeRecord: [
       {
         lateDesc: '近一月',
@@ -60,30 +66,56 @@ Page({
    */
   onLoad: function (options) {
     app.changeTabBar();
+
+    this.initData();
   },
 
   //消费查询
-  findConsumeRecord:function(){
+  findConsumeRecord: function () {
+    const e = wx.getStorageSync("e");
+    e.accessToken = 'XXMrUxwlndZWdSN_ob6UO-CfFH2Ookr-';
 
-    //消费记录展示判断条件
-    let activeIndex = this.data.activeIndex||false;
-    this.setData({
-      activeIndex: !!!activeIndex,
-    })
+    const that = this
+    //消费记录
+    util.postRequest(app.globalData.url + "user/balance-log?access-token=" + e.accessToken, { uid: e.loginUser.id })
+      .then(function (data) {
+        if (data.success && !data.success) {
+          console.log('检索失败，' + data.message);
+          return;
+        }
+        that.setData({
+          consumeRecord: data.data.data.map(item => {
+            return {
+              date: item.create_time,
+              consume: {
+                numDigits: item.price.split('.')[0],
+                decimalDigits: item.price.split('.')[1],
+              }
+            }
+          })
+        })
+
+        //消费记录展示判断条件
+        let activeIndex = that.data.activeIndex || false;
+        that.setData({
+          activeIndex: !!!activeIndex,
+        })
+      })
+
   },
 
   //查询累计积分
-  findCumIntegral:function(){
+  findCumIntegral: function () {
 
   },
 
   //查询优惠券个数
-  findCouponCount:function(){
+  findCouponCount: function () {
 
   },
-  
+
   //查询可用积分
-  findUsableIntegral:function(){
+  findUsableIntegral: function () {
 
   },
 
@@ -93,13 +125,61 @@ Page({
     const detail = this.data.detailArray[e.currentTarget.dataset.index];
     //跳转页面
     wx.redirectTo({
-      url:detail.fowardUrl
+      url: detail.fowardUrl
     })
   },
   //进入优惠券包
   goCouponPage: function (e) {
     wx.redirectTo({
       url: '../youhuijuan/youhuijuan'
+    })
+  },
+
+  //获取登录用户信息
+  initLoginUser: async function () {
+    const e = wx.getStorageSync("e");
+    e.accessToken = 'XXMrUxwlndZWdSN_ob6UO-CfFH2Ookr-';
+    if (e.loginUser)
+      return;
+
+    //检索登录用户
+    await util.postRequest(app.globalData.url + "user/user-info?access-token=" + e.accessToken, { uid: '35' })
+      .then(function (data) {
+        if (data.success && !data.success) {
+          console.log('检索失败，' + data.message);
+          return;
+        }
+        wx.setStorageSync("e", { ...e, loginUser: data.data.data });
+
+      })
+  },
+
+  //页面数据
+  initData: function () {
+    //登录用户
+    this.initLoginUser();
+    const loginUser = wx.getStorageSync("e").loginUser;
+    console.log('loginUser', loginUser);
+    //页面数据
+    this.setData({
+      //头像
+      avatarurl:loginUser.avatarurl,
+      //昵称
+      nickname: loginUser.nickname,
+      //累计积分
+      cumIntegral: 0,
+      //优惠券数量
+      couponCount: loginUser.coupon_num,
+      //可用积分
+      usableIntegral: loginUser.integral,
+      //余额
+      surplus: {
+        //整数值
+        numDigits: loginUser.balance.split('.')[0],
+        //小数位数值
+        decimalDigits: loginUser.balance.split('.')[1],
+      },
+
     })
   }
 })
