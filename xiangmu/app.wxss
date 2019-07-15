@@ -29,3 +29,8 @@
   width:50rpx;
   height:50rpx;
 }
+.youhuijuan1 .top .left .dingwei1 .active{
+  right: 40rpx;
+  top: 36rpx;
+  font-size: 36rpx;
+}
