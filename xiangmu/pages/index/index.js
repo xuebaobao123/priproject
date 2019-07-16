@@ -57,7 +57,7 @@ Page({
                 .then(function (tokenData) {
                   if (tokenData.status == "0") {
                     //成功获取token
-                    console.log('tokenData',111);
+                    console.log('tokenData', 111);
                     wx.setStorageSync("e", { ...e, accessToken: tokenData })
                   }
                 }, function (error) {
@@ -104,7 +104,7 @@ Page({
       "merchants_id": 1//商家ID，暂定为1
     }
     const that = this
-    util.postRequest(app.globalData.url + "banner/list?access-token="+e.accessToken, params)
+    util.postRequest(app.globalData.url + "banner/list?access-token=" + e.accessToken, params)
       .then(function (data) {
         if (data.success && !data.success) {
           console.log('检索失败，' + data.message);

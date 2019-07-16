@@ -8,7 +8,7 @@ Page({
    */
   data: {
     //头像
-    avatarurl:null,
+    avatarurl: null,
     //昵称
     nickname: '',
     //累计积分
@@ -83,7 +83,7 @@ Page({
           console.log('检索失败，' + data.message);
           return;
         }
-        console.log('data.data.data',data)
+        console.log('data.data.data', data)
         that.setData({
           consumeRecord: data.data.data.map(item => {
             return {
@@ -164,7 +164,7 @@ Page({
     //页面数据
     this.setData({
       //头像
-      avatarurl:loginUser.avatarurl,
+      avatarurl: loginUser.avatarurl,
       //昵称
       nickname: loginUser.nickname,
       //累计积分

@@ -22,9 +22,9 @@ Page({
     userList: [
       {
         //名称
-        userName:'',
+        userName: '',
         //头像
-        headImg:'../images/weixin_03.png',
+        headImg: '../images/weixin_03.png',
       }
     ],
   },
@@ -49,8 +49,8 @@ Page({
       surNumber: '3',//剩余
       projectSpeed: { projectDesc: '此处开始为项目的运营进度的详细介绍,字体是思源黑体字号控制在25px,可以图文并茂介绍。' },//项目进度
       //参团人
-      userList:[
-        {headImg:'../images/weixin_03.png'}
+      userList: [
+        { headImg: '../images/weixin_03.png' }
       ]
     })
 
@@ -60,9 +60,9 @@ Page({
   group: function () {
     const that = this
     const e = wx.getStorageSync("e");
-    const params={
-      uid:e.loginUser.id,
-      tuan_id:0
+    const params = {
+      uid: e.loginUser.id,
+      tuan_id: 0
     }
     util.postRequest(app.globalData.url + "add-tuan?access-token=" + e.accessToken, params)
       .then(function (data) {
@@ -70,8 +70,8 @@ Page({
           console.log('检索失败，' + data.message);
           return;
         }
-        if(data.data.status!='200'){
-          console.log('参团接口请求失败，错误信息：'+data.data.msg);
+        if (data.data.status != '200') {
+          console.log('参团接口请求失败，错误信息：' + data.data.msg);
         }
 
       })
@@ -80,12 +80,12 @@ Page({
     // })
   },
   //加载用户头像
-  initUserList:function(){
+  initUserList: function () {
     const that = this
     const e = wx.getStorageSync("e");
-    const params={
-      uid:e.loginUser.id,
-      tuan_id:0
+    const params = {
+      uid: e.loginUser.id,
+      tuan_id: 0
     }
     util.postRequest(app.globalData.url + "coupon/tuan-user?access-token=" + e.accessToken, params)
       .then(function (data) {
@@ -95,7 +95,7 @@ Page({
         }
         that.setData({
           userList: data.data.data.map(item => {
-            return {headImg:item.avatarurl}
+            return { headImg: item.avatarurl }
           })
         })
 

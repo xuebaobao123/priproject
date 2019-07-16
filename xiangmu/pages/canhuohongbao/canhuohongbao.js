@@ -81,7 +81,7 @@ Page({
   onCashOut: function () {
     const e = wx.getStorageSync("e");
     //申请提现
-    util.postRequest(app.globalData.url + "withdrawal/add?access-token=" + e.accessToken, { uid: e.loginUser.id,mid:'' })
+    util.postRequest(app.globalData.url + "withdrawal/add?access-token=" + e.accessToken, { uid: e.loginUser.id, mid: '' })
       .then(function (data) {
         if (data.success && !data.success) {
           console.log('检索失败，' + data.message);
@@ -119,11 +119,11 @@ Page({
           console.log('检索失败，' + data.message);
           return;
         }
-        
+
         //将余额修改为0
         let loginUser = e.loginUser;
-        loginUser = {...loginUser,red_envelope:'0.00'}
-        wx.setStorageSync('e',{...e,loginUser:loginUser})
+        loginUser = { ...loginUser, red_envelope: '0.00' }
+        wx.setStorageSync('e', { ...e, loginUser: loginUser })
       })
   },
 

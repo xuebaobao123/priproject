@@ -70,18 +70,15 @@ Page({
 
   //初始化
   initData: function () {
-    console.log(1);
-    let couponArray = [];
-
     const e = wx.getStorageSync("e");
     e.accessToken = 'XXMrUxwlndZWdSN_ob6UO-CfFH2Ookr-';
-    console.log('e',e);
+    console.log('e', e);
 
     this.setData({
-      usableIntegral:e.loginUser.integral
+      usableIntegral: e.loginUser.integral
     })
 
-    
+
     const that = this
     //优惠券记录
     util.postRequest(app.globalData.url + "user/participate-list?access-token=" + e.accessToken, { uid: e.loginUser.id })
@@ -95,18 +92,18 @@ Page({
           couponArray: data.data.data.map(item => {
             let content = "";
             //根据优惠券类型显示内容
-            switch (item.type){
+            switch (item.type) {
               case "1":
-                  //通用劵展示优惠金额
-                  content = item.discount_amount+"元代金券"
-                  break;
+                //通用劵展示优惠金额
+                content = item.discount_amount + "元代金券"
+                break;
               case "2":
-                  //满减券展示满多少减多少
-                  content = "满"+item.restrict_amount+"元减"+item.discount_amount+"元";
-                  break;
+                //满减券展示满多少减多少
+                content = "满" + item.restrict_amount + "元减" + item.discount_amount + "元";
+                break;
               case "3":
-                  //折扣券展示折扣比例
-                  content = item.discount+"折"
+                //折扣券展示折扣比例
+                content = item.discount + "折"
             }
             return {
               //需要积分
@@ -132,7 +129,7 @@ Page({
               //优惠券所有者
               owner: '',
               imgUrl: item.pic,
-              couponType: item.tuan_type==='1'?this.data.COUPONTYPE.GROUP:this.data.COUPONTYPE.DISCOUNT
+              couponType: item.tuan_type === '1' ? this.data.COUPONTYPE.GROUP : this.data.COUPONTYPE.DISCOUNT
             }
           })
         })
@@ -201,7 +198,7 @@ Page({
     //     couponType: this.data.COUPONTYPE.DISCOUNT
     //   }
     // )
-    
+
   },
   //我的会员
   goMyMember: function () {
@@ -220,5 +217,5 @@ Page({
   organGroup: function () {
     //
     console.log(222);
-  }
+  },
 })
