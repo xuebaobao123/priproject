@@ -12,17 +12,17 @@ Page({
     //昵称
     nickname: '',
     //累计积分
-    cumIntegral: 2000,
+    cumIntegral: 0,
     //优惠券数量
-    couponCount: 2,
+    couponCount: 0,
     //可用积分
-    usableIntegral: 300,
+    usableIntegral: 0,
     //余额
     surplus: {
       //整数值
-      numDigits: 5000,
+      numDigits: 0,
       //小数位数值
-      decimalDigits: 20,
+      decimalDigits: 0,
     },
     //消费记录
 
@@ -83,6 +83,7 @@ Page({
           console.log('检索失败，' + data.message);
           return;
         }
+        console.log('data.data.data',data)
         that.setData({
           consumeRecord: data.data.data.map(item => {
             return {
@@ -138,7 +139,7 @@ Page({
   //获取登录用户信息
   initLoginUser: async function () {
     const e = wx.getStorageSync("e");
-    e.accessToken = 'XXMrUxwlndZWdSN_ob6UO-CfFH2Ookr-';
+    e.accessToken = 'aWNPAF_Isy1IF78TyH7Dbi0fxMOHSn2n';
     if (e.loginUser)
       return;
 

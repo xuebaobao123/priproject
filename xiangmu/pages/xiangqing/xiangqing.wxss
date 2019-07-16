@@ -1,3 +1,9 @@
+.swiper1{
+  height:550rpx;
+}
+.swiper1 image{
+  height:100%;
+}
 .xiangqing image{
   width:100%;
   height:500rpx;

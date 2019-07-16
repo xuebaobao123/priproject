@@ -1,4 +1,6 @@
 const app = getApp();
+var util = require('../../utils/fengzhuang.js');
+import regeneratorRuntime from '../../regenerator-runtime/runtime.js';
 Page({
 
   /**
@@ -67,69 +69,94 @@ Page({
 
   //加载数据
   initData: function () {
-    this.setData({
-      billRecord: [
-        {
-          //消费日期
-          time: '2019-06-20',
-          //金额
-          money: {
-            //整数值
-            numDigits: 50,
-            //小数位数值
-            decimalDigits: '10',
-          },
-          //账单类型
-          type: this.data.BILLTYPE.INCOME,
-          //账单描述
-          desc: ''
-        },
-        {
-          //消费日期
-          time: '2019-06-20',
-          //金额
-          money: {
-            //整数值
-            numDigits: 20,
-            //小数位数值
-            decimalDigits: '01',
-          },
-          //账单类型
-          type: this.data.BILLTYPE.EXPEND,
-          //账单描述
-          desc: ''
-        },
-        {
-          //消费日期
-          time: '2019-07-20',
-          //金额
-          money: {
-            //整数值
-            numDigits: 40,
-            //小数位数值
-            decimalDigits: '01',
-          },
-          //账单类型
-          type: this.data.BILLTYPE.INCOME,
-          //账单描述
-          desc: ''
-        },
-      ]
-    })
+    //登录用户
+    this.initLoginUser();
+    //红包余额
+    this.findBalance();
+    //账单查询
+    this.findBillRecord();
   },
 
   //申请体现
-  onCashOut:function(){
-
+  onCashOut: function () {
+    const e = wx.getStorageSync("e");
+    //申请提现
+    util.postRequest(app.globalData.url + "withdrawal/add?access-token=" + e.accessToken, { uid: e.loginUser.id,mid:'' })
+      .then(function (data) {
+        if (data.success && !data.success) {
+          console.log('检索失败，' + data.message);
+          return;
+        }
+        console.log('data.data.data', data)
+        that.setData({
+          billRecord: data.data.data.map(item => {
+            return {
+              //消费日期
+              time: item.create_time,
+              //金额
+              money: {
+                //整数值
+                numDigits: item.price.split('.')[0],
+                //小数位数值
+                decimalDigits: item.price.split('.')[1],
+              },
+              //账单类型
+              type: item.type === 'in' ? this.data.BILLTYPE.INCOME : this.data.BILLTYPE.EXPEND,
+            }
+          })
+        })
+      })
   },
 
   //账单查询
-  findBillRecord:function(){
-
+  findBillRecord: function () {
+    const e = wx.getStorageSync("e");
+    e.accessToken = 'XXMrUxwlndZWdSN_ob6UO-CfFH2Ookr-';
+    //消费记录
+    util.postRequest(app.globalData.url + "user/red-log?access-token=" + e.accessToken, { uid: e.loginUser.id })
+      .then(function (data) {
+        if (data.success && !data.success) {
+          console.log('检索失败，' + data.message);
+          return;
+        }
+        
+        //将余额修改为0
+        let loginUser = e.loginUser;
+        loginUser = {...loginUser,red_envelope:'0.00'}
+        wx.setStorageSync('e',{...e,loginUser:loginUser})
+      })
   },
 
   //查询余额
-  findBalance:function(){
+  findBalance: function () {
+    const loginUser = wx.getStorageSync("e").loginUser;
+    this.setData({
+      //余额
+      balance: {
+        //整数值
+        numDigits: loginUser.red_envelope.split('.')[0],
+        //小数位数值
+        decimalDigits: loginUser.red_envelope.split('.')[1],
+      },
+    })
+  },
 
-  }
+  //获取登录用户信息
+  initLoginUser: async function () {
+    const e = wx.getStorageSync("e");
+    e.accessToken = 'XXMrUxwlndZWdSN_ob6UO-CfFH2Ookr-';
+    if (e.loginUser)
+      return;
+
+    //检索登录用户
+    await util.postRequest(app.globalData.url + "user/user-info?access-token=" + e.accessToken, { uid: '35' })
+      .then(function (data) {
+        if (data.success && !data.success) {
+          console.log('检索失败，' + data.message);
+          return;
+        }
+        wx.setStorageSync("e", { ...e, loginUser: data.data.data });
+
+      })
+  },
 })

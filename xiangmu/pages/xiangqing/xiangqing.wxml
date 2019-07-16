@@ -1,6 +1,10 @@
-<view class="xiangqing">
-   <image src="https://images.unsplash.com/photo-1551334787-21e6bd3ab135?w=640"></image>
-</view>
+<swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" class="swiper1" indicator-color="#db7231" indicator-active-color="white">
+    <block wx:for="{{imgUrls}}">
+        <swiper-item>
+            <image src="{{item}}" class="slide-image" />
+        </swiper-item>
+    </block>
+</swiper>
 <view class="xiangQi">
    <view class="top">
       <view class="top1">{{projectName}}</view>

@@ -1,5 +1,6 @@
 const app = getApp();
 var util = require('../../utils/fengzhuang.js');
+import regeneratorRuntime from '../../regenerator-runtime/runtime.js';
 Page({
   data: {
     indicatorDots: true,  //是否显示面板指示点
@@ -17,7 +18,7 @@ Page({
     advertPlaceArray: [
       { img: "../images/huiyuan.png", fowardUrl: '../wode/wode' },
       { img: "../images/canhuo.png", fowardUrl: '../xiangqing/xiangqing' },
-      { img: "../images/weixinzhifu.png", fowardUrl: '../zhifu/zhifu'},
+      { img: "../images/weixinzhifu.png", fowardUrl: '../zhifu/zhifu' },
       { img: "../images/youhuijuan.png", fowardUrl: '../youhuijuan/youhuijuan' },
       { img: "../images/hongbao.png", fowardUrl: '../canhuohongbao/canhuohongbao' },
     ]
@@ -27,7 +28,10 @@ Page({
     this.setData({
       shouquan: !!e,
     })
+    //加载token
     this.initToken();
+    //加载轮播图
+    this.initImageUrls();
   },
   //点击跳转
   foward: function (e) {
@@ -37,23 +41,24 @@ Page({
       url: advertPlace.fowardUrl
     })
   },
-  initToken:function(){
+  initToken: async function () {
     var e = wx.getStorageSync('e');
-  
+
     wx.login({
       success(res) {
         if (res.code) {
-          var data={
-            merchants_id:"1",
-            merchants_id:res.code
+          var data = {
+            merchants_id: "1",
+            merchants_id: res.code
           }
-          util.postRequest(app.globalData.url + "auth/openid",data)
+          util.postRequest(app.globalData.url + "auth/openid", data)
             .then(function (data) {
-              util.postRequest(app.globalData.url + "auth/login", { openId: data})
+              util.postRequest(app.globalData.url + "auth/login", { openId: data })
                 .then(function (tokenData) {
                   if (tokenData.status == "0") {
                     //成功获取token
-                    wx.setStorageSync("e",{...e,accessToken:tokenData})
+                    console.log('tokenData',111);
+                    wx.setStorageSync("e", { ...e, accessToken: tokenData })
                   }
                 }, function (error) {
                 })
@@ -88,4 +93,29 @@ Page({
       });
     }
   },
+
+  //获取轮播图
+  initImageUrls: function () {
+    var e = wx.getStorageSync('e');
+    e.accessToken = '9NfL1S6yWoIZHSd4cXsKOb1Iz816_3se';
+    //消费记录
+    const params = {
+      "type": "2", //表示首页
+      "merchants_id": 1//商家ID，暂定为1
+    }
+    const that = this
+    util.postRequest(app.globalData.url + "banner/list?access-token="+e.accessToken, params)
+      .then(function (data) {
+        if (data.success && !data.success) {
+          console.log('检索失败，' + data.message);
+          return;
+        }
+        that.setData({
+          imgUrls: data.data.data.map(item => {
+            return item.address
+          })
+        })
+
+      })
+  }
 })

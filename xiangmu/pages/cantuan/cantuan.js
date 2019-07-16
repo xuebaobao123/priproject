@@ -1,4 +1,5 @@
 const app = getApp();
+var util = require('../../utils/fengzhuang.js');
 // pages/xiangqing/xiangqing.js
 Page({
 
@@ -52,11 +53,52 @@ Page({
         {headImg:'../images/weixin_03.png'}
       ]
     })
+
+    this.initUserList();
   },
   // 开团
-  // group: function () {
-  //   wx.navigateTo({
-  //     url: '../cantuan/cantuan',
-  //   })
-  // }
+  group: function () {
+    const that = this
+    const e = wx.getStorageSync("e");
+    const params={
+      uid:e.loginUser.id,
+      tuan_id:0
+    }
+    util.postRequest(app.globalData.url + "add-tuan?access-token=" + e.accessToken, params)
+      .then(function (data) {
+        if (data.success && !data.success) {
+          console.log('检索失败，' + data.message);
+          return;
+        }
+        if(data.data.status!='200'){
+          console.log('参团接口请求失败，错误信息：'+data.data.msg);
+        }
+
+      })
+    // wx.navigateTo({
+    //   url: '../cantuan/cantuan',
+    // })
+  },
+  //加载用户头像
+  initUserList:function(){
+    const that = this
+    const e = wx.getStorageSync("e");
+    const params={
+      uid:e.loginUser.id,
+      tuan_id:0
+    }
+    util.postRequest(app.globalData.url + "coupon/tuan-user?access-token=" + e.accessToken, params)
+      .then(function (data) {
+        if (data.success && !data.success) {
+          console.log('检索失败，' + data.message);
+          return;
+        }
+        that.setData({
+          userList: data.data.data.map(item => {
+            return {headImg:item.avatarurl}
+          })
+        })
+
+      })
+  }
 })
