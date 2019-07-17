@@ -19,7 +19,7 @@ Page({
       { img: "../images/huiyuan.png", fowardUrl: '../wode/wode' },
       { img: "../images/canhuo.png", fowardUrl: '../xiangqing/xiangqing' },
       { img: "../images/weixinzhifu.png", fowardUrl: '../zhifu/zhifu' },
-      { img: "../images/youhuijuan.png", fowardUrl: '../youhuijuan/youhuijuan' },
+      { img: "../images/youhuijuan.png", fowardUrl: '../youhuijuan/youhuijuan?owner=business' },
       { img: "../images/hongbao.png", fowardUrl: '../canhuohongbao/canhuohongbao' },
     ]
   },
@@ -51,6 +51,7 @@ Page({
             merchants_id: "1",
             merchants_id: res.code
           }
+          console.log('code',res.code)
           util.postRequest(app.globalData.url + "auth/openid", data)
             .then(function (data) {
               util.postRequest(app.globalData.url + "auth/login", { openId: data })

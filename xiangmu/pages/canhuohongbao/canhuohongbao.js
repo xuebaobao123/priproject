@@ -14,8 +14,8 @@ Page({
       //支出
       EXPEND: 1
     },
-    beginDate: "2019-7-6",
-    endDate: "2019-7-6",
+    beginDate: "2019-07-06",
+    endDate: "2019-07-22",
 
     //余额
     balance: {
@@ -88,6 +88,36 @@ Page({
           return;
         }
         console.log('data.data.data', data)
+
+        //将余额修改为0
+        let loginUser = e.loginUser;
+        loginUser = { ...loginUser, red_envelope: '0.00' }
+        wx.setStorageSync('e', { ...e, loginUser: loginUser })
+      })
+  },
+
+  //红包记录查询
+  findBillRecord: function () {
+    this.setData({
+      billRecord: []
+    })
+    const e = wx.getStorageSync("e");
+    e.accessToken = '9NfL1S6yWoIZHSd4cXsKOb1Iz816_3se';
+    const params = {
+      uid: 1,
+      startDay:this.data.beginDate,
+      endDay:this.data.endDate
+    }
+    const that = this
+    //消费记录
+    util.postRequest(app.globalData.url + "user/red-log?access-token=" + e.accessToken, params)
+      .then(function (data) {
+        if (data.success && !data.success) {
+          console.log('检索失败，' + data.message);
+          return;
+        }
+        console.log('data', data);
+
         that.setData({
           billRecord: data.data.data.map(item => {
             return {
@@ -101,29 +131,10 @@ Page({
                 decimalDigits: item.price.split('.')[1],
               },
               //账单类型
-              type: item.type === 'in' ? this.data.BILLTYPE.INCOME : this.data.BILLTYPE.EXPEND,
+              type: item.type === 'in' ? that.data.BILLTYPE.INCOME : that.data.BILLTYPE.EXPEND,
             }
           })
         })
-      })
-  },
-
-  //账单查询
-  findBillRecord: function () {
-    const e = wx.getStorageSync("e");
-    e.accessToken = 'XXMrUxwlndZWdSN_ob6UO-CfFH2Ookr-';
-    //消费记录
-    util.postRequest(app.globalData.url + "user/red-log?access-token=" + e.accessToken, { uid: e.loginUser.id })
-      .then(function (data) {
-        if (data.success && !data.success) {
-          console.log('检索失败，' + data.message);
-          return;
-        }
-
-        //将余额修改为0
-        let loginUser = e.loginUser;
-        loginUser = { ...loginUser, red_envelope: '0.00' }
-        wx.setStorageSync('e', { ...e, loginUser: loginUser })
       })
   },
 

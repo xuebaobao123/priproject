@@ -2,10 +2,10 @@
    <view class="youhuijuan1" wx:for="{{couponArray}}">
       <view class="top">
          <view class="left">
-            <image src="../images/youhui.png" class="img1"></image>
+            <image src="{{item.imgUrl}}" class="img1"></image>
             <view class="dingwei">
                <view class="dingwei1">
-                  <image src="{{item.imgUrl}}"></image>
+                  <image src="../images/youhuijuan1.png"></image>
                   <text>{{item.needIntegral}}积分</text>
                </view>
             </view>

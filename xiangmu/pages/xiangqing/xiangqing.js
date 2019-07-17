@@ -1,4 +1,5 @@
 const app = getApp();
+var util = require('../../utils/fengzhuang.js');
 // pages/xiangqing/xiangqing.js
 Page({
 
@@ -40,7 +41,10 @@ Page({
 
   //初始化数据
   initData: function () {
-    const loginUser = wx.getStorageSync('e').loginUser;
+    const e = wx.getStorageSync('e');
+    const loginUser = e.loginUser;
+    const that = this;
+    e.accessToken = '9NfL1S6yWoIZHSd4cXsKOb1Iz816_3se'
     //请求数据
     // this.setData({
     //   projectName: '项目名称写在这里,字体是思源黑体简体中无,字号是30px。字数不宜过多,控制在量行内即可。',
@@ -51,7 +55,7 @@ Page({
     //   total: '5000.00'//合计
     // })
     const params = {
-      merchants_id: '3',
+      merchants_id: '1',
       uid: loginUser.id,
     }
 
@@ -61,6 +65,7 @@ Page({
           console.log('检索失败，' + data.message);
           return;
         }
+        console.log('data',data);
         that.setData({
           projectName: data.data.data.name,
           money: data.data.data.price,//金额

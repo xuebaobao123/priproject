@@ -41,7 +41,7 @@ App({
         "selectedIconPath": "../images/index1.png",
       },
       {
-        "pagePath": "../youhuijuan/youhuijuan",
+        "pagePath": "../youhuijuan/youhuijuan?owner=business",
         "text": "优惠卷包",
         "iconPath": "../images/yhq.png",
         "selectedIconPath": "../images/yhq1.png"

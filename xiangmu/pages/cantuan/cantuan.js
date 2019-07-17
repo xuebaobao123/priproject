@@ -35,7 +35,33 @@ Page({
    */
   onLoad: function (options) {
     app.changeTabBar();
-    this.initData();
+    // this.initData();
+    this.initInvolvedData()
+  },
+
+   //我参与的团数据
+  initInvolvedData: function () {
+    const that = this
+    const e = wx.getStorageSync("e");
+    e.accessToken = '9NfL1S6yWoIZHSd4cXsKOb1Iz816_3se';
+    const params = {
+      uid: e.loginUser.id,
+    }
+    util.postRequest(app.globalData.url + "user/participate-list?access-token=" + e.accessToken,params)
+    .then(function (data) {
+      if (data.success && !data.success) {
+        console.log('检索失败，' + data.message);
+        return;
+      }
+      if (data.data.status != '200') {
+        console.log('参团接口请求失败，错误信息：' + data.data.msg);
+        return;
+      }
+      that.setData({
+        //
+      })
+
+    })
   },
 
   //初始化数据
@@ -60,10 +86,12 @@ Page({
   group: function () {
     const that = this
     const e = wx.getStorageSync("e");
+    e.accessToken = '9NfL1S6yWoIZHSd4cXsKOb1Iz816_3se';
     const params = {
       uid: e.loginUser.id,
       tuan_id: 0
     }
+    
     util.postRequest(app.globalData.url + "add-tuan?access-token=" + e.accessToken, params)
       .then(function (data) {
         if (data.success && !data.success) {

@@ -53,7 +53,7 @@ Page({
     ],
     //详细列表
     detailArray: [
-      { text: '我参与的团', img: '../images/jiantou-2_03.png', fowardUrl: '../youhuijuan/youhuijuan' },
+      { text: '我参与的团', img: '../images/jiantou-2_03.png', fowardUrl: '../cantuan/cantuan' },
       { text: '红包获取规则', img: '../images/jiantou-2_03.png', fowardUrl: '22' },
       { text: '积分获取规则', img: '../images/jiantou-2_03.png', fowardUrl: '3' },
       { text: '积分使用规则', img: '../images/jiantou-2_03.png', fowardUrl: '3' },
@@ -73,7 +73,7 @@ Page({
   //消费查询
   findConsumeRecord: function () {
     const e = wx.getStorageSync("e");
-    e.accessToken = 'XXMrUxwlndZWdSN_ob6UO-CfFH2Ookr-';
+    e.accessToken = '9NfL1S6yWoIZHSd4cXsKOb1Iz816_3se';
 
     const that = this
     //消费记录
@@ -132,14 +132,14 @@ Page({
   //进入优惠券包
   goCouponPage: function (e) {
     wx.redirectTo({
-      url: '../youhuijuan/youhuijuan'
+      url: '../youhuijuan/youhuijuan?owner=user'
     })
   },
 
   //获取登录用户信息
   initLoginUser: async function () {
     const e = wx.getStorageSync("e");
-    e.accessToken = 'aWNPAF_Isy1IF78TyH7Dbi0fxMOHSn2n';
+    e.accessToken = '9NfL1S6yWoIZHSd4cXsKOb1Iz816_3se';
     if (e.loginUser)
       return;
 
