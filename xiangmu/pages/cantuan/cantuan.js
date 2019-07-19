@@ -42,7 +42,7 @@ Page({
     this.initInvolvedData()
   },
 
-   //我参与的团数据
+  //我参与的团数据
   initInvolvedData: function () {
     const that = this
     const e = wx.getStorageSync("e");
@@ -50,16 +50,16 @@ Page({
     const params = {
       uid: e.loginUser.id,
     }
-    util.postRequest(app.globalData.url + "user/participate-list?access-token=" + e.accessToken,params)
-    .then(function (data) {
-      if (!(errorMessage(data.data))) {
-        return;
-      }
-      that.setData({
-        //
-      })
+    util.postRequest(app.globalData.url + "user/participate-list?access-token=" + e.accessToken, params)
+      .then(function (data) {
+        if (!(errorMessage(data.data))) {
+          return;
+        }
+        that.setData({
+          //
+        })
 
-    })
+      })
   },
 
   //初始化数据
@@ -89,7 +89,7 @@ Page({
       uid: e.loginUser.id,
       tuan_id: 0
     }
-    
+
     util.postRequest(app.globalData.url + "add-tuan?access-token=" + e.accessToken, params)
       .then(function (data) {
         if (data.success && !data.success) {

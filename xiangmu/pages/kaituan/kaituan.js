@@ -7,7 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    headImg:'https://images.unsplash.com/photo-1551334787-21e6bd3ab135?w=640',
+    headImg: 'https://images.unsplash.com/photo-1551334787-21e6bd3ab135?w=640',
     //项目名称
     projectName: '',
     content: '',//内容
@@ -48,6 +48,6 @@ Page({
     })
   },
   // 开团
-  group:function(){
+  group: function () {
   }
 })

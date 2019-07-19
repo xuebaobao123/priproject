@@ -16,11 +16,11 @@
                <view>{{item.content}}</view>
 
             </view>
-            <view class="you">
+            <!-- <view class="you">
                <view>
                   <image src="../images/zhuanzeng.png"></image>
                </view>
-            </view>
+            </view> -->
          </view>
          <view class="clearfloat"></view>
       </view>

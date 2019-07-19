@@ -21,7 +21,6 @@ export default async function initLoginUser() {
             //是参伙用户，则底部导航栏显示参伙，否则显示优惠券
             app.tabbar.isJoin = data.data.data.is_canhuo===2;
             wx.setStorageSync("e", { ...e, loginUser: data.data.data });
-
         })
 }
 

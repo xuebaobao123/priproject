@@ -1,13 +1,16 @@
 {
   "pages": [
+    "pages/kaituanxiangqing/kaituanxiangqing",
+    "pages/kaituan/kaituan",
+    
     
     
     "pages/index/index",
     "pages/tixianjine/tixianjine",
-    "pages/kaituan/kaituan",
+    
     "pages/cantuan/cantuan",
     "pages/zhifu/zhifu",
-    "pages/lijiduihuan/lijiduihuan",
+    
 
     "pages/woyaocantuan/woyaocantuan",
     "pages/canhuohongbao/canhuohongbao",

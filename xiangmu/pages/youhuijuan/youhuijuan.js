@@ -280,26 +280,17 @@ Page({
     const current = wx.getStorageSync("e");
     const currentCoupon = this.data.couponArray[e.detail.value]
     const params = {
+      merchants_id: app.globalData.merchantsId,
       uid: current.loginUser.id,
-      ct_id: currentCoupon.id,
+      cid: currentCoupon.id,
+      tuan_id: currentCoupon.tuan_id
     }
-    util.postRequest(app.globalData.url + "partner/open?access-token=" + e.accessToken, params)
-      .then(function (data) {
-        if (!errorMessage(data)) {
-          return
-        }
-        wx.showToast({
-          title: '操作成功',
-          icon: 'success',
-          duration: 2000
-        })
+    //跳转至开团详情页面
+    wx.redirectTo({
+      url: '../lijiduihuan/lijiduihuan?params=' + JSON.stringify(params)
+    })
 
-        //跳回首页
-        wx.redirectTo({
-          url: '../wode/wode'
-        })
-      })
-    
+
   },
   //我的会员
   goMyMember: function () {
@@ -308,7 +299,7 @@ Page({
     })
   },
 
- 
+
   //分享
   onShareAppMessage: function (res) {
     // let gbid = res.target.dataset.info.order_id;

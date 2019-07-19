@@ -95,14 +95,14 @@ Page({
     e.accessToken = '9NfL1S6yWoIZHSd4cXsKOb1Iz816_3se';
     const params = {
       uid: 1,
-      startDay:this.data.beginDate,
-      endDay:this.data.endDate
+      startDay: this.data.beginDate,
+      endDay: this.data.endDate
     }
     const that = this
     //消费记录
     util.postRequest(app.globalData.url + "user/red-log?access-token=" + e.accessToken, params)
       .then(function (data) {
-        if(!errorMessage(data)){
+        if (!errorMessage(data)) {
           return;
         }
 
