@@ -23,13 +23,13 @@
    </view>
    <view class="bottom">
       <view>参伙权益</view>
-      <text>{{projectSpeed.projectDesc}}</text>
+      <rich-text nodes="{{projectSpeed.projectDesc}}" style="font-size:30rpx;margin:30rpx auto 0;display:block;"></rich-text>
    </view>
    <view class="heji">
       <view>
          合计:
          <text>￥{{total}}</text>
       </view>
-      <view>去支付></view>
+      <view bindtap='zhifu'>去支付></view>
    </view>
 </view>

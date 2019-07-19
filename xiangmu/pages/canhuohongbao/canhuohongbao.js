@@ -1,6 +1,8 @@
 const app = getApp();
 var util = require('../../utils/fengzhuang.js');
 import regeneratorRuntime from '../../regenerator-runtime/runtime.js';
+import errorMessage from '../../utils/errorMessage'
+import userLogin from '../../utils/userLogin'
 Page({
 
   /**
@@ -20,9 +22,9 @@ Page({
     //余额
     balance: {
       //整数值
-      numDigits: 2000,
+      numDigits: 0,
       //小数位数值
-      decimalDigits: 21,
+      decimalDigits: 0,
     },
     //账单记录
     billRecord: [
@@ -70,7 +72,7 @@ Page({
   //加载数据
   initData: function () {
     //登录用户
-    this.initLoginUser();
+    userLogin();
     //红包余额
     this.findBalance();
     //账单查询
@@ -79,21 +81,9 @@ Page({
 
   //申请体现
   onCashOut: function () {
-    const e = wx.getStorageSync("e");
-    //申请提现
-    util.postRequest(app.globalData.url + "withdrawal/add?access-token=" + e.accessToken, { uid: e.loginUser.id, mid: '' })
-      .then(function (data) {
-        if (data.success && !data.success) {
-          console.log('检索失败，' + data.message);
-          return;
-        }
-        console.log('data.data.data', data)
-
-        //将余额修改为0
-        let loginUser = e.loginUser;
-        loginUser = { ...loginUser, red_envelope: '0.00' }
-        wx.setStorageSync('e', { ...e, loginUser: loginUser })
-      })
+    wx.navigateTo({
+      url: '../tixianjine/tixianjine',
+    })
   },
 
   //红包记录查询
@@ -112,11 +102,9 @@ Page({
     //消费记录
     util.postRequest(app.globalData.url + "user/red-log?access-token=" + e.accessToken, params)
       .then(function (data) {
-        if (data.success && !data.success) {
-          console.log('检索失败，' + data.message);
+        if(!errorMessage(data)){
           return;
         }
-        console.log('data', data);
 
         that.setData({
           billRecord: data.data.data.map(item => {
@@ -152,22 +140,4 @@ Page({
     })
   },
 
-  //获取登录用户信息
-  initLoginUser: async function () {
-    const e = wx.getStorageSync("e");
-    e.accessToken = 'XXMrUxwlndZWdSN_ob6UO-CfFH2Ookr-';
-    if (e.loginUser)
-      return;
-
-    //检索登录用户
-    await util.postRequest(app.globalData.url + "user/user-info?access-token=" + e.accessToken, { uid: '35' })
-      .then(function (data) {
-        if (data.success && !data.success) {
-          console.log('检索失败，' + data.message);
-          return;
-        }
-        wx.setStorageSync("e", { ...e, loginUser: data.data.data });
-
-      })
-  },
 })

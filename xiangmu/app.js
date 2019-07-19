@@ -82,6 +82,8 @@ App({
   onLaunch: function () {
   },
   globalData: {
-    url:'https://c.cityzht.com/'
+    url:'https://c.cityzht.com/',
+    merchantsId:"1"
+
   }
 })

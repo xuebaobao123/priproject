@@ -4,7 +4,9 @@ const apiRequest = (url, method, data, header) => {
       url: url,
       data: data,
       method: method,
-      header: header ? header : {},
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
       success: function (res) {
         if (res.statusCode === 200) {
           if (res.data) {

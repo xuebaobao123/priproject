@@ -1,4 +1,8 @@
 // pages/youhuijuan/youhuijuan.js
+const app = getApp();
+var util = require('../../utils/fengzhuang.js');
+import regeneratorRuntime from '../../regenerator-runtime/runtime.js';
+import errorMessage from '../../utils/errorMessage'
 Page({
 
   /**

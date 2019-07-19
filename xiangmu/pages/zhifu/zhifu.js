@@ -1,11 +1,15 @@
 // pages/youhuijuan/youhuijuan.js
+const app = getApp();
+var util = require('../../utils/fengzhuang.js');
+import regeneratorRuntime from '../../regenerator-runtime/runtime.js';
+import errorMessage from '../../utils/errorMessage'
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    hidden:false,//弹框
+    hidden:true,//弹框
     //优惠券数组
     couponArray: [
       {

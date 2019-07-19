@@ -3,6 +3,7 @@
 }
 .swiper1 image{
   height:100%;
+  width:100%;
 }
 .space view image{
   width:115rpx;

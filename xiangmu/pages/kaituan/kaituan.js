@@ -1,4 +1,5 @@
 const app = getApp();
+import errorMessage from '../../utils/errorMessage'
 // pages/xiangqing/xiangqing.js
 Page({
 
@@ -48,8 +49,5 @@ Page({
   },
   // 开团
   group:function(){
-    wx.navigateTo({
-      url: '../cantuan/cantuan',
-    })
   }
 })

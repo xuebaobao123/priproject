@@ -1,16 +1,19 @@
 {
   "pages": [
+    
+    
     "pages/index/index",
-    "pages/woyaocantuan/woyaocantuan",
-    "pages/zhifu/zhifu",
-    "pages/cantuan/cantuan",
-    "pages/kaituan/kaituan",
-    "pages/lijiduihuan/lijiduihuan",
     "pages/tixianjine/tixianjine",
+    "pages/kaituan/kaituan",
+    "pages/cantuan/cantuan",
+    "pages/zhifu/zhifu",
+    "pages/lijiduihuan/lijiduihuan",
+
+    "pages/woyaocantuan/woyaocantuan",
     "pages/canhuohongbao/canhuohongbao",
+    "pages/xiangqing/xiangqing",
     "pages/wode/wode",
     "pages/youhuijuan/youhuijuan",
-    "pages/xiangqing/xiangqing",
     "pages/tabbar/tabbar",
     "pages/logs/logs"
   ],

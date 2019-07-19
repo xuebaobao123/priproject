@@ -12,15 +12,14 @@
          </view>
          <view class="right">
             <view class="zuo">
-               <view>{{item.integralName}}</view>
-               <view>{{item.content}}</view>
+               <view style="height:70rpx;">{{item.integralName}}</view>
+               <view style="height:34rpx;">{{item.content}}</view>
                <view bindtap="onToggle" data-index="{{index}}">查看详情 ></view>
             </view>
             <view class="you">
                <view wx:if="{{item.couponType==COUPONTYPE.DISCOUNT}}">
-                  
-                    <image src="../images/zhuanzeng.png"></image>
-                    <view>X{{item.number}}</view>
+                    <button open-type="share" data-info='{{order}}' class="button"><image src="../images/zhuanzeng.png"></image></button>
+                    <view style="height:34rpx;"></view>
                     <view bindtap="{{item.accessType.targetEvent}}">{{item.accessType.content}} ></view>
                 </view>
                
@@ -32,7 +31,7 @@
       <view class="pic {{activeIndex == index ? '' : 'hidden'}}">
          <view>
             <text>优惠说明：</text>
-            <text>{{item.integralExplain}}</text>
+            <rich-text nodes="{{item.integralExplain}}"></rich-text>
          </view>
          <view>
             <text>可用时段：</text>

@@ -1,4 +1,6 @@
 // pages/youhuijuan/youhuijuan.js
+const app = getApp();
+import errorMessage from '../../utils/errorMessage'
 Page({
 
   /**

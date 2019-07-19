@@ -1,6 +1,9 @@
 // pages/youhuijuan/youhuijuan.js
 const app = getApp();
 var util = require('../../utils/fengzhuang.js');
+import regeneratorRuntime from '../../regenerator-runtime/runtime.js';
+import errorMessage from '../../utils/errorMessage'
+import userLogin from '../../utils/userLogin'
 Page({
 
   /**
@@ -66,20 +69,24 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    if(!options.owner){
+    userLogin();
+    if (!options.owner) {
       //没有owner参数默认加载我的优惠券包数据
       this.initUserCouponArrayData();
       return;
     }
 
     switch (options.owner) {
-      case 'business'://所有商家优惠券
+      case 'business':
+        //所有商家优惠券
         this.initBusinessCouponArrayData();
         break;
-      case 'involved'://我参与的团
+      case 'involved':
+        //我参与的团
         this.initInvolvedCouponArrayData();
         break;
-      case 'user'://我的优惠券包
+      case 'user':
+        //我的优惠券包
         this.initUserCouponArrayData();
       default:
         break;
@@ -125,7 +132,6 @@ Page({
     const e = wx.getStorageSync("e");
     e.accessToken = '9NfL1S6yWoIZHSd4cXsKOb1Iz816_3se';
     console.log('e', e);
-
     this.setData({
       usableIntegral: e.loginUser.integral
     })
@@ -133,11 +139,9 @@ Page({
     //优惠券记录
     util.postRequest(app.globalData.url + url + "?access-token=" + e.accessToken, params)
       .then(function (data) {
-        if (data.success && !data.success) {
-          console.log('检索失败，' + data.message);
+        if (!errorMessage(data)) {
           return;
         }
-        console.log('data.data.data', data.data.data)
         that.setData({
           couponArray: data.data.data.map(item => {
             return that.mapData(item);
@@ -150,6 +154,7 @@ Page({
   mapData: function (item) {
     //根据优惠券类型显示内容
     return {
+      id: item.id,
       //需要积分
       needIntegral: 30,
       integralName: item.name,
@@ -177,7 +182,6 @@ Page({
       accessType: this.initAccessType(item),
     }
   },
-
   //拼接代金券描述
   concatContent: function (item) {
     let content = "";
@@ -196,12 +200,10 @@ Page({
     }
     return content;
   },
-
   //加载优惠券类型
   couponType: function (item) {
     return (item.access && item.access === '2') ? this.data.COUPONTYPE.GROUP : this.data.COUPONTYPE.DISCOUNT
   },
-
   //优惠券获取方式
   initAccessType: function (item) {
     //默认获取方式
@@ -221,33 +223,112 @@ Page({
       case "2":
         accessType = { content: '立即领取', targetEvent: 'exReceive' }
         break;
-      case "3"://暂时将优惠券获取方式的团购方式设置为我要参团，后续有变更可调整
-        accessType = { content: '我要参团', targetEvent: 'organGroup' }
+      case "3"://暂时将优惠券获取方式的团购方式设置为我要开团，后续有变更可调整
+        accessType = { content: '我要开团', targetEvent: 'organGroup' }
         break;
     }
     return accessType;
   },
-  // 立即兑换
-  exchange: function () {
-    wx.navigateTo({
-      url: '../lijiduihuan/lijiduihuan',
-    })
+  //立即兑换
+  exchange: function (e) {
+    const current = wx.getStorageSync("e");
+    const currentCoupon = this.data.couponArray[e.detail.value]
+    const params = {
+      merchants_id: app.globalData.merchantsId,
+      uid: current.loginUser.id,
+      cid: currentCoupon.id,
+      type: 1//表示兑换
+    }
+    util.postRequest(app.globalData.url + "coupon/coupon-acquire?access-token=" + e.accessToken, params)
+      .then(function (data) {
+        if (!errorMessage(data)) {
+          return
+        }
+        wx.showToast({
+          title: '操作成功',
+          icon: 'success',
+          duration: 2000
+        })
+
+      })
   },
   //立即领取
   exReceive: function () {
-    //...
-  },
+    const current = wx.getStorageSync("e");
+    const currentCoupon = this.data.couponArray[e.detail.value]
+    const params = {
+      merchants_id: app.globalData.merchantsId,
+      uid: current.loginUser.id,
+      cuid: currentCoupon.id,
+      type: 2//表示领取
+    }
+    util.postRequest(app.globalData.url + "coupon/coupon-acquire?access-token=" + e.accessToken, params)
+      .then(function (data) {
+        if (!errorMessage(data)) {
+          return
+        }
+        wx.showToast({
+          title: '操作成功',
+          icon: 'success',
+          duration: 2000
+        })
 
-  //参团
+      })
+  },
+  //开团
   organGroup: function () {
-    wx.redirectTo({
-      url: '../cantuan/cantuan'
-    })
+    const current = wx.getStorageSync("e");
+    const currentCoupon = this.data.couponArray[e.detail.value]
+    const params = {
+      uid: current.loginUser.id,
+      ct_id: currentCoupon.id,
+    }
+    util.postRequest(app.globalData.url + "partner/open?access-token=" + e.accessToken, params)
+      .then(function (data) {
+        if (!errorMessage(data)) {
+          return
+        }
+        wx.showToast({
+          title: '操作成功',
+          icon: 'success',
+          duration: 2000
+        })
+
+        //跳回首页
+        wx.redirectTo({
+          url: '../wode/wode'
+        })
+      })
+    
   },
   //我的会员
   goMyMember: function () {
     wx.redirectTo({
       url: '../wode/wode'
     })
+  },
+
+ 
+  //分享
+  onShareAppMessage: function (res) {
+    // let gbid = res.target.dataset.info.order_id;
+    return {
+      title: '分享优惠券',
+      path: 'pages/lijiduihuan/lijiduihuan',
+      imageUrl: '../images/touxiang.png',  //用户分享出去的自定义图片大小为5:4,
+      success: function (res) {
+        console.log(res, "分享成功")
+        // 转发成功
+        wx.showToast({
+          title: "分享成功",
+          icon: 'success',
+          duration: 2000
+        })
+      },
+      fail: function (res) {
+        console.log(res, "失败")
+        // 分享失败
+      },
+    }
   },
 })

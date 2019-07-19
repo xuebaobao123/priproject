@@ -1,5 +1,7 @@
 const app = getApp();
 var util = require('../../utils/fengzhuang.js');
+import errorMessage from '../../utils/errorMessage'
+import userLogin from '../../utils/userLogin'
 // pages/xiangqing/xiangqing.js
 Page({
 
@@ -34,6 +36,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    userLogin();
     app.changeTabBar();
     // this.initData();
     this.initInvolvedData()
@@ -49,12 +52,7 @@ Page({
     }
     util.postRequest(app.globalData.url + "user/participate-list?access-token=" + e.accessToken,params)
     .then(function (data) {
-      if (data.success && !data.success) {
-        console.log('检索失败，' + data.message);
-        return;
-      }
-      if (data.data.status != '200') {
-        console.log('参团接口请求失败，错误信息：' + data.data.msg);
+      if (!(errorMessage(data.data))) {
         return;
       }
       that.setData({

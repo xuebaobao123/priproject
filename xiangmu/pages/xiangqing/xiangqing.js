@@ -1,5 +1,7 @@
 const app = getApp();
 var util = require('../../utils/fengzhuang.js');
+import errorMessage from '../../utils/errorMessage'
+import userLogin from '../../utils/userLogin'
 // pages/xiangqing/xiangqing.js
 Page({
 
@@ -33,6 +35,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    userLogin();
     app.changeTabBar();
     //加载轮播图
     this.initImgUrls();
@@ -45,15 +48,6 @@ Page({
     const loginUser = e.loginUser;
     const that = this;
     e.accessToken = '9NfL1S6yWoIZHSd4cXsKOb1Iz816_3se'
-    //请求数据
-    // this.setData({
-    //   projectName: '项目名称写在这里,字体是思源黑体简体中无,字号是30px。字数不宜过多,控制在量行内即可。',
-    //   money: '5000.00',//金额
-    //   endDate: '2019/07/31',//截至日期
-    //   surNumber: '3',//剩余
-    //   projectSpeed: { projectDesc: '此处开始为项目的运营进度的详细介绍,字体是思源黑体字号控制在25px,可以图文并茂介绍。' },//项目进度
-    //   total: '5000.00'//合计
-    // })
     const params = {
       merchants_id: '1',
       uid: loginUser.id,
@@ -61,11 +55,9 @@ Page({
 
     util.postRequest(app.globalData.url + "partner/info?access-token=" + e.accessToken, params)
       .then(function (data) {
-        if (data.success && !data.success) {
-          console.log('检索失败，' + data.message);
-          return;
+        if(!errorMessage(data)){
+          return
         }
-        console.log('data',data);
         that.setData({
           projectName: data.data.data.name,
           money: data.data.data.price,//金额
@@ -91,9 +83,8 @@ Page({
     const that = this
     util.postRequest(app.globalData.url + "banner/list?access-token=" + e.accessToken, params)
       .then(function (data) {
-        if (data.success && !data.success) {
-          console.log('检索失败，' + data.message);
-          return;
+        if(!errorMessage(data)){
+          return
         }
         that.setData({
           imgUrls: data.data.data.map(item => {
@@ -102,5 +93,29 @@ Page({
         })
 
       })
+  },
+  zhifu:function(){
+    const that = this;
+    var e = wx.getStorageSync('e');
+    e.accessToken = '9NfL1S6yWoIZHSd4cXsKOb1Iz816_3se';
+    wx.showModal({
+      title: '提示',
+      content: '确认支付',
+      showCancel: false,
+      confirmText: '确定',
+      success: function (res) {
+        // 用户没有授权成功，不需要改变 isHide 的值
+        if (res.confirm) {
+          const params = {
+            "uid": 3,
+            "merchants_id": 1
+          }
+          util.postRequest(app.globalData.url + "partner/order?access-token=" + e.accessToken, params)
+            .then(function (data) {
+            })
+        }
+      }
+    });
+   
   }
 })

@@ -1,6 +1,8 @@
 const app = getApp();
 var util = require('../../utils/fengzhuang.js');
 import regeneratorRuntime from '../../regenerator-runtime/runtime.js';
+import errorMessage from '../../utils/errorMessage'
+import userLogin from '../../utils/userLogin'
 Page({
 
   /**
@@ -53,7 +55,7 @@ Page({
     ],
     //详细列表
     detailArray: [
-      { text: '我参与的团', img: '../images/jiantou-2_03.png', fowardUrl: '../cantuan/cantuan' },
+      { text: '我参与的团', img: '../images/jiantou-2_03.png', fowardUrl: '../youhuijuan/youhuijuan?owner=involved' },
       { text: '红包获取规则', img: '../images/jiantou-2_03.png', fowardUrl: '22' },
       { text: '积分获取规则', img: '../images/jiantou-2_03.png', fowardUrl: '3' },
       { text: '积分使用规则', img: '../images/jiantou-2_03.png', fowardUrl: '3' },
@@ -65,8 +67,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    //登录用户
+    userLogin();
     app.changeTabBar();
-
     this.initData();
   },
 
@@ -79,11 +82,9 @@ Page({
     //消费记录
     util.postRequest(app.globalData.url + "user/balance-log?access-token=" + e.accessToken, { uid: e.loginUser.id })
       .then(function (data) {
-        if (data.success && !data.success) {
-          console.log('检索失败，' + data.message);
+        if (!errorMessage(data)) {
           return;
         }
-        console.log('data.data.data', data)
         that.setData({
           consumeRecord: data.data.data.map(item => {
             return {
@@ -136,29 +137,8 @@ Page({
     })
   },
 
-  //获取登录用户信息
-  initLoginUser: async function () {
-    const e = wx.getStorageSync("e");
-    e.accessToken = '9NfL1S6yWoIZHSd4cXsKOb1Iz816_3se';
-    if (e.loginUser)
-      return;
-
-    //检索登录用户
-    await util.postRequest(app.globalData.url + "user/user-info?access-token=" + e.accessToken, { uid: '35' })
-      .then(function (data) {
-        if (data.success && !data.success) {
-          console.log('检索失败，' + data.message);
-          return;
-        }
-        wx.setStorageSync("e", { ...e, loginUser: data.data.data });
-
-      })
-  },
-
   //页面数据
   initData: function () {
-    //登录用户
-    this.initLoginUser();
     const loginUser = wx.getStorageSync("e").loginUser;
     console.log('loginUser', loginUser);
     //页面数据
