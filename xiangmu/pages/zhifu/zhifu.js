@@ -274,19 +274,20 @@ Page({
       price:'0',
       cuid:''
     }
+
+    //检测用户是否具有权限
+    if (!userTest()) {
+      return;
+    }
+
     //支付
     util.postRequest(app.globalData.url + "checkstand/order?access-token=" + e.accessToken, params)
       .then(function (data) {
         if (!(errorMessage(data.data))) {
           return;
         }
-        
 
-        that.setData({
-          couponArray: data.data.data.map(item => {
-            return that.mapData(item);
-          })
-        })
+        
       })
 
   },

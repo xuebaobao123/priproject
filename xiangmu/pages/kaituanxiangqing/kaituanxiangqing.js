@@ -59,7 +59,7 @@ Page({
     const that = this;
     util.postRequest(app.globalData.url + "coupon/tuan-info?access-token=" + e.accessToken, params)
       .then(function (data) {
-        if (!(errorMessage(data.data))) {
+        if (!(errorMessage(data))) {
           return;
         }
         that.setData({

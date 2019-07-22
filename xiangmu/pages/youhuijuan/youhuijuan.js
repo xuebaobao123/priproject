@@ -4,6 +4,7 @@ var util = require('../../utils/fengzhuang.js');
 import regeneratorRuntime from '../../regenerator-runtime/runtime.js';
 import errorMessage from '../../utils/errorMessage'
 import userLogin from '../../utils/userLogin'
+import userTest from '../../utils/userTest'
 Page({
 
   /**
@@ -103,30 +104,30 @@ Page({
   //优惠券包数据
   initBusinessCouponArrayData: function () {
     const params = {
-      merchants_id:app.globalData.merchantsId
+      merchants_id: app.globalData.merchantsId
     }
-    console.log('Businessparams',params)
+    console.log('Businessparams', params)
     this.initDataFromUrl('coupon/coupon-list', params)
   },
 
   //我参与的团数据
   initInvolvedCouponArrayData: function () {
-    const uid=wx.getStorageSync("uid");
+    const uid = wx.getStorageSync("uid");
     const params = {
-      uid:uid,
-      merchants_id:app.globalData.merchantsId
+      uid: uid,
+      merchants_id: app.globalData.merchantsId
     }
     this.initDataFromUrl('user/participate-list', params);
   },
 
   //我的优惠券包
   initUserCouponArrayData: function () {
-    const uid=wx.getStorageSync("uid");
+    const uid = wx.getStorageSync("uid");
     const params = {
       uid: uid,
       merchants_id: app.globalData.merchantsId
     }
-    console.log('Userparams',params)
+    console.log('Userparams', params)
     this.initDataFromUrl('coupon/coupon-list', params)
   },
   /**
@@ -145,7 +146,7 @@ Page({
         if (!errorMessage(data)) {
           return;
         }
-        console.log('youhuiquan.data',data);
+        console.log('youhuiquan.data', data);
         that.setData({
           couponArray: data.data.data.map(item => {
             return that.mapData(item);
@@ -236,7 +237,7 @@ Page({
   //立即兑换
   exchange: function (event) {
     const current = wx.getStorageSync("e");
-    const uid=wx.getStorageSync("uid");
+    const uid = wx.getStorageSync("uid");
     const params = {
       merchants_id: app.globalData.merchantsId,
       uid: uid,
@@ -244,25 +245,30 @@ Page({
       type: 1//表示兑换
     }
 
-    console.log('params',params);
+    //检测用户是否具有权限
+    if (!userTest()) {
+      return;
+    }
+
+    console.log('params', params);
     util.postRequest(app.globalData.url + "coupon/coupon-acquire?access-token=" + current.accessToken, params)
       .then(function (data) {
 
-        if(!errorMessage(data)){
+        if (!errorMessage(data)) {
           return;
         }
-        
-        console.log('data',data);
-        if(data.code==200){
+
+        console.log('data', data);
+        if (data.code == 200) {
           wx.showToast({
             title: '操作成功',
             icon: 'success',
             duration: 2000
           })
-      }
-     else{
+        }
+        else {
 
-    }
+        }
       })
   },
   //立即领取
@@ -291,14 +297,18 @@ Page({
   //开团
   organGroup: function (event) {
     const current = wx.getStorageSync("e");
-    const uid=wx.getStorageSync("uid");
+    const uid = wx.getStorageSync("uid");
     const currentCoupon = this.data.couponArray[e.detail.value]
     const params = {
       // merchants_id: app.globalData.merchantsId,
-      uid:uid,
-      ct_id:event.currentTarget.dataset.id
+      uid: uid,
+      ct_id: event.currentTarget.dataset.id
       // cid: currentCoupon.id,
       // tuan_id: currentCoupon.tuan_id
+    }
+    //检测用户是否具有权限
+    if (!userTest()) {
+      return;
     }
     //跳转至开团详情页面
     wx.redirectTo({

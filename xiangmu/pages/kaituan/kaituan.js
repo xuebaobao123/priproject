@@ -27,20 +27,46 @@ Page({
    */
   onLoad: function (options) {
     app.changeTabBar();
-    this.initData();
+    /**
+     * 参数 
+     * uid：  用户id
+       ct_id: 优惠券id
+     */
+    const params = options.params;
+    //存放参数
+    this.setData({
+      params: params
+    })
+
+    this.initOrganGroupData({ uid: params.uid, cid: params.ct_id, merchants_id: app.globalData.merchantsId })
   },
 
-  //初始化数据
-  initData: function () {
-    //请求数据
-    //创建模拟数据
-    this.setData({
-      projectName: '项目名称写在这里,字体是思源黑体简体中无,字号是30px。',
-      content: '满100减50元',//内容
-      endDate: '2019/07/31',//截至日期
-      projectSpeed: { projectDesc: '此处开始为项目的运营进度的详细介绍,字体是思源黑体字号控制在25px,可以图文并茂介绍。' },//项目进度
-    })
+  initOrganGroupData: function (params) {
+    util.postRequest(app.globalData.url + "coupon/tuan-info?access-token=" + e.accessToken, params)
+      .then(function (data) {
+        if (!(errorMessage(data))) {
+          return;
+        }
+        that.setData({
+          headImg: data.data.data.pic,
+          projectName: data.data.data.name,
+          //截至日期暂时获取开团结束日期。。可能是参团截至日期
+          endDate: data.data.data.end_time,
+          projectSpeed: {
+            projectDesc: data.data.data.describe,
+          }
+        })
+      })
   },
+  //初始化数据
+  // initData: function () {
+  //   this.setData({
+  //     projectName: '项目名称写在这里,字体是思源黑体简体中无,字号是30px。',
+  //     content: '满100减50元',//内容
+  //     endDate: '2019/07/31',//截至日期
+  //     projectSpeed: { projectDesc: '此处开始为项目的运营进度的详细介绍,字体是思源黑体字号控制在25px,可以图文并茂介绍。' },//项目进度
+  //   })
+  // },
   // 返回
   fanhui: function () {
     wx.redirectTo({
@@ -49,5 +75,18 @@ Page({
   },
   // 开团
   group: function () {
+    const params = this.data.params;
+    util.postRequest(app.globalData.url + "partner/open?access-token=" + e.accessToken, params)
+      .then(function (data) {
+        if (!(errorMessage(data))) {
+          return;
+        }
+        //开团成功
+        wx.showToast({
+          title: '',
+          icon: 'success',
+          duration: 2000
+        })
+      })
   }
 })

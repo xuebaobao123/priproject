@@ -2,6 +2,7 @@ const app = getApp();
 var util = require('../../utils/fengzhuang.js');
 import errorMessage from '../../utils/errorMessage'
 import userLogin from '../../utils/userLogin'
+import userTest from '../../utils/userTest'
 // pages/xiangqing/xiangqing.js
 Page({
 
@@ -45,16 +46,16 @@ Page({
   //初始化数据
   initData: function () {
     const e = wx.getStorageSync('e');
-    const uid=wx.getStorageSync("uid");
+    const uid = wx.getStorageSync("uid");
     const that = this;
     const params = {
       merchants_id: app.globalData.merchantsId,
-      uid:uid,
+      uid: uid,
     }
     console.log(params)
     util.postRequest(app.globalData.url + "partner/info?access-token=" + e.accessToken, params)
       .then(function (data) {
-        if(!errorMessage(data)){
+        if (!errorMessage(data)) {
           return
         }
         that.setData({
@@ -63,11 +64,11 @@ Page({
           endDate: data.data.data.end_time,//截至日期
           surNumber: data.data.data.num,//剩余
           projectSpeed: { projectDesc: data.data.data.describe },//项目进度
-          zhifu:data.data.data.partnerStatus
-          
+          zhifu: data.data.data.partnerStatus
+
           // total: parseFloat(data.data.data.price * data.data.data.num).toFixed(2)//合计
         })
-        console.log(that.data.zhifu,)
+        console.log(that.data.zhifu)
 
       })
 
@@ -84,7 +85,7 @@ Page({
     const that = this
     util.postRequest(app.globalData.url + "banner/list?access-token=" + e.accessToken, params)
       .then(function (data) {
-        if(!errorMessage(data)){
+        if (!errorMessage(data)) {
           return
         }
         that.setData({
@@ -95,10 +96,16 @@ Page({
 
       })
   },
-  zhifu:function(){
+  zhifu: function () {
     const that = this;
     var e = wx.getStorageSync('e');
     const uid = wx.getStorageSync("uid")
+
+    //检测用户是否具有权限
+    if (!userTest()) {
+      return;
+    }
+
     wx.showModal({
       title: '提示',
       content: '确认支付',
@@ -109,42 +116,42 @@ Page({
         if (res.confirm) {
           const params = {
             "uid": uid,
-            "merchants_id":app.globalData.merchantsId
+            "merchants_id": app.globalData.merchantsId
           }
           util.postRequest(app.globalData.url + "partner/order?access-token=" + e.accessToken, params)
             .then(function (data) {
               wx.requestPayment({
-                "timeStamp":data.data.data.timeStamp,
+                "timeStamp": data.data.data.timeStamp,
                 "nonceStr": data.data.data.nonceStr,
-                "package":data.data.data.package,
+                "package": data.data.data.package,
                 "signType": data.data.data.signType,
                 "paySign": data.data.data.paySign,
                 success(res) {
-                  const params={
-                    "uid":uid,
-                    "merchants_id":app.globalData.merchantsId,
-                    "oid":data.data.data.oid
+                  const params = {
+                    "uid": uid,
+                    "merchants_id": app.globalData.merchantsId,
+                    "oid": data.data.data.oid
                   }
-                  util.postRequest(app.globalData.url +"partner/getpaystatus?access-token="+e.accessToken,params)
-                  .then(function(data){
-                   that.setData({
-                     zhifu:data.data.data.status,
-                   })
-                   if(data.data.data.status==1){
-                     that.onLoad();
-                     that.zhifu();
-                   }
-                   else{
-                     that.onLoad();
-                   }
-                  })
-                 },
+                  util.postRequest(app.globalData.url + "partner/getpaystatus?access-token=" + e.accessToken, params)
+                    .then(function (data) {
+                      that.setData({
+                        zhifu: data.data.data.status,
+                      })
+                      if (data.data.data.status == 1) {
+                        that.onLoad();
+                        that.zhifu();
+                      }
+                      else {
+                        that.onLoad();
+                      }
+                    })
+                },
                 fail(res) { }
               })
             })
         }
       }
     });
-   
+
   }
 })
