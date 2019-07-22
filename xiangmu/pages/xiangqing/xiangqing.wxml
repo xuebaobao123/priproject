@@ -28,8 +28,12 @@
    <view class="heji">
       <view>
          合计:
-         <text>￥{{total}}</text>
+         <text>￥{{money}}</text>
       </view>
-      <view bindtap='zhifu'>去支付></view>
+      <view wx:if="{{zhifu==1}}">已购买</view>
+      <view wx:if="{{zhifu==2}}">已过期</view>
+      <view wx:if="{{zhifu==3}}">未开始</view>
+      <view wx:if="{{zhifu==4}}">份额不足</view>
+      <view bindtap='zhifu' wx:if="{{!zhifu}}">去支付></view>
    </view>
 </view>

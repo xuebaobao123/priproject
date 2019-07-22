@@ -75,7 +75,6 @@ Page({
       this.initUserCouponArrayData();
       return;
     }
-
     switch (options.owner) {
       case 'business':
         //所有商家优惠券
@@ -104,34 +103,32 @@ Page({
   //优惠券包数据
   initBusinessCouponArrayData: function () {
     const params = {
-      merchants_id: 1
+      merchants_id:app.globalData.merchantsId
     }
     this.initDataFromUrl('coupon/coupon-list', params)
   },
 
   //我参与的团数据
   initInvolvedCouponArrayData: function () {
-    this.initDataFromUrl('user/participate-list', { uid: 3 });
+    const uid=wx.getStorageSync("uid");
+    this.initDataFromUrl('user/participate-list', { uid: uid });
   },
 
   //我的优惠券包
   initUserCouponArrayData: function () {
+    const uid=wx.getStorageSync("uid");
     const params = {
-      uid: 1,
-      merchants_id: 1
+      uid: uid,
+      merchants_id: app.globalData.merchantsId
     }
     this.initDataFromUrl('coupon/coupon-list', params)
   },
-
-
   /**
    * 从不同的接口路径加载不同的数据
    * @param {*} url 
    */
   initDataFromUrl(url, params) {
     const e = wx.getStorageSync("e");
-    e.accessToken = '9NfL1S6yWoIZHSd4cXsKOb1Iz816_3se';
-    console.log('e', e);
     this.setData({
       usableIntegral: e.loginUser.integral
     })
@@ -230,32 +227,33 @@ Page({
     return accessType;
   },
   //立即兑换
-  exchange: function (e) {
+  exchange: function (event) {
     const current = wx.getStorageSync("e");
-    const currentCoupon = this.data.couponArray[e.detail.value]
+    const uid=wx.getStorageSync("uid");
     const params = {
       merchants_id: app.globalData.merchantsId,
-      uid: current.loginUser.id,
-      cid: currentCoupon.id,
+      uid: uid,
+      cid: event.currentTarget.dataset.id,
       type: 1//表示兑换
     }
-    util.postRequest(app.globalData.url + "coupon/coupon-acquire?access-token=" + e.accessToken, params)
+    util.postRequest(app.globalData.url + "coupon/coupon-acquire?access-token=" + current.accessToken, params)
       .then(function (data) {
-        if (!errorMessage(data)) {
-          return
-        }
-        wx.showToast({
-          title: '操作成功',
-          icon: 'success',
-          duration: 2000
-        })
+        if(data.code==200){
+          wx.showToast({
+            title: '操作成功',
+            icon: 'success',
+            duration: 2000
+          })
+      }
+     else{
 
+    }
       })
   },
   //立即领取
   exReceive: function () {
     const current = wx.getStorageSync("e");
-    const currentCoupon = this.data.couponArray[e.detail.value]
+    const currentCoupon = this.data.couponArray[e.detail.value];
     const params = {
       merchants_id: app.globalData.merchantsId,
       uid: current.loginUser.id,
@@ -276,18 +274,20 @@ Page({
       })
   },
   //开团
-  organGroup: function () {
+  organGroup: function (event) {
     const current = wx.getStorageSync("e");
+    const uid=wx.getStorageSync("uid");
     const currentCoupon = this.data.couponArray[e.detail.value]
     const params = {
-      merchants_id: app.globalData.merchantsId,
-      uid: current.loginUser.id,
-      cid: currentCoupon.id,
-      tuan_id: currentCoupon.tuan_id
+      // merchants_id: app.globalData.merchantsId,
+      uid:uid,
+      ct_id:event.currentTarget.dataset.id
+      // cid: currentCoupon.id,
+      // tuan_id: currentCoupon.tuan_id
     }
     //跳转至开团详情页面
     wx.redirectTo({
-      url: '../lijiduihuan/lijiduihuan?params=' + JSON.stringify(params)
+      url: '../kaituan/kaituan?params=' + JSON.stringify(params)
     })
 
 

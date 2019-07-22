@@ -10,11 +10,6 @@ Page({
     duration: 1000,       //滑动动画时长
     inputShowed: false,
     inputVal: "",
-    imgUrls: [
-      '../images/banner.png',
-      '../images/banner.png',
-      '../images/banner.png',
-    ],
     //广告位
     advertPlaceArray: [
       { img: "../images/huiyuan.png", fowardUrl: '../wode/wode' },
@@ -31,9 +26,6 @@ Page({
     })
     //加载token
     this.initToken();
-    //加载轮播图
-    this.initImageUrls();
-
   },
   //点击跳转
   foward: function (e) {
@@ -53,7 +45,6 @@ Page({
             merchants_id: app.globalData.merchantsId,
             client_code: res.code,
           }
-          console.log('code', res.code)
           util.postRequest(app.globalData.url + "auth/openid", data)
             .then(function (data) {
               if (!(errorMessage(data.data))) {
@@ -68,6 +59,8 @@ Page({
                   //成功获取token
                   wx.setStorageSync("e", { ...e, accessToken: tokenData.data.data.access_token })
                   that.initlogin();
+                  //轮播图
+                  that.initImageUrls();
                 }, function (error) {
                 })
             }, function (error) {
@@ -83,7 +76,7 @@ Page({
       openid: wx.getStorageSync('openid'),
       nickname: e.nickName,
       avatarurl: e.avatarUrl,
-      gender: "",
+      gender: e.gender,
       province: e.country,
       city: e.city,
       country: e.province,
@@ -91,6 +84,8 @@ Page({
     }
     util.postRequest(app.globalData.url + "user/up-info?access-token=" + e.accessToken, data)
       .then(function (data) {
+        var uid=wx.setStorageSync("uid", data.data.data.uid);
+
       }, function (error) {
       })
   },
@@ -121,9 +116,8 @@ Page({
   },
 
   //获取轮播图
-  initImageUrls: function () {
+initImageUrls: function () {
     var e = wx.getStorageSync('e');
-    e.accessToken = '9NfL1S6yWoIZHSd4cXsKOb1Iz816_3se';
     //消费记录
     const params = {
       "type": "2", //表示首页
@@ -132,7 +126,7 @@ Page({
     const that = this
     util.postRequest(app.globalData.url + "banner/list?access-token=" + e.accessToken, params)
       .then(function (data) {
-        if (!(errorMessage(data.data))) {
+        if (!(errorMessage(data.data.data))) {
           return;
         }
         that.setData({

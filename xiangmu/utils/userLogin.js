@@ -8,12 +8,12 @@ import regeneratorRuntime from '../regenerator-runtime/runtime.js';
 //获取登录用户信息
 export default async function initLoginUser() {
     const e = wx.getStorageSync("e");
-    e.accessToken = 'XXMrUxwlndZWdSN_ob6UO-CfFH2Ookr-';
+    const uid=wx.getStorageSync("uid")
     if (e.loginUser)
         return;
 
     //检索登录用户
-    await util.postRequest(app.globalData.url + "user/user-info?access-token=" + e.accessToken, { uid: '35' })
+    await util.postRequest(app.globalData.url + "user/user-info?access-token=" + e.accessToken, { uid: uid })
         .then(function (data) {
             if (!errorMessage(data)) {
                 return;

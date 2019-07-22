@@ -53,11 +53,11 @@ page{
 .youhuijuan1 .right .zuo{
   float:left;
   font-size:30rpx;
-  width:62%;
+  width:58%;
 }
 .youhuijuan1 .right .you{
   float:right;
-  width:38%;
+  width:42%;
   font-size:30rpx;
   text-align: right;
 }

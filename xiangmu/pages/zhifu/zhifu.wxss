@@ -71,3 +71,9 @@ page{
   right:20rpx;
   top:20rpx;
 }
+.money input,.in{
+  color:black;
+  height:100rpx;
+  line-height:100rpx;
+  font-size:70rpx;
+}

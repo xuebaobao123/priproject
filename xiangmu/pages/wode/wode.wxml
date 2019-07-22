@@ -27,7 +27,7 @@
                <text>{{usableIntegral}}</text>
             </view>
          </view>
-         <view class="wode-top1" bindtap="goCouponPage">
+         <view class="wode-top1">
             <image src="../images/yhj.png"></image>
             <view>
                <text>{{couponCount}}</text>

@@ -51,6 +51,9 @@ Page({
    */
   onLoad: function (options) {
     this.initData();
+    this.setData({
+      moneyZf:(500).toFixed(2)
+   })
   },
   //初始化
   initData: function () {

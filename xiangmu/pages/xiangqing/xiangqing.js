@@ -27,7 +27,7 @@ Page({
       projectImage: ''
     },
     total: '',//合计
-    imgUrls: []
+    imgUrls: [],
   },
 
 
@@ -45,14 +45,13 @@ Page({
   //初始化数据
   initData: function () {
     const e = wx.getStorageSync('e');
-    const loginUser = e.loginUser;
+    const uid=wx.getStorageSync("uid");
     const that = this;
-    e.accessToken = '9NfL1S6yWoIZHSd4cXsKOb1Iz816_3se'
     const params = {
-      merchants_id: '1',
-      uid: loginUser.id,
+      merchants_id: app.globalData.merchantsId,
+      uid:uid,
     }
-
+    console.log(params)
     util.postRequest(app.globalData.url + "partner/info?access-token=" + e.accessToken, params)
       .then(function (data) {
         if(!errorMessage(data)){
@@ -64,8 +63,11 @@ Page({
           endDate: data.data.data.end_time,//截至日期
           surNumber: data.data.data.num,//剩余
           projectSpeed: { projectDesc: data.data.data.describe },//项目进度
-          total: parseFloat(data.data.data.price * data.data.data.num).toFixed(2)//合计
+          zhifu:data.data.data.partnerStatus
+          
+          // total: parseFloat(data.data.data.price * data.data.data.num).toFixed(2)//合计
         })
+        console.log(that.data.zhifu,)
 
       })
 
@@ -74,11 +76,10 @@ Page({
   //加载轮播图
   initImgUrls: function () {
     var e = wx.getStorageSync('e');
-    e.accessToken = '9NfL1S6yWoIZHSd4cXsKOb1Iz816_3se';
     //消费记录
     const params = {
       "type": 3, //表示参伙
-      "merchants_id": 1//商家ID，暂定为1
+      "merchants_id": app.globalData.merchantsId//商家ID，暂定为1
     }
     const that = this
     util.postRequest(app.globalData.url + "banner/list?access-token=" + e.accessToken, params)
@@ -97,7 +98,7 @@ Page({
   zhifu:function(){
     const that = this;
     var e = wx.getStorageSync('e');
-    e.accessToken = '9NfL1S6yWoIZHSd4cXsKOb1Iz816_3se';
+    const uid = wx.getStorageSync("uid")
     wx.showModal({
       title: '提示',
       content: '确认支付',
@@ -107,11 +108,39 @@ Page({
         // 用户没有授权成功，不需要改变 isHide 的值
         if (res.confirm) {
           const params = {
-            "uid": 3,
-            "merchants_id": 1
+            "uid": uid,
+            "merchants_id":app.globalData.merchantsId
           }
           util.postRequest(app.globalData.url + "partner/order?access-token=" + e.accessToken, params)
             .then(function (data) {
+              wx.requestPayment({
+                "timeStamp":data.data.data.timeStamp,
+                "nonceStr": data.data.data.nonceStr,
+                "package":data.data.data.package,
+                "signType": data.data.data.signType,
+                "paySign": data.data.data.paySign,
+                success(res) {
+                  const params={
+                    "uid":uid,
+                    "merchants_id":app.globalData.merchantsId,
+                    "oid":data.data.data.oid
+                  }
+                  util.postRequest(app.globalData.url +"partner/getpaystatus?access-token="+e.accessToken,params)
+                  .then(function(data){
+                   that.setData({
+                     zhifu:data.data.data.status,
+                   })
+                   if(data.data.data.status==1){
+                     that.onLoad();
+                     that.zhifu();
+                   }
+                   else{
+                     that.onLoad();
+                   }
+                  })
+                 },
+                fail(res) { }
+              })
             })
         }
       }

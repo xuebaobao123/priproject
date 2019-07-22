@@ -1,11 +1,11 @@
 {
   "pages": [
+    "pages/index/index",
     "pages/kaituanxiangqing/kaituanxiangqing",
     "pages/kaituan/kaituan",
     
     
     
-    "pages/index/index",
     "pages/tixianjine/tixianjine",
     
     "pages/cantuan/cantuan",
