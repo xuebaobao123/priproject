@@ -105,13 +105,18 @@ Page({
     const params = {
       merchants_id:app.globalData.merchantsId
     }
+    console.log('Businessparams',params)
     this.initDataFromUrl('coupon/coupon-list', params)
   },
 
   //我参与的团数据
   initInvolvedCouponArrayData: function () {
     const uid=wx.getStorageSync("uid");
-    this.initDataFromUrl('user/participate-list', { uid: uid });
+    const params = {
+      uid:uid,
+      merchants_id:app.globalData.merchantsId
+    }
+    this.initDataFromUrl('user/participate-list', params);
   },
 
   //我的优惠券包
@@ -121,6 +126,7 @@ Page({
       uid: uid,
       merchants_id: app.globalData.merchantsId
     }
+    console.log('Userparams',params)
     this.initDataFromUrl('coupon/coupon-list', params)
   },
   /**
@@ -139,6 +145,7 @@ Page({
         if (!errorMessage(data)) {
           return;
         }
+        console.log('youhuiquan.data',data);
         that.setData({
           couponArray: data.data.data.map(item => {
             return that.mapData(item);
@@ -236,8 +243,16 @@ Page({
       cid: event.currentTarget.dataset.id,
       type: 1//表示兑换
     }
+
+    console.log('params',params);
     util.postRequest(app.globalData.url + "coupon/coupon-acquire?access-token=" + current.accessToken, params)
       .then(function (data) {
+
+        if(!errorMessage(data)){
+          return;
+        }
+        
+        console.log('data',data);
         if(data.code==200){
           wx.showToast({
             title: '操作成功',

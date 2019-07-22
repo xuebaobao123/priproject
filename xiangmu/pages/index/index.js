@@ -2,6 +2,7 @@ const app = getApp();
 var util = require('../../utils/fengzhuang.js');
 import regeneratorRuntime from '../../regenerator-runtime/runtime.js';
 import errorMessage from '../../utils/errorMessage'
+import userLogin from '../../utils/userLogin'
 Page({
   data: {
     indicatorDots: true,  //是否显示面板指示点
@@ -10,6 +11,7 @@ Page({
     duration: 1000,       //滑动动画时长
     inputShowed: false,
     inputVal: "",
+    shouquan:false,
     //广告位
     advertPlaceArray: [
       { img: "../images/huiyuan.png", fowardUrl: '../wode/wode' },
@@ -24,8 +26,6 @@ Page({
     this.setData({
       shouquan: !!e,
     })
-    //加载token
-    this.initToken();
   },
   //点击跳转
   foward: function (e) {
@@ -47,13 +47,13 @@ Page({
           }
           util.postRequest(app.globalData.url + "auth/openid", data)
             .then(function (data) {
-              if (!(errorMessage(data.data))) {
+              if (!(errorMessage(data))) {
                 return;
               }
               wx.setStorageSync("openid", data.data.data.openid)
               util.postRequest(app.globalData.url + "auth/login", { openid: data.data.data.openid })
                 .then(function (tokenData) {
-                  if (!(errorMessage(tokenData.data))) {
+                  if (!(errorMessage(tokenData))) {
                     return;
                   }
                   //成功获取token
@@ -82,10 +82,12 @@ Page({
       country: e.province,
       parent_id: "",
     }
+    console.log('index.beforedata',data);
     util.postRequest(app.globalData.url + "user/up-info?access-token=" + e.accessToken, data)
       .then(function (data) {
-        var uid=wx.setStorageSync("uid", data.data.data.uid);
-
+        console.log('index.data',data);
+        wx.setStorageSync("uid", data.data.data.uid);
+        userLogin();
       }, function (error) {
       })
   },
@@ -95,9 +97,9 @@ Page({
     if (e.detail.userInfo) {
       //用户按了允许授权按钮
       var that = this;
-      that.setData({
-        shouquan: true,
-      });
+      
+      //加载token
+      this.initToken();
     } else {
       //用户按了拒绝按钮
       wx.showModal({
@@ -113,20 +115,24 @@ Page({
         }
       });
     }
+    this.setData({
+      shouquan: !this.data.shouquan,
+    })
   },
 
   //获取轮播图
-initImageUrls: function () {
+  initImageUrls: function () {
     var e = wx.getStorageSync('e');
     //消费记录
     const params = {
       "type": "2", //表示首页
-      "merchants_id": 1//商家ID，暂定为1
+      //商家ID
+      "merchants_id": app.globalData.merchantsId
     }
     const that = this
     util.postRequest(app.globalData.url + "banner/list?access-token=" + e.accessToken, params)
       .then(function (data) {
-        if (!(errorMessage(data.data.data))) {
+        if (!(errorMessage(data))) {
           return;
         }
         that.setData({

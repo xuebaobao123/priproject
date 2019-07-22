@@ -4,11 +4,13 @@
 var util = require('./fengzhuang.js');
 const app = getApp();
 import regeneratorRuntime from '../regenerator-runtime/runtime.js';
+import errorMessage from './errorMessage'
 
 //获取登录用户信息
 export default async function initLoginUser() {
     const e = wx.getStorageSync("e");
     const uid=wx.getStorageSync("uid")
+
     if (e.loginUser)
         return;
 

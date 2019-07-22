@@ -77,7 +77,7 @@ Page({
   findConsumeRecord: function () {
     const e = wx.getStorageSync("e");
     // e.accessToken = '9NfL1S6yWoIZHSd4cXsKOb1Iz816_3se';
-
+    console.log('loginUser',e.loginUser);
     const that = this
     //消费记录
     util.postRequest(app.globalData.url + "user/balance-log?access-token=" + e.accessToken, { uid: e.loginUser.id })
@@ -85,6 +85,8 @@ Page({
         if (!errorMessage(data)) {
           return;
         }
+
+        console.log('user.balance.data',data);
         that.setData({
           consumeRecord: data.data.data.map(item => {
             return {

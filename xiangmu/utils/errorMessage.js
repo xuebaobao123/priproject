@@ -26,24 +26,25 @@ const MESSAGE = {
 export default function showModal(data) {
     let result = false;
 
-    return true;
-    // try {
-    //     if (data.success && data.data.status && data.data.status === 200) {
-    //         result = !result;
-    //     } else {
-    //         throw MESSAGE[data.data.status || 600];
-    //     }
-    // } catch (error) {
-    //     console.log("errorMessage.data", data)
-    //     console.log("error", error);
+    // return true;
+    try {
+        if (data.success && data.data.status && data.data.status === 200) {
+        // if (data.success && data.data.status) {
+            result = !result;
+        } else {
+            throw MESSAGE[data.data.status || 600];
+        }
+    } catch (error) {
+        console.log("errorMessage.data", data)
+        console.log("error", error);
 
-    //     //此处自定义错误弹窗
-    //     wx.showToast({
-    //         title: error,
-    //         icon: 'success',
-    //         duration: 2000
-    //     })
-    // } finally {
-    //     return result;
-    // }
+        //此处自定义错误弹窗
+        wx.showToast({
+            title: error,
+            icon: 'success',
+            duration: 2000
+        })
+    } finally {
+        return result;
+    }
 }

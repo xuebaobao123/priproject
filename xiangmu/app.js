@@ -83,7 +83,7 @@ App({
   },
   globalData: {
     url:'https://c.cityzht.com/',
-    merchantsId:"1"
-
+    merchantsId:"1",
+    title:'天津XX管理有限公司'
   }
 })

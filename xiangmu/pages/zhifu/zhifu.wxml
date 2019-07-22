@@ -1,5 +1,5 @@
 <view class="zhifu">
-   <view class="zhifu-title">天津XX管理有限公司</view>
+   <view class="zhifu-title">{{title}}</view>
    <view class="zhufu-nr">
       <view class="nr-title">支付</view>
       <view class="money">
