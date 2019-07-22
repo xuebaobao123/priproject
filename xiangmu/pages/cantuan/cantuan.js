@@ -46,7 +46,7 @@ Page({
   initInvolvedData: function () {
     const that = this
     const e = wx.getStorageSync("e");
-    e.accessToken = '9NfL1S6yWoIZHSd4cXsKOb1Iz816_3se';
+    // e.accessToken = '9NfL1S6yWoIZHSd4cXsKOb1Iz816_3se';
     const params = {
       uid: e.loginUser.id,
     }
@@ -84,7 +84,7 @@ Page({
   group: function () {
     const that = this
     const e = wx.getStorageSync("e");
-    e.accessToken = '9NfL1S6yWoIZHSd4cXsKOb1Iz816_3se';
+    // e.accessToken = '9NfL1S6yWoIZHSd4cXsKOb1Iz816_3se';
     const params = {
       uid: e.loginUser.id,
       tuan_id: 0

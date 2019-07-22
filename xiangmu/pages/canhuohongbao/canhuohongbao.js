@@ -92,7 +92,7 @@ Page({
       billRecord: []
     })
     const e = wx.getStorageSync("e");
-    e.accessToken = '9NfL1S6yWoIZHSd4cXsKOb1Iz816_3se';
+    // e.accessToken = '9NfL1S6yWoIZHSd4cXsKOb1Iz816_3se';
     const params = {
       uid: 1,
       startDay: this.data.beginDate,

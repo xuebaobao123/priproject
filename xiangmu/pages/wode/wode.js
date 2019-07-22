@@ -76,7 +76,7 @@ Page({
   //消费查询
   findConsumeRecord: function () {
     const e = wx.getStorageSync("e");
-    e.accessToken = '9NfL1S6yWoIZHSd4cXsKOb1Iz816_3se';
+    // e.accessToken = '9NfL1S6yWoIZHSd4cXsKOb1Iz816_3se';
 
     const that = this
     //消费记录
