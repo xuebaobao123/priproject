@@ -245,7 +245,7 @@ Page({
       cid: event.currentTarget.dataset.id,
       type: 1//表示兑换
     }
-
+    const that=this;
     //检测用户是否具有权限
     if (!userTest()) {
       return;

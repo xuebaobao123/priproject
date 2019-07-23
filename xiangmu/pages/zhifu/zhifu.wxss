@@ -42,6 +42,7 @@ page{
 }
 .tanchuang{
   width:100%;
+  z-index:100;
   height:100%;
   position: fixed;
   left:0;
@@ -59,10 +60,7 @@ page{
   overflow-y:scroll;
 }
 .youhuijuan1 .right .zuo{
-  width:70%;
-}
-.youhuijuan1 .right .you{
-  width:30%;
+  width:100%;
 }
 .cha{
   width:40rpx;

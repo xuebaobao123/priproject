@@ -3,24 +3,24 @@
    <view class="zhufu-nr">
       <view class="nr-title">支付</view>
       <view class="money">
-          <input placeholder='{{moneyZf}}' placeholder-class='in' type="number"></input>
+          <input placeholder='{{money.price}}' placeholder-class='in' type="number" bindinput="money"></input>
       </view>
-      <view class="nr-title" style="line-height:80rpx;height:60rpx;">参伙余额￥500.00</view>
-      <view class="nr-title" style="height:80rpx;line-height:80rpx;color:red;" bindtap="zhifu">优惠金额：￥100</view>
-      <view class="mony" >支付</view>
+      <view class="nr-title" style="line-height:80rpx;height:60rpx;">参伙余额￥{{money.balance}}</view>
+      <view class="nr-title" style="height:80rpx;line-height:80rpx;color:red;" bindtap="youhui">优惠金额：￥{{money.discount_amount}}</view>
+      <view class="mony" bindtap="zhifu">支付</view>
    </view>
 </view>
 <view class="tanchuang" hidden="{{hidden}}">
    <view class="tanchuang1">
       <image src="../images/cha_03.jpg" class="cha" bindtap="guanbi"></image>
       <view class="youhuijuan">
-          <view class="youhuijuan1" wx:for="{{couponArray}}">
+          <view class="youhuijuan1" wx:for="{{couponArray}}" bindtap="youhuijuan">
               <view class="top">
                 <view class="left">
-                    <image src="../images/youhui.png" class="img1"></image>
+                    <image src="{{item.imgUrl}}" class="img1"></image>
                     <view class="dingwei">
                       <view class="dingwei1">
-                          <image src="{{item.imgUrl}}"></image>
+                          <image src="../images/youhuijuan1.png"></image>
                           <text>{{item.needIntegral}}积分</text>
                       </view>
                     </view>
@@ -32,7 +32,6 @@
                     </view>
                     <view class="you">
                       <view>
-                          <image src="../images/zhuanzeng.png"></image>
                       </view>
                     </view>
                 </view>

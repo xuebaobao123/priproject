@@ -26,7 +26,7 @@ Page({
     this.setData({
       shouquan: !!e,
     })
-    this.initToken();
+    this.initImageUrls();
   },
   //点击跳转
   foward: function (e) {
@@ -61,7 +61,7 @@ Page({
                   wx.setStorageSync("e", { ...e, accessToken: tokenData.data.data.access_token })
                   that.initlogin();
                   //轮播图
-                  that.initImageUrls();
+                 
                 }, function (error) {
                 })
             }, function (error) {
@@ -86,7 +86,6 @@ Page({
     console.log('index.beforedata',data);
     util.postRequest(app.globalData.url + "user/up-info?access-token=" + e.accessToken, data)
       .then(function (data) {
-        console.log('index.data',data);
         wx.setStorageSync("uid", data.data.data.uid);
         userLogin();
       }, function (error) {
@@ -98,9 +97,9 @@ Page({
     if (e.detail.userInfo) {
       //用户按了允许授权按钮
       var that = this;
-      
       //加载token
-      this.initlogin();
+      that.initToken();
+      that.initImageUrls();
     } else {
       //用户按了拒绝按钮
       wx.showModal({
@@ -120,7 +119,6 @@ Page({
       shouquan: !this.data.shouquan,
     })
   },
-
   //获取轮播图
   initImageUrls: function () {
     var e = wx.getStorageSync('e');

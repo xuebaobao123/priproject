@@ -13,6 +13,13 @@ Page({
     hidden:true,//弹框
     title:app.globalData.title,
     //优惠券数组
+    //券类型
+    COUPONTYPE: {
+      //开团券
+      GROUP: 0,
+      //优惠券
+      DISCOUNT: 1,
+    },
     couponArray: [
       {
         //主键,扩展
@@ -46,30 +53,29 @@ Page({
     //优惠券详情展开标志
     activeIndex: 0,
     //可用积分
-    usableIntegral: 300
+    usableIntegral: 300,
+    money:{
+      price:0,
+      balance:0,
+      discount_amount:0
+    }
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.initData();
+    this.initUserCouponArrayData();
     this.setData({
-      moneyZf:(500).toFixed(2)
+      moneyZf:(0).toFixed(2)
    })
   },
-  //初始化
-  initData: function () {
-
-    
-  },
-
   //我的优惠券包
   initUserCouponArrayData: function () {
     const uid=wx.getStorageSync("uid");
     const params = {
       uid: uid,
       merchants_id: app.globalData.merchantsId,
-      price:500
+      price:this.data.moneyZf
     }
     this.initDataFromUrl('coupon/coupon-list', params)
   },
@@ -97,7 +103,6 @@ Page({
         })
       })
   },
-
    //封装后台对象至页面对象
    mapData: function (item) {
     //根据优惠券类型显示内容
@@ -243,7 +248,6 @@ Page({
 
 
   },
-
   // 返回
   fanhui: function () {
     // wx.navigateBack({ 
@@ -265,36 +269,83 @@ Page({
       url: '../lijiduihuan/lijiduihuan',
     })
   },
-  zhifu:function(){
-    // this.setData({
-    //   hidden:false
-    // })
-    const e = wx.getStorageSync("e");
-    const params = {
-      merchants_id:app.globalData.merchantsId,
-      uid:e.loginUser.id,
-      price:500,
-    }
-
-    //检测用户是否具有权限
-    if (!userTest()) {
-      return;
-    }
-
-    //支付
-    util.postRequest(app.globalData.url + "checkstand/order?access-token=" + e.accessToken, params)
-      .then(function (data) {
-        if (!(errorMessage(data.data))) {
-          return;
-        }
-
-        
-      })
-
+  youhui:function(){
+    this.setData({
+      hidden: false
+    })
   },
   guanbi:function(){
     this.setData({
       hidden: true
     })
+  },
+  money:function(e){
+    this.setData({
+      moneyZf:e.detail.value
+    })
+  },
+  // 优惠券
+  youhuijuan:function(){
+    const e = wx.getStorageSync("e");
+    const params = {
+      merchants_id: app.globalData.merchantsId,
+      uid: e.loginUser.id,
+      price: this.data.moneyZf,
+      cuid:"10"
+    }
+    var that = this;
+    util.postRequest(app.globalData.url + "checkstand/price?access-token=" + e.accessToken, params)
+      .then(function (data) {
+        if (!(errorMessage(data))) {
+          return;
+        }
+        that.setData({
+          hidden: true,
+          money:data.data.data
+        })
+      })
+  },
+  // 支付
+  zhifu:function(){
+    const e = wx.getStorageSync("e");
+    const params = {
+      merchants_id: app.globalData.merchantsId,
+      uid: e.loginUser.id,
+      price: this.data.moneyZf,
+      cuid:"10"
+    }
+    //检测用户是否具有权限
+    if (!userTest()) {
+      return;
+    }
+    //支付
+    const that = this;
+    util.postRequest(app.globalData.url + "checkstand/order?access-token=" + e.accessToken, params)
+      .then(function (data) {
+        if (!(errorMessage(data))) {
+          return;
+        }
+        console.log('111',data)
+        // if(data.data.data.type=="ok"){
+        //    wx.switchTab({
+        //      url: '../index/index',
+        //    })
+        // }
+        // else{
+        //   wx.requestPayment({
+        //     "timeStamp": data.data.data.pay.timeStamp,
+        //     "nonceStr": data.data.data.pay.nonceStr,
+        //     "package": data.data.data.pay.package,
+        //     "signType": data.data.data.pay.signType,
+        //     "paySign": data.data.data.pay.paySign,
+        //     success(res) {
+        //       wx.switchTab({
+        //         url: '../index/index',
+        //       })
+        //     }
+        //   })
+        // }
+        
+      })
   }
 })
