@@ -227,7 +227,7 @@ Page({
         accessType = { content: '立即兑换', targetEvent: 'exchange' }
         break;
       case "2":
-        accessType = { content: '立即领取', targetEvent: 'exReceive' }
+        accessType = { content: '我要开团', targetEvent: 'organGroup' }
         break;
       case "3"://暂时将优惠券获取方式的团购方式设置为我要开团，后续有变更可调整
         accessType = { content: '我要开团', targetEvent: 'organGroup' }
@@ -299,7 +299,7 @@ Page({
   organGroup: function (event) {
     const current = wx.getStorageSync("e");
     const uid = wx.getStorageSync("uid");
-    const currentCoupon = this.data.couponArray[e.detail.value]
+    const currentCoupon = this.data.couponArray[event.detail.value]
     const params = {
       // merchants_id: app.globalData.merchantsId,
       uid: uid,

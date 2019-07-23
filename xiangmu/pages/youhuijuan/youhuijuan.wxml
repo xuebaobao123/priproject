@@ -23,7 +23,7 @@
                     <view bindtap="{{item.accessType.targetEvent}}" data-id="{{item.id}}">{{item.accessType.content}} ></view>
                 </view>
                
-               <view wx:if="{{item.couponType==COUPONTYPE.GROUP}}" bindtap="{{item.accessType.targetEvent}}" style="padding-top:186rpx;" data-id="{{item.id}}">{{item.accessType.content}} ></view>
+               <view wx:if="{{item.couponType==COUPONTYPE.GROUP}}" bindtap="{{item.accessType.targetEvent}}" style="padding-top:176rpx;" data-id="{{item.id}}">{{item.accessType.content}} ></view>
             </view>
          </view>
          <view class="clearfloat"></view>

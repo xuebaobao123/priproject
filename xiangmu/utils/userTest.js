@@ -25,7 +25,7 @@ export default async function userTest() {
             if (!errorMessage(data)) {
                 return false;
             }
-            if (!(data.data.data.status)) {
+            if (!(data.data.data.status!==200)) {
                 //此处自定义错误弹窗
                 wx.showToast({
                     title: data.data.data.msg,

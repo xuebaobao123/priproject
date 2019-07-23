@@ -36,6 +36,7 @@ Page({
       url: advertPlace.fowardUrl
     })
   },
+
   initToken: async function () {
     var e = wx.getStorageSync('e');
     const that = this;
@@ -142,4 +143,7 @@ Page({
 
       })
   }
+})
+wx.showShareMenu({
+  withShareTicket: true
 })

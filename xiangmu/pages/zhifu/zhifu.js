@@ -291,7 +291,7 @@ Page({
       merchants_id: app.globalData.merchantsId,
       uid: e.loginUser.id,
       price: this.data.moneyZf,
-      cuid:"10"
+      cuid:"11"
     }
     var that = this;
     util.postRequest(app.globalData.url + "checkstand/price?access-token=" + e.accessToken, params)
@@ -312,7 +312,7 @@ Page({
       merchants_id: app.globalData.merchantsId,
       uid: e.loginUser.id,
       price: this.data.moneyZf,
-      cuid:"10"
+      cuid:"11"
     }
     //检测用户是否具有权限
     if (!userTest()) {

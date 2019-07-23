@@ -37,3 +37,7 @@
   margin:40rpx 0 0 0;
   text-align: center;
 }
+.button{
+  font-size:30rpx;
+  color:#de7534;
+}

@@ -1,5 +1,6 @@
 const app = getApp();
-import errorMessage from '../../utils/errorMessage'
+import errorMessage from '../../utils/errorMessage';
+var util = require('../../utils/fengzhuang.js');
 // pages/xiangqing/xiangqing.js
 Page({
 
@@ -42,6 +43,7 @@ Page({
   },
 
   initOrganGroupData: function (params) {
+    const e = wx.getStorageSync("e");
     util.postRequest(app.globalData.url + "coupon/tuan-info?access-token=" + e.accessToken, params)
       .then(function (data) {
         if (!(errorMessage(data))) {
@@ -88,5 +90,27 @@ Page({
           duration: 2000
         })
       })
-  }
+  },
+  //分享
+  onShareAppMessage: function (res) {
+    console.log(res)
+    return {
+      title: '分享优惠券',
+      path: 'pages/lijiduihuan/lijiduihuan',
+      imageUrl: '../images/touxiang.png',  //用户分享出去的自定义图片大小为5:4,
+      success: function (res) {
+        console.log(res, "分享成功")
+        // 转发成功
+        wx.showToast({
+          title: "分享成功",
+          icon: 'success',
+          duration: 2000
+        })
+      },
+      fail: function (res) {
+        console.log(res, "失败")
+        // 分享失败
+      },
+    }
+  },
 })
