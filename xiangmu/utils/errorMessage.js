@@ -39,11 +39,9 @@ export default function showModal(data) {
         console.log("error", error);
 
         //此处自定义错误弹窗
-        wx.showToast({
-            title: error,
-            icon: 'success',
-            duration: 2000
-        })
+      wx.showModal({
+        title: error
+      })
     } finally {
         return result;
     }

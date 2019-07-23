@@ -157,6 +157,7 @@ Page({
 
   //封装后台对象至页面对象
   mapData: function (item) {
+    console.log(item)
     //根据优惠券类型显示内容
     return {
       id: item.id,
@@ -327,7 +328,7 @@ Page({
 
   //分享
   onShareAppMessage: function (res) {
-    // let gbid = res.target.dataset.info.order_id;
+    console.log(res)
     return {
       title: '分享优惠券',
       path: 'pages/lijiduihuan/lijiduihuan',

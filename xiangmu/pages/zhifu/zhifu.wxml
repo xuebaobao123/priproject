@@ -3,11 +3,11 @@
    <view class="zhufu-nr">
       <view class="nr-title">支付</view>
       <view class="money">
-          <input placeholder='{{moneyZf}}' placeholder-class='in'></input>
+          <input placeholder='{{moneyZf}}' placeholder-class='in' type="number"></input>
       </view>
       <view class="nr-title" style="line-height:80rpx;height:60rpx;">参伙余额￥500.00</view>
-      <view class="nr-title" style="height:80rpx;line-height:80rpx;color:red;">优惠金额：￥100</view>
-      <view class="mony" bindtap="zhifu">支付</view>
+      <view class="nr-title" style="height:80rpx;line-height:80rpx;color:red;" bindtap="zhifu">优惠金额：￥100</view>
+      <view class="mony" >支付</view>
    </view>
 </view>
 <view class="tanchuang" hidden="{{hidden}}">

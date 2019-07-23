@@ -2,7 +2,8 @@
 const app = getApp();
 var util = require('../../utils/fengzhuang.js');
 import regeneratorRuntime from '../../regenerator-runtime/runtime.js';
-import errorMessage from '../../utils/errorMessage'
+import errorMessage from '../../utils/errorMessage';
+import userTest from '../../utils/userTest'
 Page({
 
   /**
@@ -67,7 +68,8 @@ Page({
     const uid=wx.getStorageSync("uid");
     const params = {
       uid: uid,
-      merchants_id: app.globalData.merchantsId
+      merchants_id: app.globalData.merchantsId,
+      price:500
     }
     this.initDataFromUrl('coupon/coupon-list', params)
   },
@@ -271,8 +273,7 @@ Page({
     const params = {
       merchants_id:app.globalData.merchantsId,
       uid:e.loginUser.id,
-      price:'0',
-      cuid:''
+      price:500,
     }
 
     //检测用户是否具有权限

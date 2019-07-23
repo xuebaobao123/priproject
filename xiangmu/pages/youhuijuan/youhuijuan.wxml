@@ -18,8 +18,8 @@
             </view>
             <view class="you">
                <view wx:if="{{item.couponType==COUPONTYPE.DISCOUNT}}">
-                    <button open-type="share" data-info='{{order}}' class="button"><image src="../images/zhuanzeng.png"></image></button>
-                    <view style="height:34rpx;"></view>
+                    <button open-type="share"  class="button"><image src="../images/zhuanzeng.png"></image></button>
+                    <view style="height:30rpx;"></view>
                     <view bindtap="{{item.accessType.targetEvent}}" data-id="{{item.id}}">{{item.accessType.content}} ></view>
                 </view>
                

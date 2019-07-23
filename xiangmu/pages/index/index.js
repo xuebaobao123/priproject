@@ -26,6 +26,7 @@ Page({
     this.setData({
       shouquan: !!e,
     })
+    this.initToken();
   },
   //点击跳转
   foward: function (e) {
@@ -99,7 +100,7 @@ Page({
       var that = this;
       
       //加载token
-      this.initToken();
+      this.initlogin();
     } else {
       //用户按了拒绝按钮
       wx.showModal({
