@@ -1,0 +1,43 @@
+<view class="zhifu">
+   <view class="zhifu-title">{{title}}</view>
+   <view class="zhufu-nr">
+      <view class="nr-title">支付</view>
+      <view class="money">
+          <input placeholder='{{money.price}}' placeholder-class='in' type="number" bindinput="money"></input>
+      </view>
+      <view class="nr-title" style="line-height:80rpx;height:60rpx;">参伙余额￥{{money.balance}}</view>
+      <view class="nr-title" style="height:80rpx;line-height:80rpx;color:red;" bindtap="youhui">优惠金额：￥{{money.discount_amount}}</view>
+      <view class="mony" bindtap="zhifu">支付</view>
+   </view>
+</view>
+<view class="tanchuang" hidden="{{hidden}}">
+   <view class="tanchuang1">
+      <image src="../images/cha_03.jpg" class="cha" bindtap="guanbi"></image>
+      <view class="youhuijuan">
+               <view class="youhuijuan1" wx:for="{{couponArray}}"      bindtap="youhuijuan" data-id="{{item.cuid}}">
+              <view class="top">
+                <view class="left">
+                    <image src="{{item.imgUrl}}" class="img1"></image>
+                    <view class="dingwei">
+                      <view class="dingwei1">
+                          <image src="../images/youhuijuan1.png"></image>
+                          <text>{{item.needIntegral}}积分</text>
+                      </view>
+                    </view>
+                </view>
+                <view class="right">
+                    <view class="zuo">
+                      <view>{{item.integralName}}</view>
+                      <view>{{item.content}}</view>
+                    </view>
+                    <view class="you">
+                      <view>
+                      </view>
+                    </view>
+                </view>
+                <view class="clearfloat"></view>
+              </view>
+          </view>
+        </view>
+   </view>
+</view>

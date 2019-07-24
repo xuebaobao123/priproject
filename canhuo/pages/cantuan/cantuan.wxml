@@ -1,0 +1,30 @@
+<view class="xiangqing">
+   <image src="https://images.unsplash.com/photo-1551334787-21e6bd3ab135?w=640"></image>
+</view>
+<view class="xiangQi">
+   <view class="top">
+      <view class="top1">
+         <view class="left">{{projectName}}</view>
+         <view class="right">{{content}}</view>
+      </view>
+      <view class="top2">
+         <view>
+            <text>截止日期 {{endDate}}</text>
+         </view>
+      </view>
+   </view>
+   <view class="bottom">
+      <view class="cantuan">
+        <view class="cantuan-title">参团人员</view>
+        <view class="cantuan-touxiang">
+           <view class="cantuan1" wx:for="{{userList}}">
+            <image src="{{item.headImg}}"></image>
+            </view>
+        </view>
+      </view>
+      <view>参伙权益</view>
+      <text>{{projectSpeed.projectDesc}}</text>
+       <button open-type="share"  class="button">分享</button> 
+      <view class="group" bindtap="group">参团</view>
+   </view>
+</view>
