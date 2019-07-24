@@ -1,12 +1,7 @@
 const app = getApp();
 import errorMessage from '../../utils/errorMessage';
 var util = require('../../utils/fengzhuang.js');
-// pages/xiangqing/xiangqing.js
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
     headImg: 'https://images.unsplash.com/photo-1551334787-21e6bd3ab135?w=640',
     //项目名称
@@ -21,29 +16,18 @@ Page({
       projectImage: ''
     },
   },
-
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
     app.changeTabBar();
-    /**
-     * 参数 
-     * uid：  用户id
-       ct_id: 优惠券id
-     */
-    const params = options.params;
+    const params = JSON.parse(options.params);
     //存放参数
     this.setData({
       params: params
     })
-
-    this.initOrganGroupData({ uid: params.uid, cid: params.ct_id, merchants_id: app.globalData.merchantsId })
+    this.initOrganGroupData(params)
   },
-
   initOrganGroupData: function (params) {
     const e = wx.getStorageSync("e");
+    const that=this;
     util.postRequest(app.globalData.url + "coupon/tuan-info?access-token=" + e.accessToken, params)
       .then(function (data) {
         if (!(errorMessage(data))) {
@@ -54,6 +38,7 @@ Page({
           projectName: data.data.data.name,
           //截至日期暂时获取开团结束日期。。可能是参团截至日期
           endDate: data.data.data.end_time,
+          ctid: data.data.data.ctid,
           projectSpeed: {
             projectDesc: data.data.data.describe,
           }
@@ -77,40 +62,36 @@ Page({
   },
   // 开团
   group: function () {
-    const params = this.data.params;
+    const e = wx.getStorageSync("e");
+    const params ={
+      ct_id: this.data.ctid,
+      uid: this.data.params.uid,
+    }
     util.postRequest(app.globalData.url + "partner/open?access-token=" + e.accessToken, params)
       .then(function (data) {
         if (!(errorMessage(data))) {
           return;
         }
-        //开团成功
-        wx.showToast({
-          title: '',
-          icon: 'success',
-          duration: 2000
-        })
+        if (data.code == 200) {
+          const params1 = {
+            uid: this.data.params.uid,
+            cid: this.data.params.cid,
+            tuan_id:data.data.data.tuan_id,
+            merchants_id: app.globalData.merchantsId
+          }
+          wx.showModal({
+            title:"开团成功",
+            success: function (res) {
+              if (res.confirm) {
+                wx.redirectTo({
+                  url: '../cantuan/cantuan?params=' + JSON.stringify(params1)
+                })
+              } else {
+              }
+            }
+          })
+        }
       })
   },
-  //分享
-  onShareAppMessage: function (res) {
-    console.log(res)
-    return {
-      title: '分享优惠券',
-      path: 'pages/lijiduihuan/lijiduihuan',
-      imageUrl: '../images/touxiang.png',  //用户分享出去的自定义图片大小为5:4,
-      success: function (res) {
-        console.log(res, "分享成功")
-        // 转发成功
-        wx.showToast({
-          title: "分享成功",
-          icon: 'success',
-          duration: 2000
-        })
-      },
-      fail: function (res) {
-        console.log(res, "失败")
-        // 分享失败
-      },
-    }
-  },
+  
 })

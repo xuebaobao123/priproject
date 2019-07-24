@@ -61,7 +61,7 @@ Page({
         that.setData({
           projectName: data.data.data.name,
           money: data.data.data.price,//金额
-          endDate: data.data.data.end_time,//截至日期
+          endDate: data.data.data.end_time.substring(0,10),//截至日期
           surNumber: data.data.data.num,//剩余
           projectSpeed: { projectDesc: data.data.data.describe },//项目进度
           zhifu: data.data.data.partnerStatus
@@ -101,10 +101,10 @@ Page({
     var e = wx.getStorageSync('e');
     const uid = wx.getStorageSync("uid")
 
-    //检测用户是否具有权限
-    if (!userTest()) {
-      return;
-    }
+    // //检测用户是否具有权限
+    // if (!userTest()) {
+    //   return;
+    // }
 
     wx.showModal({
       title: '提示',

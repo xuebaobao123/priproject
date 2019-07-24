@@ -1,23 +1,19 @@
 {
   "pages": [
+    "pages/youhuijuanfx/youhuijuanfx",
     "pages/index/index",
-    "pages/kaituanxiangqing/kaituanxiangqing",
     "pages/kaituan/kaituan",
-    
-    
+    "pages/cantuan/cantuan",
     
     "pages/tixianjine/tixianjine",
-    
-    "pages/cantuan/cantuan",
     "pages/zhifu/zhifu",
-    
-
     "pages/woyaocantuan/woyaocantuan",
     "pages/canhuohongbao/canhuohongbao",
     "pages/xiangqing/xiangqing",
     "pages/wode/wode",
     "pages/youhuijuan/youhuijuan",
     "pages/tabbar/tabbar",
+    "pages/guize/guize",
     "pages/logs/logs"
   ],
   "window": {
@@ -27,5 +23,4 @@
     "navigationBarTextStyle": "black"
   },
   "sitemapLocation": "sitemap.json"
-  
 }

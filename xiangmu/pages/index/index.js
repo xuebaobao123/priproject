@@ -61,6 +61,7 @@ Page({
                   //成功获取token
                   wx.setStorageSync("e", { ...e, accessToken: tokenData.data.data.access_token })
                   that.initlogin();
+                  that.initImageUrls();
                   //轮播图
                  
                 }, function (error) {
@@ -100,7 +101,7 @@ Page({
       var that = this;
       //加载token
       that.initToken();
-      that.initImageUrls();
+      
     } else {
       //用户按了拒绝按钮
       wx.showModal({

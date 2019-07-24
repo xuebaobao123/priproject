@@ -29,6 +29,7 @@
   font-size:38rpx;
   margin-bottom:20rpx;
   height:400rpx;
+  
 }
 page{
   background:#f8f8f8;
@@ -70,6 +71,9 @@ page{
   width:92%;
   padding:0 4% 30rpx;
   font-size:32rpx;
+  background: white;
+  height: 60rpx;
+  line-height: 76rpx;
 }
 .heji view:nth-child(1){
   float:left;

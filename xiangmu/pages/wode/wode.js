@@ -56,10 +56,10 @@ Page({
     //详细列表
     detailArray: [
       { text: '我参与的团', img: '../images/jiantou-2_03.png', fowardUrl: '../youhuijuan/youhuijuan?owner=involved' },
-      { text: '红包获取规则', img: '../images/jiantou-2_03.png', fowardUrl: '22' },
-      { text: '积分获取规则', img: '../images/jiantou-2_03.png', fowardUrl: '3' },
-      { text: '积分使用规则', img: '../images/jiantou-2_03.png', fowardUrl: '3' },
-      { text: '隐私权政策', img: '../images/jiantou-2_03.png', fowardUrl: '4' },
+      { text: '红包获取规则', img: '../images/jiantou-2_03.png', fowardUrl: '../guize/guize?type=1' },
+      { text: '积分获取规则', img: '../images/jiantou-2_03.png', fowardUrl: '../guize/guize?type=2' },
+      { text: '积分使用规则', img: '../images/jiantou-2_03.png', fowardUrl: '../guize/guize?type=3' },
+      { text: '隐私权政策', img: '../images/jiantou-2_03.png', fowardUrl: '../guize/guize?type=4' },
     ]
   },
 
@@ -79,6 +79,7 @@ Page({
     // e.accessToken = '9NfL1S6yWoIZHSd4cXsKOb1Iz816_3se';
     console.log('loginUser',e.loginUser);
     const that = this
+    
     //消费记录
     util.postRequest(app.globalData.url + "user/balance-log?access-token=" + e.accessToken, { uid: e.loginUser.id })
       .then(function (data) {
@@ -142,27 +143,38 @@ Page({
   //页面数据
   initData: function () {
     const loginUser = wx.getStorageSync("e").loginUser;
+    const e = wx.getStorageSync("e");
+    var that=this;
     console.log('loginUser', loginUser);
-    //页面数据
-    this.setData({
-      //头像
-      avatarurl: loginUser.avatarurl,
-      //昵称
-      nickname: loginUser.nickname,
-      //累计积分
-      cumIntegral: 0,
-      //优惠券数量
-      couponCount: loginUser.coupon_num,
-      //可用积分
-      usableIntegral: loginUser.integral,
-      //余额
-      surplus: {
-        //整数值
-        numDigits: loginUser.balance.split('.')[0],
-        //小数位数值
-        decimalDigits: loginUser.balance.split('.')[1],
-      },
+    util.postRequest(app.globalData.url + "user/user-info?access-token=" + e.accessToken, { uid: e.loginUser.id })
+      .then(function (data) {
+        if (!errorMessage(data)) {
+          return;
+        }
 
-    })
+        console.log('user.balance.data', data);
+        //页面数据
+        that.setData({
+          //头像
+          avatarurl: data.data.data.avatarurl,
+          //昵称
+          nickname: data.data.data.nickname,
+          //累计积分
+          cumIntegral: data.data.data.integral,
+          //优惠券数量
+          couponCount: data.data.data.coupon_num,
+          //可用积分
+          usableIntegral: data.data.data.integral,
+          //余额
+          surplus: {
+            //整数值
+            numDigits: data.data.data.balance.split('.')[0],
+            //小数位数值
+            decimalDigits: data.data.data.balance.split('.')[1],
+          },
+
+        })
+      })
+    
   }
 })

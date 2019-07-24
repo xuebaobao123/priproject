@@ -23,7 +23,7 @@
    </view>
    <view class="bottom">
       <view>参伙权益</view>
-      <rich-text nodes="{{projectSpeed.projectDesc}}" style="font-size:30rpx;margin:30rpx auto 0;display:block;"></rich-text>
+      <rich-text nodes="{{projectSpeed.projectDesc}}" style="font-size:30rpx;margin:30rpx auto 120rpx;display:block;"></rich-text>
    </view>
    <view class="heji">
       <view>

@@ -111,6 +111,7 @@ Page({
       //需要积分
       needIntegral: 30,
       integralName: item.name,
+      cuid:item.cuid,
       //规则
       content: this.concatContent(item),
       //数量
@@ -285,14 +286,17 @@ Page({
     })
   },
   // 优惠券
-  youhuijuan:function(){
+  youhuijuan: function (event){
     const e = wx.getStorageSync("e");
     const params = {
       merchants_id: app.globalData.merchantsId,
       uid: e.loginUser.id,
       price: this.data.moneyZf,
-      cuid:"11"
+      cuid: event.currentTarget.dataset.id
     }
+    this.setData({
+      cuid: event.currentTarget.dataset.id
+    })
     var that = this;
     util.postRequest(app.globalData.url + "checkstand/price?access-token=" + e.accessToken, params)
       .then(function (data) {
@@ -312,7 +316,7 @@ Page({
       merchants_id: app.globalData.merchantsId,
       uid: e.loginUser.id,
       price: this.data.moneyZf,
-      cuid:"11"
+      cuid:this.data.cuid
     }
     //检测用户是否具有权限
     if (!userTest()) {
@@ -325,26 +329,25 @@ Page({
         if (!(errorMessage(data))) {
           return;
         }
-        console.log('111',data)
-        // if(data.data.data.type=="ok"){
-        //    wx.switchTab({
-        //      url: '../index/index',
-        //    })
-        // }
-        // else{
-        //   wx.requestPayment({
-        //     "timeStamp": data.data.data.pay.timeStamp,
-        //     "nonceStr": data.data.data.pay.nonceStr,
-        //     "package": data.data.data.pay.package,
-        //     "signType": data.data.data.pay.signType,
-        //     "paySign": data.data.data.pay.paySign,
-        //     success(res) {
-        //       wx.switchTab({
-        //         url: '../index/index',
-        //       })
-        //     }
-        //   })
-        // }
+        if(data.data.data.type=="ok"){
+           wx.redirectTo({
+             url: '../index/index',
+           })
+        }
+        else{
+          wx.requestPayment({
+            "timeStamp": data.data.data.pay.timeStamp,
+            "nonceStr": data.data.data.pay.nonceStr,
+            "package": data.data.data.pay.package,
+            "signType": data.data.data.pay.signType,
+            "paySign": data.data.data.pay.paySign,
+            success(res) {
+              wx.switchTab({
+                url: '../index/index',
+              })
+            }
+          })
+        }
         
       })
   }

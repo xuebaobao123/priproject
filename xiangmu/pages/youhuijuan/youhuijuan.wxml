@@ -11,19 +11,19 @@
             </view>
          </view>
          <view class="right">
-            <view class="zuo">
+            <view class="zuo" style=" position: relative;height:220rpx;">
                <view style="height:70rpx;">{{item.integralName}}</view>
                <view style="height:34rpx;">{{item.content}}</view>
-               <view bindtap="onToggle" data-index="{{index}}">查看详情 ></view>
+               <view bindtap="onToggle" data-index="{{index}}"  style="position: absolute;bottom:0;">查看详情 ></view>
             </view>
-            <view class="you">
+            <view class="you" style=" position: relative;height:220rpx;">
                <view wx:if="{{item.couponType==COUPONTYPE.DISCOUNT}}">
-                    <button open-type="share"  class="button"><image src="../images/zhuanzeng.png"></image></button>
+                    <button open-type="share"  class="button"  data-cuid="{{item.cuid}}" hidden="{{!item.cuid}}"><image src="../images/zhuanzeng.png"></image></button>
                     <view style="height:30rpx;"></view>
-                    <view bindtap="{{item.accessType.targetEvent}}" data-id="{{item.id}}">{{item.accessType.content}} ></view>
+                    <view bindtap="{{item.accessType.targetEvent}}" wx:if="{{params!=='user'}}" data-id="{{item.id}}" style="position: absolute;bottom:0;">{{item.accessType.content}} ></view>
                 </view>
                
-               <view wx:if="{{item.couponType==COUPONTYPE.GROUP}}" bindtap="{{item.accessType.targetEvent}}" style="padding-top:176rpx;" data-id="{{item.id}}">{{item.accessType.content}} ></view>
+               <view wx:if="{{item.couponType==COUPONTYPE.GROUP && params!=='user'}}" bindtap="{{item.accessType.targetEvent}}" style="padding-top:180rpx;" data-id="{{item.id}}" >{{item.accessType.content}} ></view>
             </view>
          </view>
          <view class="clearfloat"></view>
@@ -32,14 +32,6 @@
          <view>
             <text>优惠说明：</text>
             <rich-text nodes="{{item.integralExplain}}"></rich-text>
-         </view>
-         <view>
-            <text>可用时段：</text>
-            <text style="text-indent:0rpx;">{{item.validityDate.desc}}</text>
-         </view>
-         <view>
-            <text>使用须知：</text>
-            <text>{{item.useRequire}}</text>
          </view>
       </view>
    </view>

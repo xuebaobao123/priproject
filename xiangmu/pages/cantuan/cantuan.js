@@ -30,29 +30,31 @@ Page({
       }
     ],
   },
-
-
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log(options)
+    this.setData({
+      options: options
+    })
     userLogin();
     app.changeTabBar();
     // this.initData();
-    this.initInvolvedData()
+    this.initInvolvedData();
+    this.initInvolvedContent();
   },
 
   //我参与的团数据
   initInvolvedData: function () {
     const that = this
     const e = wx.getStorageSync("e");
-    // e.accessToken = '9NfL1S6yWoIZHSd4cXsKOb1Iz816_3se';
     const params = {
       uid: e.loginUser.id,
     }
     util.postRequest(app.globalData.url + "user/participate-list?access-token=" + e.accessToken, params)
       .then(function (data) {
-        if (!(errorMessage(data.data))) {
+        if (!(errorMessage(data))) {
           return;
         }
         that.setData({
@@ -61,7 +63,28 @@ Page({
 
       })
   },
+  //参团内容
+  initInvolvedContent:function(){
+    const e = wx.getStorageSync("e");
+    var that=this;
+    const params={
+      merchants_id:app.globalData.merchantsId,
+      uid: e.loginUser.id,
+      tuan_id:that.data.options.tuan_id,
+      cid:that.data.options.ct_id,
+    }
+    // 参团内容详情
+    util.postRequest(app.globalData.url + "user/participate-list?access-token=" + e.accessToken, params)
+      .then(function (data) {
+        if (!(errorMessage(data))) {
+          return;
+        }
+        that.setData({
+          //
+        })
 
+      })
+  },
   //初始化数据
   initData: function () {
     //请求数据
@@ -84,12 +107,10 @@ Page({
   group: function () {
     const that = this
     const e = wx.getStorageSync("e");
-    // e.accessToken = '9NfL1S6yWoIZHSd4cXsKOb1Iz816_3se';
     const params = {
       uid: e.loginUser.id,
-      tuan_id: 0
+      tuan_id: that.data.options.tuan_id
     }
-
     util.postRequest(app.globalData.url + "add-tuan?access-token=" + e.accessToken, params)
       .then(function (data) {
         if (data.success && !data.success) {
@@ -101,9 +122,6 @@ Page({
         }
 
       })
-    // wx.navigateTo({
-    //   url: '../cantuan/cantuan',
-    // })
   },
   //加载用户头像
   initUserList: function () {
@@ -126,5 +144,30 @@ Page({
         })
 
       })
-  }
+  },
+  //分享
+  onShareAppMessage: function (res) {
+    const params = {
+      uid: this.data.params.uid,
+      tuan_id: this.data.params.tuan_id
+    }
+    return {
+      title: '分享优惠券',
+      path: 'pages/cantuan/cantuan?params=' + params,
+      imageUrl: '../images/canhuo.png',
+      success: function (res) {
+        console.log(res, "分享成功")
+        // 转发成功
+        wx.showToast({
+          title: "分享成功",
+          icon: 'success',
+          duration: 2000
+        })
+      },
+      fail: function (res) {
+        console.log(res, "失败")
+        // 分享失败
+      },
+    }
+  },
 })

@@ -24,6 +24,7 @@
       </view>
       <view>参伙权益</view>
       <text>{{projectSpeed.projectDesc}}</text>
+       <button open-type="share"  class="button">分享</button> 
       <view class="group" bindtap="group">参团</view>
    </view>
 </view>
