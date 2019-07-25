@@ -99,7 +99,7 @@ Page({
     const e = wx.getStorageSync("e");
     const params = {
       uid: e.loginUser.id,
-      tuan_id: 0
+      tuan_id: that.data.shareParams.tuan_id
     }
     util.postRequest(app.globalData.url + "coupon/tuan-user?access-token=" + e.accessToken, params)
       .then(function (data) {
@@ -107,6 +107,7 @@ Page({
           return;
         }
         that.setData({
+          kaituan: data.data.data[0].kaiTuan,
           userList: data.data.data.map(item => {
             return { headImg: item.avatarurl }
           })
