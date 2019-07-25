@@ -33,7 +33,8 @@ Page({
     const shareParams = JSON.parse(options.shareParams);
     console.log(shareParams)
     this.setData({
-      shareParams: shareParams
+      shareParams: shareParams,
+      type:options.type
     })
     app.changeTabBar();
     this.initInvolvedContent(shareParams);

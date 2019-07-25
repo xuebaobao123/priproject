@@ -100,7 +100,7 @@ Page({
     const e = wx.getStorageSync("e");
     // e.accessToken = '9NfL1S6yWoIZHSd4cXsKOb1Iz816_3se';
     const params = {
-      uid: 1,
+      uid: e.loginUser.id,
       startDay: this.data.beginDate,
       endDay: this.data.endDate
     }

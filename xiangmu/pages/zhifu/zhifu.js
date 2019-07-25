@@ -235,10 +235,10 @@ Page({
       merchants_id: app.globalData.merchantsId,
       uid: e.loginUser.id,
       price: this.data.moneyZf,
-      cuid: event.currentTarget.dataset.id
+      cuid: event.currentTarget.dataset.cuid
     }
     this.setData({
-      cuid: event.currentTarget.dataset.id
+      cuid: event.currentTarget.dataset.cuid
     })
     var that = this;
     util.postRequest(app.globalData.url + "checkstand/price?access-token=" + e.accessToken, params)
@@ -275,15 +275,9 @@ Page({
         merchants_id: app.globalData.merchantsId,
         uid: e.loginUser.id,
         price: that.data.moneyZf,
+        cuid: that.data.cuid
       }
 
-
-      if (that.data.cuid === true) {
-        params = {
-          ...params,
-          cuid: that.data.cuid
-        }
-      }
       //支付
 
       util.postRequest(app.globalData.url + "checkstand/order?access-token=" + e.accessToken, params)

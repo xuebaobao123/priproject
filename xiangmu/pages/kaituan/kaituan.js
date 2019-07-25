@@ -84,7 +84,7 @@ Page({
             showCancel: true,
             success: function (res) {
               wx.navigateTo({
-                url: '../cantuan/cantuan?shareParams=' + JSON.stringify(shareParams),
+                url: '../cantuan/cantuan?type=kaituan&shareParams=' + JSON.stringify(shareParams),
               })
             }
           })

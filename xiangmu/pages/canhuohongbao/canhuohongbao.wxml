@@ -31,7 +31,7 @@
          <view wx:if="{{item.type==BILLTYPE.EXPEND}}" class="right">-￥<text>{{item.money.numDigits}}.</text>{{item.money.decimalDigits}}</view>
          <view wx:if="{{item.type==BILLTYPE.INCOME}}" class="right" style="color:#de7534;">+￥<text>{{item.money.numDigits}}.</text>{{item.money.decimalDigits}}</view>
       </view>
-      <view wx:if="{{billRecord}}" style="font-size:34rpx;">暂无数据</view>
+      <view wx:if="{{billRecord.length===0}}" style="font-size:34rpx;">暂无数据</view>
    </view>
 </view>
 <import src="../tabbar/tabbar.wxml" />
