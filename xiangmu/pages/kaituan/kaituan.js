@@ -18,7 +18,7 @@ Page({
       projectImage: '',
     },
   },
-  onLoad: function(options) {
+  onLoad: function (options) {
     console.log()
     app.changeTabBar();
     const params = JSON.parse(options.params);
@@ -29,11 +29,11 @@ Page({
     this.initOrganGroupData(params)
     console.log(options)
   },
-  initOrganGroupData: function(params) {
+  initOrganGroupData: function (params) {
     const e = wx.getStorageSync("e");
     const that = this;
     util.postRequest(app.globalData.url + "coupon/tuan-info?access-token=" + e.accessToken, params)
-      .then(function(data) {
+      .then(function (data) {
         if (!(errorMessage(data))) {
           return;
         }
@@ -51,13 +51,13 @@ Page({
   },
 
   // 返回
-  fanhui: function() {
+  fanhui: function () {
     wx.redirectTo({
       url: '../index/index',
     })
   },
   // 开团
-  group: function() {
+  group: function () {
     const e = wx.getStorageSync("e");
     const params = {
       ct_id: this.data.data.ctid,
@@ -68,25 +68,26 @@ Page({
       if (!data)
         return;
       util.postRequest(app.globalData.url + "partner/open?access-token=" + e.accessToken, params)
-        .then(function(data) {
-
-          if (data.code == 200) {
-            const shareParams = {
-              uid: that.data.params.uid,
-              cid: that.data.params.cid,
-              tuan_id: data.data.data.tuan_id,
-              merchants_id: app.globalData.merchantsId
-            }
-            wx.showModal({
-              title: data.data.msg,
-              showCancel: true,
-              success: function(res) {
-                wx.navigateTo({
-                  url: '../cantuan/cantuan?shareParams=' + JSON.stringify(shareParams),
-                })
-              }
-            })
+        .then(function (data) {
+          console.log('partner/open.data', data);
+          if (!errorMessage(data)) {
+            return;
           }
+          const shareParams = {
+            uid: that.data.params.uid,
+            cid: that.data.params.cid,
+            tuan_id: data.data.data.tuan_id,
+            merchants_id: app.globalData.merchantsId
+          }
+          wx.showModal({
+            title: '操作成功！',
+            showCancel: true,
+            success: function (res) {
+              wx.navigateTo({
+                url: '../cantuan/cantuan?shareParams=' + JSON.stringify(shareParams),
+              })
+            }
+          })
         })
     })
   },

@@ -144,7 +144,7 @@ Page({
       tuan_id: event.currentTarget.dataset.tuanid
     }
     wx.redirectTo({
-      url: '../cantuan/cantuan?params=' + JSON.stringify(params)
+      url: '../cantuan/cantuan?shareParams=' + JSON.stringify(params)
     })
   },
   //我的会员

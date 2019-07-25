@@ -61,12 +61,13 @@ Page({
   group: function () {
     //检测用户是否具有权限
     const that = this
-    console.log(that.data.shareParams)
+    console.log('cantuan.group.shareParams',that.data.shareParams)
     const e = wx.getStorageSync("e");
     const params = {
       uid: e.loginUser.id,
       tuan_id: that.data.shareParams.tuan_id
     }
+    console.log('cantuan.group.params',params)
     userTest().then(data => {
       if (!data)
         return;
@@ -75,7 +76,7 @@ Page({
           if (!errorMessage(data)) {
             return;
           }
-          
+
           wx.showModal({
             title: "参团成功",
             showCancel: true,
