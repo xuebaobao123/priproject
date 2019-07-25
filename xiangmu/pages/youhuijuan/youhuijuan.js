@@ -98,14 +98,9 @@ Page({
     if (!userTest()) {
       return;
     }
-    console.log('params', params);
     util.postRequest(app.globalData.url + "coupon/coupon-acquire?access-token=" + current.accessToken, params)
       .then(function (data) {
-
-        if (!errorMessage(data)) {
-          return;
-        }
-        if (data.code == 200) {
+        if (data.status == 200) {
           wx.showToast({
             title: '操作成功',
             icon: 'success',
@@ -124,56 +119,28 @@ Page({
     const currentCoupon = this.data.couponArray[event.detail.value]
     const params = {
       uid: uid,
-      ct_id: event.currentTarget.dataset.id,
-    }
-    //检测用户是否具有权限
-    if (!userTest()) {
-      return;
-    }
-    // util.postRequest(app.globalData.url + "partner/open?access-token=" + current.accessToken, params)
-    //   .then(function (data) {
-    //     if (!errorMessage(data)) {
-    //       return;
-    //     }
-    //     if (data.code == 200) {
-    //       const params1 = {
-    //         uid: uid,
-    //         cid: event.currentTarget.dataset.id,
-    //         tuan_id:data.data.data.tuan_id,
-    //         merchants_id: app.globalData.merchantsId
-    //       }
-    //       wx.showModal({
-    //         title:"开团成功",
-    //         success: function (res) {
-    //           if (res.confirm) {
-    //             wx.redirectTo({
-    //               url: '../kaituan/kaituan?params=' + JSON.stringify(params1)
-    //             })
-    //           } else {
-    //           }
-    //         }
-    //       })
-    //     }
-    //     else {
-
-    //     }
-    //   })
-    const params1 = {
-      uid: uid,
       cid: event.currentTarget.dataset.id,
       merchants_id: app.globalData.merchantsId
+    }     
+    wx.redirectTo({
+      url: '../kaituan/kaituan?params=' + JSON.stringify(params)
+    })
+
+  },
+
+  //进入我参与的团
+  organgoto: function (event){
+    console.log(event.currentTarget.dataset);
+    const uid = wx.getStorageSync("uid");
+    const params = {
+      uid: uid,
+      cid: event.currentTarget.dataset.id,
+      merchants_id: app.globalData.merchantsId,
+      tuan_id: event.currentTarget.dataset.tuanid
     }
-    wx.showModal({
-        title:"开团成功",
-        success: function (res) {
-          if (res.confirm) {
-            wx.redirectTo({
-              url: '../kaituan/kaituan?params=' + JSON.stringify(params1)
-            })
-          } else {
-          }
-        }
-      })
+    wx.redirectTo({
+      url: '../cantuan/cantuan?params=' + JSON.stringify(params)
+    })
   },
   //我的会员
   goMyMember: function () {

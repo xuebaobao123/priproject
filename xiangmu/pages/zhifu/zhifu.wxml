@@ -5,7 +5,8 @@
       <view class="money">
           <input placeholder='{{money.price}}' placeholder-class='in' type="number" bindinput="money"></input>
       </view>
-      <view class="nr-title" style="line-height:80rpx;height:60rpx;">参伙余额￥{{money.balance}}</view>
+      <view class="nr-title" style="line-height:80rpx;height:60rpx;">参伙余额￥{{money.price}}</view>
+      <view class="nr-title" style="line-height:80rpx;height:60rpx;">实际金额￥{{money.balance}}</view>
       <view class="nr-title" style="height:80rpx;line-height:80rpx;color:red;" bindtap="youhui">优惠金额：￥{{money.discount_amount}}</view>
       <view class="mony" bindtap="zhifu">支付</view>
    </view>

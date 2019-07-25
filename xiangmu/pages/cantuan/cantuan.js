@@ -2,12 +2,9 @@ const app = getApp();
 var util = require('../../utils/fengzhuang.js');
 import errorMessage from '../../utils/errorMessage'
 import userLogin from '../../utils/userLogin'
+import youhuijuanService from '../../utils/youhuijuanService'
 // pages/xiangqing/xiangqing.js
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
     //项目名称
     projectName: '',
@@ -30,97 +27,63 @@ Page({
       }
     ],
   },
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
     console.log(options)
+    const params = JSON.parse(options.params);
     this.setData({
-      options: options
+      params: params
     })
     userLogin();
     app.changeTabBar();
-    // this.initData();
-    this.initInvolvedData();
-    this.initInvolvedContent();
-  },
-
-  //我参与的团数据
-  initInvolvedData: function () {
-    const that = this
-    const e = wx.getStorageSync("e");
-    const params = {
-      uid: e.loginUser.id,
-    }
-    util.postRequest(app.globalData.url + "user/participate-list?access-token=" + e.accessToken, params)
-      .then(function (data) {
-        if (!(errorMessage(data))) {
-          return;
-        }
-        that.setData({
-          //
-        })
-
-      })
+    this.initInvolvedContent(params);
   },
   //参团内容
-  initInvolvedContent:function(){
+  initInvolvedContent: function (params){
     const e = wx.getStorageSync("e");
     var that=this;
-    const params={
-      merchants_id:app.globalData.merchantsId,
-      uid: e.loginUser.id,
-      tuan_id:that.data.options.tuan_id,
-      cid:that.data.options.ct_id,
-    }
     // 参团内容详情
-    util.postRequest(app.globalData.url + "user/participate-list?access-token=" + e.accessToken, params)
+    util.postRequest(app.globalData.url + "coupon/tuan-info?access-token=" + e.accessToken, params)
       .then(function (data) {
         if (!(errorMessage(data))) {
           return;
         }
+        that.initUserList();
+        let curData = youhuijuanService.mapData(data.data.data)
+        curData.validityDate.endDate = curData.validityDate.endDate.substring(0, 10)
         that.setData({
-          //
+          data: curData
         })
-
       })
   },
-  //初始化数据
-  initData: function () {
-    //请求数据
-    //创建模拟数据
-    this.setData({
-      projectName: '项目名称写在这里,字体是思源黑体简体中无,字号是30px。',
-      content: '满100减50元',//内容
-      endDate: '2019/07/31',//截至日期
-      surNumber: '3',//剩余
-      projectSpeed: { projectDesc: '此处开始为项目的运营进度的详细介绍,字体是思源黑体字号控制在25px,可以图文并茂介绍。' },//项目进度
-      //参团人
-      userList: [
-        { headImg: '../images/weixin_03.png' }
-      ]
-    })
-
-    this.initUserList();
-  },
-  // 开团
+  // 参团
   group: function () {
     const that = this
     const e = wx.getStorageSync("e");
     const params = {
       uid: e.loginUser.id,
-      tuan_id: that.data.options.tuan_id
+      tuan_id: that.data.params.tuan_id
     }
-    util.postRequest(app.globalData.url + "add-tuan?access-token=" + e.accessToken, params)
+    util.postRequest(app.globalData.url + "coupon/add-tuan?access-token=" + e.accessToken, params)
       .then(function (data) {
-        if (data.success && !data.success) {
-          console.log('检索失败，' + data.message);
-          return;
-        }
         if (data.data.status != '200') {
-          console.log('参团接口请求失败，错误信息：' + data.data.msg);
+         wx.showModal({
+           title: data.data.msg,
+         })
         }
-
+        else{
+          wx.showModal({
+            title:"参团成功",
+            showCancel: true, 
+            success: function (res) {
+              if (res.confirm) {
+                wx.switchTab({
+                  url: '../index/index' 
+                })
+              } else {
+              }
+            }
+          })
+        }
       })
   },
   //加载用户头像
@@ -134,7 +97,6 @@ Page({
     util.postRequest(app.globalData.url + "coupon/tuan-user?access-token=" + e.accessToken, params)
       .then(function (data) {
         if (data.success && !data.success) {
-          console.log('检索失败，' + data.message);
           return;
         }
         that.setData({

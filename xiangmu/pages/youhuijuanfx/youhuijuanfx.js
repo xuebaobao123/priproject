@@ -22,7 +22,7 @@ Page({
   onLoad: function (options) {
     userLogin();
     const params={
-       cuid:"16",
+       cuid:options.cuid,
        merchants_id: app.globalData.merchantsId
     }
     var that=this;
@@ -74,5 +74,26 @@ Page({
           duration: 2000
         })
       })
+  },
+  //分享
+  onShareAppMessage: function (res) {
+    return {
+      title: '分享优惠券',
+      path: 'pages/youhuijuanfx/youhuijuanfx?cuid=' + res.target.dataset.cuid,
+      imageUrl: '../images/canhuo.png',  //用户分享出去的自定义图片大小为5:4,
+      success: function (res) {
+        console.log(res, "分享成功")
+        // 转发成功
+        wx.showToast({
+          title: "分享成功",
+          icon: 'success',
+          duration: 2000
+        })
+      },
+      fail: function (res) {
+        console.log(res, "失败")
+        // 分享失败
+      },
+    }
   },
 })

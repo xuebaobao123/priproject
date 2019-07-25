@@ -62,7 +62,7 @@ Page({
           projectName: data.data.data.name,
           money: data.data.data.price,//金额
           endDate: data.data.data.end_time.substring(0,10),//截至日期
-          surNumber: data.data.data.num,//剩余
+          surNumber: data.data.data.remainingNum,//剩余
           projectSpeed: { projectDesc: data.data.data.describe },//项目进度
           zhifu: data.data.data.partnerStatus
 

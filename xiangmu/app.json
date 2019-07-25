@@ -1,7 +1,8 @@
 {
   "pages": [
-    "pages/youhuijuanfx/youhuijuanfx",
     "pages/index/index",
+    "pages/youhuijuanfx/youhuijuanfx",
+   
     "pages/kaituan/kaituan",
     "pages/cantuan/cantuan",
     

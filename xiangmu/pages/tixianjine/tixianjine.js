@@ -12,9 +12,11 @@ Page({
       //小数位数值
       decimalDigits: 0,
     },
+    enable:false
   },
   onLoad: function (options) {
     userLogin();
+    const loginUser = wx.getStorageSync("e").loginUser;
     //红包余额
     this.findBalance();
   },
@@ -23,15 +25,12 @@ Page({
     const e = wx.getStorageSync("e");
     const uid=wx.getStorageSync("uid")
     //申请提现
-    util.postRequest(app.globalData.url + "withdrawal/add?access-token=" + e.accessToken, { uid: uid, mid: '' })
+    util.postRequest(app.globalData.url + "withdrawal/add?access-token=" + e.accessToken, { uid: uid, mid: app.globalData.merchantsId })
       .then(function (data) {
         if (!errorMessage(data)) {
           return;
         }
-        //将余额修改为0
-        let loginUser = e.loginUser;
-        loginUser = { ...loginUser, red_envelope: '0.00' }
-        wx.setStorageSync('e', { ...e, loginUser: loginUser })
+       
       })
   },
 

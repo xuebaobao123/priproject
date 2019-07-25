@@ -1,6 +1,7 @@
 .show{
   display: block;
-  height:300rpx;
+  min-height:50rpx;
+  max-height:300rpx;
   overflow-y: scroll;
 }
 .hide{

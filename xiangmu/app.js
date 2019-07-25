@@ -1,7 +1,5 @@
 //app.js
 App({
-  
-  
   tabbar: {
     "color": "black",
     "selectedColor": "#666",
@@ -70,11 +68,6 @@ App({
     }
     var tabBar = this.tabbar;
     let list = this.tabbar.isJoin ? this.tabbar.beforeJoinList : this.tabbar.afterJoinList
-    // for (var i = 0; i < list.length; i++) {
-    //   if (tabBar.list[i].pagePath == _pagePath) {
-    //     tabBar.list[i].selected = true;//根据页面地址设置当前页面状态  
-    //   }
-    // }
     _curPage.setData({
       tabbar: tabBar
     });

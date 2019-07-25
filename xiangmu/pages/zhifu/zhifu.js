@@ -64,9 +64,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.initUserCouponArrayData();
     this.setData({
-      moneyZf:(0).toFixed(2)
+      moneyZf:0
    })
   },
   //我的优惠券包
@@ -79,7 +78,6 @@ Page({
     }
     this.initDataFromUrl('coupon/coupon-list', params)
   },
-
   /**
    * 从不同的接口路径加载不同的数据
    * @param {*} url 
@@ -97,6 +95,7 @@ Page({
           return;
         }
         that.setData({
+          hidden: false,
           couponArray: data.data.data.map(item => {
             return that.mapData(item);
           })
@@ -246,8 +245,6 @@ Page({
     wx.redirectTo({
       url: '../kaituan/kaituan?params=' + JSON.stringify(params)
     })
-
-
   },
   // 返回
   fanhui: function () {
@@ -271,9 +268,8 @@ Page({
     })
   },
   youhui:function(){
-    this.setData({
-      hidden: false
-    })
+    this.initUserCouponArrayData();
+   
   },
   guanbi:function(){
     this.setData({
@@ -288,67 +284,88 @@ Page({
   // 优惠券
   youhuijuan: function (event){
     const e = wx.getStorageSync("e");
-    const params = {
-      merchants_id: app.globalData.merchantsId,
-      uid: e.loginUser.id,
-      price: this.data.moneyZf,
-      cuid: event.currentTarget.dataset.id
-    }
-    this.setData({
-      cuid: event.currentTarget.dataset.id
-    })
-    var that = this;
-    util.postRequest(app.globalData.url + "checkstand/price?access-token=" + e.accessToken, params)
-      .then(function (data) {
-        if (!(errorMessage(data))) {
-          return;
-        }
-        that.setData({
-          hidden: true,
-          money:data.data.data
-        })
+      const params = {
+        merchants_id: app.globalData.merchantsId,
+        uid: e.loginUser.id,
+        price: this.data.moneyZf,
+        cuid: event.currentTarget.dataset.id
+      }
+      this.setData({
+        cuid: event.currentTarget.dataset.id
       })
+      var that = this;
+      util.postRequest(app.globalData.url + "checkstand/price?access-token=" + e.accessToken, params)
+        .then(function (data) {
+          if (data.data.status==200) {
+            that.setData({
+              hidden: true,
+              money: data.data.data
+            })
+          }
+          else{
+            wx.showModal({
+              content: data.data.msg,
+            })
+          }
+        })
   },
   // 支付
   zhifu:function(){
     const e = wx.getStorageSync("e");
-    const params = {
-      merchants_id: app.globalData.merchantsId,
-      uid: e.loginUser.id,
-      price: this.data.moneyZf,
-      cuid:this.data.cuid
-    }
-    //检测用户是否具有权限
-    if (!userTest()) {
-      return;
-    }
-    //支付
-    const that = this;
-    util.postRequest(app.globalData.url + "checkstand/order?access-token=" + e.accessToken, params)
-      .then(function (data) {
-        if (!(errorMessage(data))) {
-          return;
-        }
-        if(data.data.data.type=="ok"){
-           wx.redirectTo({
-             url: '../index/index',
-           })
-        }
-        else{
-          wx.requestPayment({
-            "timeStamp": data.data.data.pay.timeStamp,
-            "nonceStr": data.data.data.pay.nonceStr,
-            "package": data.data.data.pay.package,
-            "signType": data.data.data.pay.signType,
-            "paySign": data.data.data.pay.paySign,
-            success(res) {
-              wx.switchTab({
-                url: '../index/index',
-              })
-            }
-          })
-        }
-        
-      })
+  if (this.data.moneyZf > 0) {
+      const params = {
+        merchants_id: app.globalData.merchantsId,
+        uid: e.loginUser.id,
+        price: this.data.moneyZf,
+        cuid: this.data.cuid ? this.data.cuid:""
+      }
+      //检测用户是否具有权限
+      if (!userTest()) {
+        return;
+      }
+      //支付
+      const that = this;
+      util.postRequest(app.globalData.url + "checkstand/order?access-token=" + e.accessToken, params)
+        .then(function (data) {
+          if (!(errorMessage(data))) {
+            return;
+          }
+          if(data.data.data.type=="ok"){
+            wx.redirectTo({
+              url: '../index/index',
+            })
+          }
+          else{
+            wx.requestPayment({
+              "timeStamp": data.data.data.pay.timeStamp,
+              "nonceStr": data.data.data.pay.nonceStr,
+              "package": data.data.data.pay.package,
+              "signType": data.data.data.pay.signType,
+              "paySign": data.data.data.pay.paySign,
+              success(res) {
+                wx.showModal({
+                  title: "支付成功",
+                  showCancel: true,
+                  success: function (res) {
+                    if (res.confirm) {
+                      wx.switchTab({
+                        url: '../index/index',
+                      })
+                    } else {
+                    }
+                  }
+                })
+                
+              }
+            })
+          }
+          
+        })
+      }
+   else {
+    wx.showModal({
+      title: '金额不能为空',
+    })
+  }
   }
 })

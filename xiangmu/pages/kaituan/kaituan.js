@@ -1,6 +1,7 @@
 const app = getApp();
 import errorMessage from '../../utils/errorMessage';
 var util = require('../../utils/fengzhuang.js');
+import youhuijuanService from '../../utils/youhuijuanService'
 Page({
   data: {
     headImg: 'https://images.unsplash.com/photo-1551334787-21e6bd3ab135?w=640',
@@ -15,8 +16,10 @@ Page({
       //图片
       projectImage: ''
     },
+
   },
   onLoad: function (options) {
+    console.log()
     app.changeTabBar();
     const params = JSON.parse(options.params);
     //存放参数
@@ -24,6 +27,7 @@ Page({
       params: params
     })
     this.initOrganGroupData(params)
+    console.log(options)
   },
   initOrganGroupData: function (params) {
     const e = wx.getStorageSync("e");
@@ -33,15 +37,10 @@ Page({
         if (!(errorMessage(data))) {
           return;
         }
+        let curData = youhuijuanService.mapData(data.data.data)
+        curData.validityDate.endDate=curData.validityDate.endDate.substring(0, 10)
         that.setData({
-          headImg: data.data.data.pic,
-          projectName: data.data.data.name,
-          //截至日期暂时获取开团结束日期。。可能是参团截至日期
-          endDate: data.data.data.end_time,
-          ctid: data.data.data.ctid,
-          projectSpeed: {
-            projectDesc: data.data.data.describe,
-          }
+          data: curData
         })
       })
   },
@@ -67,20 +66,22 @@ Page({
       ct_id: this.data.ctid,
       uid: this.data.params.uid,
     }
+    var that=this;
     util.postRequest(app.globalData.url + "partner/open?access-token=" + e.accessToken, params)
       .then(function (data) {
-        if (!(errorMessage(data))) {
+        if (!userTest()) {
           return;
         }
-        if (data.code == 200) {
+        // if (data.code == 200) {
           const params1 = {
-            uid: this.data.params.uid,
-            cid: this.data.params.cid,
+            uid: that.data.params.uid,
+            cid: that.data.params.cid,
             tuan_id:data.data.data.tuan_id,
             merchants_id: app.globalData.merchantsId
           }
           wx.showModal({
             title:"开团成功",
+            showCancel: true, 
             success: function (res) {
               if (res.confirm) {
                 wx.redirectTo({
@@ -90,7 +91,7 @@ Page({
               }
             }
           })
-        }
+        // }
       })
   },
   

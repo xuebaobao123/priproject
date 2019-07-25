@@ -1,3 +1,0 @@
-<view>
-   <web-view src="{{srcURL}}" width="100%;"></web-view>
-</view>

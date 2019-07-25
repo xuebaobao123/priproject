@@ -4,7 +4,7 @@
          <view class="left">
             <image src="{{item.imgUrl}}" class="img1"></image>
             <view class="dingwei">
-               <view class="dingwei1">
+               <view class="dingwei1" wx:if="{{params=='business'}}">
                   <image src="../images/youhuijuan1.png"></image>
                   <text class="{{item.couponType==COUPONTYPE.DISCOUNT?'':'active'}}">{{item.couponType==COUPONTYPE.DISCOUNT?item.needIntegral+'积分':'团'}}</text>
                </view>
@@ -20,10 +20,10 @@
                <view wx:if="{{item.couponType==COUPONTYPE.DISCOUNT}}">
                     <button open-type="share"  class="button"  data-cuid="{{item.cuid}}" hidden="{{!item.cuid}}"><image src="../images/zhuanzeng.png"></image></button>
                     <view style="height:30rpx;"></view>
-                    <view bindtap="{{item.accessType.targetEvent}}" wx:if="{{params!=='user'}}" data-id="{{item.id}}" style="position: absolute;bottom:0;">{{item.accessType.content}} ></view>
+                    <view bindtap="{{item.accessType.targetEvent}}" wx:if="{{params!=='user'}}" data-id="{{item.id}}" data-tuanId="{{item.tuan_id}}" style="position: absolute;bottom:0;">{{item.accessType.content}} ></view>
                 </view>
                
-               <view wx:if="{{item.couponType==COUPONTYPE.GROUP && params!=='user'}}" bindtap="{{item.accessType.targetEvent}}" style="padding-top:180rpx;" data-id="{{item.id}}" >{{item.accessType.content}} ></view>
+               <view wx:if="{{item.couponType==COUPONTYPE.GROUP && params!=='user'}}" bindtap="{{item.accessType.targetEvent}}" data-tuanId="{{item.tuan_id}}" style="padding-top:184rpx;" data-id="{{item.id}}" >{{item.accessType.content}} ></view>
             </view>
          </view>
          <view class="clearfloat"></view>
@@ -36,8 +36,8 @@
       </view>
    </view>
 </view>
-<view class="fixed">
-   <view>
+<view class="fixed" >
+   <view wx:if="{{params!=='user'}}">
       可用积分
       <text>{{usableIntegral}}</text>
    </view>

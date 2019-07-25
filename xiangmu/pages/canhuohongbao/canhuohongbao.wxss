@@ -106,3 +106,7 @@ page{
 .liebiao .right text{
   font-size:38rpx;
 }
+.enable{
+  background:gray !important;
+  color:white !important;
+}

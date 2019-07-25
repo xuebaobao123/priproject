@@ -50,8 +50,14 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    userLogin();
+    const loginUser = wx.getStorageSync("e").loginUser;
     this.initData();
     app.changeTabBar();
+    this.setData({
+      //判断是否可提现
+      enable: loginUser.withdrawal_state === 1
+    })
   },
   // 起止时间
   bindDateChange(e) {
