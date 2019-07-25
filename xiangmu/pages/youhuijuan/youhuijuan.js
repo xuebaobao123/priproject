@@ -95,21 +95,27 @@ Page({
     }
     const that=this;
     //检测用户是否具有权限
-    if (!userTest()) {
-      return;
-    }
+    userTest().then(data => {
+      if (!data)
+        return;
     util.postRequest(app.globalData.url + "coupon/coupon-acquire?access-token=" + current.accessToken, params)
       .then(function (data) {
-        if (data.status == 200) {
-          wx.showToast({
-            title: '操作成功',
-            icon: 'success',
-            duration: 2000
-          })
+        if (data.data.status == 200) {
+         wx.showModal({
+           title: '提示',
+           content: "兑换成功",
+           showCancel: false, 
+         })
         }
         else {
+          wx.showModal({
+            title: '提示',
+            content: data.data.msg,
+            showCancel: false,
+          })
         }
       })
+    })
   },
 
   //开团
@@ -130,7 +136,6 @@ Page({
 
   //进入我参与的团
   organgoto: function (event){
-    console.log(event.currentTarget.dataset);
     const uid = wx.getStorageSync("uid");
     const params = {
       uid: uid,

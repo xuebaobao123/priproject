@@ -75,3 +75,17 @@ page{
   line-height:100rpx;
   font-size:70rpx;
 }
+.guanbi{
+  background:#de7534;
+  color:white;
+  width:200rpx;
+  font-size:30rpx;
+  height:50rpx;
+  line-height:50rpx;
+  text-align: center;
+  border-radius: 10rpx;
+}
+.enable{
+  background:gray !important;
+  color:white !important;
+}

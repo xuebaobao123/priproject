@@ -55,10 +55,8 @@ const initDataFromUrl = async(url, params, type) => {
 }
 //封装后台对象至页面对象
 const mapData = (item, type) => {
-  console.log(item,"开团")
   const loginUser = wx.getStorageSync("e").loginUser;
   //根据优惠券类型显示内容
-  console.log('undefined',)
   return {
     id: item.id,
     tuan_id: item.tuan_id || item.utid,
@@ -141,7 +139,7 @@ function initAccessType(item, type) {
       } else {
         //暂时将优惠券获取方式的团购方式设置为我要开团，后续有变更可调整
         accessType = {
-          content: '我要开团',
+          content: '进入',
           targetEvent: 'organGroup'
         }
       }
@@ -150,7 +148,7 @@ function initAccessType(item, type) {
       
       //暂时将优惠券获取方式的团购方式设置为我要开团，后续有变更可调整
       accessType = {
-        content: '我要开团',
+        content: '进入',
         targetEvent: 'organGroup'
       }
       break;

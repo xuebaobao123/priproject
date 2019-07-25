@@ -25,7 +25,7 @@ Page({
     const e = wx.getStorageSync("e");
     const uid=wx.getStorageSync("uid")
     //申请提现
-    util.postRequest(app.globalData.url + "withdrawal/add?access-token=" + e.accessToken, { uid: uid, mid: app.globalData.merchantsId })
+    util.postRequest(app.globalData.url + "withdrawal/add?access-token=" + e.accessToken, { uid: uid, merchants_id: app.globalData.merchantsId })
       .then(function (data) {
         if (!errorMessage(data)) {
           return;

@@ -19,9 +19,8 @@ export default async function userTest() {
         return false;
     }
     //检索登录用户
-    await util.postRequest(app.globalData.url + "user/user-check?access-token=" + e.accessToken, { uid: uid })
+    return await util.postRequest(app.globalData.url + "user/user-check?access-token=" + e.accessToken, { uid: uid })
         .then(function (data) {
-          console.log('userTest.data',data);
             if (!errorMessage(data)) {
                 return false;
             }
@@ -36,5 +35,6 @@ export default async function userTest() {
                 return false;
             }
             return true;
+            console.log(data,"data")
         })
 }

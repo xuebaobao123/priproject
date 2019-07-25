@@ -5,8 +5,9 @@
       <view class="money">
           <input placeholder='{{money.price}}' placeholder-class='in' type="number" bindinput="money"></input>
       </view>
-      <view class="nr-title" style="line-height:80rpx;height:60rpx;">参伙余额￥{{money.price}}</view>
-      <view class="nr-title" style="line-height:80rpx;height:60rpx;">实际金额￥{{money.balance}}</view>
+      <view class="nr-title" style="line-height:80rpx;height:60rpx;">实付金额￥{{money.payPrice}}</view>
+      <view class="nr-title" style="line-height:80rpx;height:60rpx;">使用金额￥{{money.balance}}</view>
+      <view class="nr-title" style="line-height:80rpx;height:60rpx;">原始金额￥{{money.price}}</view>
       <view class="nr-title" style="height:80rpx;line-height:80rpx;color:red;" bindtap="youhui">优惠金额：￥{{money.discount_amount}}</view>
       <view class="mony" bindtap="zhifu">支付</view>
    </view>
@@ -15,7 +16,7 @@
    <view class="tanchuang1">
       <image src="../images/cha_03.jpg" class="cha" bindtap="guanbi"></image>
       <view class="youhuijuan">
-               <view class="youhuijuan1" wx:for="{{couponArray}}"      bindtap="youhuijuan" data-id="{{item.cuid}}">
+               <view class="youhuijuan1" wx:for="{{couponArray}}" bindtap="youhuijuan" data-id="{{item.cuid}}">
               <view class="top">
                 <view class="left">
                     <image src="{{item.imgUrl}}" class="img1"></image>
@@ -31,11 +32,11 @@
                       <view>{{item.integralName}}</view>
                       <view>{{item.content}}</view>
                     </view>
-                    <view class="you">
-                      <view>
-                      </view>
-                    </view>
+                     <view class="clearfloat"></view>
+                     <view class="guanbi {{item.is_use==1?'':'enable'}}" bindtap="{{item.is_use==1?'guanbi':''}}">立即领取</view>
+                     
                 </view>
+
                 <view class="clearfloat"></view>
               </view>
           </view>
