@@ -31,14 +31,14 @@ Page({
   },
   initOrganGroupData: function (params) {
     const e = wx.getStorageSync("e");
-    const that=this;
+    const that = this;
     util.postRequest(app.globalData.url + "coupon/tuan-info?access-token=" + e.accessToken, params)
       .then(function (data) {
         if (!(errorMessage(data))) {
           return;
         }
         let curData = youhuijuanService.mapData(data.data.data)
-        curData.validityDate.endDate=curData.validityDate.endDate.substring(0, 10)
+        curData.validityDate.endDate = curData.validityDate.endDate.substring(0, 10)
         that.setData({
           data: curData
         })
@@ -62,48 +62,48 @@ Page({
   // 开团
   group: function () {
     const e = wx.getStorageSync("e");
-    const params ={
+    const params = {
       ct_id: this.data.ctid,
       uid: this.data.params.uid,
     }
-    var that=this;
+    var that = this;
     util.postRequest(app.globalData.url + "partner/open?access-token=" + e.accessToken, params)
       .then(function (data) {
         if (!userTest()) {
           return;
         }
         // if (data.code == 200) {
-          const params1 = {
-            uid: that.data.params.uid,
-            cid: that.data.params.cid,
-            tuan_id:data.data.data.tuan_id,
-            merchants_id: app.globalData.merchantsId
+        const shareParams = {
+          uid: that.data.params.uid,
+          cid: that.data.params.cid,
+          tuan_id: data.data.data.tuan_id,
+          merchants_id: app.globalData.merchantsId
+        }
+        this.setData({
+          shareParams: shareParams
+        })
+        wx.showModal({
+          title: "开团成功",
+          showCancel: true,
+          success: function (res) {
+            // if (res.confirm) {
+            //   wx.redirectTo({
+            //     url: '../cantuan/cantuan?params=' + JSON.stringify(params1)
+            //   })
+            // } else {
+            // }
           }
-          wx.showModal({
-            title:"开团成功",
-            showCancel: true, 
-            success: function (res) {
-              // if (res.confirm) {
-              //   wx.redirectTo({
-              //     url: '../cantuan/cantuan?params=' + JSON.stringify(params1)
-              //   })
-              // } else {
-              // }
-            }
-          })
+        })
         // }
       })
   },
-  
+
   //分享
   onShareAppMessage: function (res) {
-    const params = {
-      uid: this.data.params.uid,
-      tuan_id: this.data.params.tuan_id
-    }
+    
     return {
       title: '分享优惠券',
-      path: 'pages/cantuan/cantuan?params=' + params,
+      path: 'pages/cantuan/cantuan?params=' + JSON.stringify(this.data.shareParams),
       imageUrl: '../images/canhuo.png',
       success: function (res) {
         console.log(res, "分享成功")
