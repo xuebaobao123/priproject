@@ -107,29 +107,5 @@ Page({
 
       })
   },
-  //分享
-  onShareAppMessage: function (res) {
-    const params = {
-      uid: this.data.params.uid,
-      tuan_id: this.data.params.tuan_id
-    }
-    return {
-      title: '分享优惠券',
-      path: 'pages/cantuan/cantuan?params=' + params,
-      imageUrl: '../images/canhuo.png',
-      success: function (res) {
-        console.log(res, "分享成功")
-        // 转发成功
-        wx.showToast({
-          title: "分享成功",
-          icon: 'success',
-          duration: 2000
-        })
-      },
-      fail: function (res) {
-        console.log(res, "失败")
-        // 分享失败
-      },
-    }
-  },
+  
 })
