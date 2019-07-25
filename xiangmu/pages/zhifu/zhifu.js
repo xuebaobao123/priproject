@@ -74,6 +74,7 @@ Page({
       merchants_id: app.globalData.merchantsId,
       price: this.data.moneyZf
     }
+    console.log('usercoupon.params',params);
     this.initDataFromUrl('coupon/coupon-list', params)
   },
   /**
@@ -222,6 +223,7 @@ Page({
     })
   },
   money: function(e) {
+    console.log('moneyzf',e.detail.value)
     this.setData({
       moneyZf: e.detail.value
     })
@@ -244,7 +246,7 @@ Page({
         if(!errorMessage(data)){
           return;
         }
-        
+
         that.setData({
           hidden: true,
           money: data.data.data,
