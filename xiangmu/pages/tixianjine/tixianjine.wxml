@@ -5,7 +5,7 @@
        <view class="amount-shenqing" bindtap="shenqing">申 请</view>
        <view class="amount-xz">
            <view>提现须知:</view>
-           <view>提现须知提现须知提现须知提现须知提现须知提现须知提现须知</view>
+           <view>每个月内可进行提现申请一次，本月内申请的的提现，会在下个月10号一次性提到微信账户。</view>
        </view>
    </view>
 </view>

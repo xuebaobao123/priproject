@@ -3,6 +3,15 @@
   min-height:50rpx;
   max-height:300rpx;
   overflow-y: scroll;
+
+}
+.show1{
+    transform: rotate(90deg);
+    display: inline-block
+}
+.hide1{
+    transform: rotate(0);
+    display: inline-block
 }
 .hide{
   display: none;

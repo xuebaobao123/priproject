@@ -14,11 +14,11 @@
             <view class="zuo" style=" position: relative;height:220rpx;">
                <view style="height:70rpx;">{{item.integralName}}</view>
                <view style="height:34rpx;">{{item.content}}</view>
-               <view bindtap="onToggle" data-index="{{index}}"  style="position: absolute;bottom:0;">查看详情 ></view>
+               <view bindtap="onToggle" data-index="{{index}}"  style="position: absolute;bottom:0;" >查看详情 <text class="{{activeIndex == index ? 'show1' : 'hide1'}}">></text></view>
             </view>
             <view class="you" style=" position: relative;height:220rpx;">
                <view wx:if="{{item.couponType==COUPONTYPE.DISCOUNT}}">
-                    <button open-type="share"  class="button"  data-cuid="{{item.cuid}}" hidden="{{!item.cuid}}"><image src="../images/zhuanzeng.png"></image></button>
+                    <button open-type="share"  class="button"  data-cuid="{{item.cuid}}" hidden="{{!item.cuid}}" data-index="{{index}}"><image src="../images/zhuanzeng.png"></image></button>
                     <view style="height:30rpx;"></view>
                     <view bindtap="{{item.accessType.targetEvent}}" wx:if="{{params!=='user'}}" data-id="{{item.id}}" data-tuanId="{{item.tuan_id}}" style="position: absolute;bottom:0;">{{item.accessType.content}} ></view>
                 </view>

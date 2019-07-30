@@ -87,9 +87,17 @@ Page({
 
   //申请体现
   onCashOut: function () {
-    wx.navigateTo({
-      url: '../tixianjine/tixianjine',
-    })
+    if (this.data.balance.numDigits==0){
+      wx.showModal({
+        title: '提示',
+        content: '金额不能等于0',
+      })
+    }
+    else{
+      wx.navigateTo({
+        url: '../tixianjine/tixianjine',
+      })
+    }
   },
 
   //红包记录查询
@@ -98,9 +106,10 @@ Page({
       billRecord: []
     })
     const e = wx.getStorageSync("e");
+    const uid = wx.getStorageSync("uid");
     // e.accessToken = '9NfL1S6yWoIZHSd4cXsKOb1Iz816_3se';
     const params = {
-      uid: e.loginUser.id,
+      uid: uid,
       startDay: this.data.beginDate,
       endDay: this.data.endDate
     }

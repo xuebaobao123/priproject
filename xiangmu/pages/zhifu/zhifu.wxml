@@ -33,7 +33,7 @@
                       <view>{{item.content}}</view>
                     </view>
                      <view class="clearfloat"></view>
-                     <view class="guanbi {{item.is_use==1?'':'enable'}}" bindtap="{{item.is_use==1?'guanbi':''}}">立即领取</view>
+                     <view class="guanbi {{item.is_use==1?'':'enable'}}" bindtap="{{item.is_use==1?'guanbi':''}}">立即使用</view>
                      
                 </view>
 

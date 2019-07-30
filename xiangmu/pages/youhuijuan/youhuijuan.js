@@ -31,21 +31,11 @@ Page({
   onLoad: function (options) {
     userLogin();
     const e = wx.getStorageSync("e");
-    this.setData({
-      usableIntegral: e.loginUser.integral
-    })
-    let dataArray = null;
-    if (!options.owner) {
-      //没有owner参数默认加载我的优惠券包数据
-      dataArray = youhuijuanService.initUserCouponArrayData();
-      this.setData({
-        couponArray: dataArray
-      })
-      return;
-    }
-    const that = this;
+    const loginUser = wx.getStorageSync("e").loginUser;
+    var that=this;
     that.setData({
-      params:options.owner
+      usableIntegral: loginUser.integral,
+      params: options.owner
     })
     switch (options.owner) {
       case 'business':
@@ -87,7 +77,7 @@ Page({
   exchange: function (event) {
     const current = wx.getStorageSync("e");
     const uid = wx.getStorageSync("uid");
-    const params = {
+    const shareParams = {
       merchants_id: app.globalData.merchantsId,
       uid: uid,
       cid: event.currentTarget.dataset.id,
@@ -98,7 +88,7 @@ Page({
     userTest().then(data => {
       if (!data)
         return;
-    util.postRequest(app.globalData.url + "coupon/coupon-acquire?access-token=" + current.accessToken, params)
+      util.postRequest(app.globalData.url + "coupon/coupon-acquire?access-token=" + current.accessToken, shareParams)
       .then(function (data) {
         if (data.data.status == 200) {
          wx.showModal({
@@ -123,42 +113,50 @@ Page({
     const current = wx.getStorageSync("e");
     const uid = wx.getStorageSync("uid");
     const currentCoupon = this.data.couponArray[event.detail.value]
-    const params = {
+    const shareParams = {
       uid: uid,
       cid: event.currentTarget.dataset.id,
       merchants_id: app.globalData.merchantsId
     }     
-    wx.redirectTo({
-      url: '../kaituan/kaituan?params=' + JSON.stringify(params)
+    wx.navigateTo({
+      url: '../kaituan/kaituan?shareParams=' + JSON.stringify(shareParams)
     })
-
   },
-
   //进入我参与的团
   organgoto: function (event){
     const uid = wx.getStorageSync("uid");
-    const params = {
+    const shareParams = {
       uid: uid,
       cid: event.currentTarget.dataset.id,
       merchants_id: app.globalData.merchantsId,
       tuan_id: event.currentTarget.dataset.tuanid
     }
-    wx.redirectTo({
-      url: '../cantuan/cantuan?shareParams=' + JSON.stringify(params)
+    this.setData({
+      cid: event.currentTarget.dataset.id,
+    })
+    wx.navigateTo({
+      url: '../cantuan/cantuan?type=kaituan&uid='+uid+'&shareParams=' + JSON.stringify(shareParams)
     })
   },
   //我的会员
   goMyMember: function () {
-    wx.redirectTo({
+    wx.navigateTo({
       url: '../wode/wode'
     })
   },
   //分享
   onShareAppMessage: function (res) {
+    console.log(res)
+    var uid = wx.getStorageSync('uid');
+    const params = {
+      cuid: res.target.dataset.cuid,
+      merchants_id: app.globalData.merchantsId,
+      uid: uid
+    }
     return {
       title: '分享优惠券',
-      path: 'pages/youhuijuanfx/youhuijuanfx?cuid=' + res.target.dataset.cuid,
-      imageUrl: '../images/canhuo.png',  //用户分享出去的自定义图片大小为5:4,
+      path: 'pages/youhuijuanfx/youhuijuanfx?params=' + JSON.stringify(params),
+      imageUrl: this.data.couponArray[res.target.dataset.index].imgUrl,  //用户分享出去的自定义图片大小为5:4,
       success: function (res) {
         console.log(res, "分享成功")
         // 转发成功

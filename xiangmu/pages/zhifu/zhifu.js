@@ -55,7 +55,8 @@ Page({
     money: {
       price: 0,
       balance: 0,
-      discount_amount: 0
+      discount_amount: 0,
+      payPrice:0
     }
   },
   /**
@@ -235,10 +236,10 @@ Page({
       merchants_id: app.globalData.merchantsId,
       uid: e.loginUser.id,
       price: this.data.moneyZf,
-      cuid: event.currentTarget.dataset.cuid
+      cuid: event.currentTarget.dataset.id
     }
     this.setData({
-      cuid: event.currentTarget.dataset.cuid
+      cuid: event.currentTarget.dataset.id
     })
     var that = this;
     util.postRequest(app.globalData.url + "checkstand/price?access-token=" + e.accessToken, params)
@@ -271,15 +272,25 @@ Page({
         return
       }
       const e = wx.getStorageSync("e");
-      var params = {
-        merchants_id: app.globalData.merchantsId,
-        uid: e.loginUser.id,
-        price: that.data.moneyZf,
-        cuid: that.data.cuid
+   
+
+
+      if (that.data.cuid) {
+        params = {
+          merchants_id: app.globalData.merchantsId,
+          uid: e.loginUser.id,
+          price: that.data.moneyZf,
+          cuid: that.data.cuid
+        }
       }
-
+      else{
+        var params = {
+          merchants_id: app.globalData.merchantsId,
+          uid: e.loginUser.id,
+          price: that.data.moneyZf,
+        }
+      }
       //支付
-
       util.postRequest(app.globalData.url + "checkstand/order?access-token=" + e.accessToken, params)
         .then(function(data) {
           if (!(errorMessage(data))) {
@@ -291,7 +302,7 @@ Page({
                 showCancel: true,
                 success: function (res) {
                   if (res.confirm) {
-                    wx.switchTab({
+                    wx.redirectTo({
                       url: '../index/index',
                     })
                   } else {
@@ -313,7 +324,7 @@ Page({
                   showCancel: true,
                   success: function(res) {
                     if (res.confirm) {
-                      wx.switchTab({
+                      wx.redirectTo({
                         url: '../index/index',
                       })
                     } else {

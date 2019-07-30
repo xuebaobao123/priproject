@@ -21,18 +21,18 @@ Page({
   onLoad: function (options) {
     console.log()
     app.changeTabBar();
-    const params = JSON.parse(options.params);
+    const shareParams = JSON.parse(options.shareParams);
     //存放参数
     this.setData({
-      params: params
+      shareParams: shareParams
     })
-    this.initOrganGroupData(params)
-    console.log(options)
+    this.initOrganGroupData(shareParams)
+    console.log(options,"开团")
   },
-  initOrganGroupData: function (params) {
+  initOrganGroupData: function (shareParams) {
     const e = wx.getStorageSync("e");
     const that = this;
-    util.postRequest(app.globalData.url + "coupon/tuan-info?access-token=" + e.accessToken, params)
+    util.postRequest(app.globalData.url + "coupon/tuan-info?access-token=" + e.accessToken, shareParams)
       .then(function (data) {
         if (!(errorMessage(data))) {
           return;
@@ -59,23 +59,23 @@ Page({
   // 开团
   group: function () {
     const e = wx.getStorageSync("e");
-    const params = {
+    const shareParams = {
       ct_id: this.data.data.ctid,
-      uid: this.data.params.uid,
+      uid: this.data.shareParams.uid,
     }
     var that = this;
     userTest().then(data => {
       if (!data)
         return;
-      util.postRequest(app.globalData.url + "partner/open?access-token=" + e.accessToken, params)
+      util.postRequest(app.globalData.url + "partner/open?access-token=" + e.accessToken, shareParams)
         .then(function (data) {
           console.log('partner/open.data', data);
           if (!errorMessage(data)) {
             return;
           }
           const shareParams = {
-            uid: that.data.params.uid,
-            cid: that.data.params.cid,
+            uid: that.data.shareParams.uid,
+            cid: that.data.shareParams.cid,
             tuan_id: data.data.data.tuan_id,
             merchants_id: app.globalData.merchantsId
           }
@@ -84,7 +84,7 @@ Page({
             showCancel: true,
             success: function (res) {
               wx.navigateTo({
-                url: '../cantuan/cantuan?type=kaituan&shareParams=' + JSON.stringify(shareParams),
+                url: '../cantuan/cantuan?type=kaituan&uid=' + that.data.shareParams.uid+'&shareParams=' + JSON.stringify(shareParams),
               })
             }
           })

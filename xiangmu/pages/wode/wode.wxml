@@ -45,7 +45,7 @@
                   {{surplus.decimalDigits}}
                </view>
             </view>
-            <view class="right">消费查询 ></view>
+            <view class="right">消费查询 <text class="{{activeIndex ? 'show1' : 'hide1'}}">></text></view>
          </view>
          <view class="pic {{activeIndex ? 'show' : 'hide'}}">
             <view>近一月</view>

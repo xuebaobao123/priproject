@@ -34,11 +34,13 @@ const initUserShareCoupon = (params) => {
   return initDataFromUrl('coupon/cuinfo', params);
 }
 const initDataFromUrl = async(url, params, type) => {
+  console.log("参数",params)
   const e = wx.getStorageSync("e");
   let curData = null;
   //优惠券记录
   await util.postRequest(app.globalData.url + url + "?access-token=" + e.accessToken, params)
     .then(function(data) {
+      console.log("优惠卷包",data)
       if (!errorMessage(data)) {
         return;
       }

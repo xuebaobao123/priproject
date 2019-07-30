@@ -19,13 +19,26 @@
         <view class="cantuan-title">参团人员</view>
         <view class="cantuan-touxiang">
            <view class="cantuan1" wx:for="{{userList}}">
-              <image src="{{item.headImg}}"></image>
-           </view>
+            <image src="{{item.headImg}}"></image>
+            </view>
         </view>
       </view>
       <rich-text style="padding:10rpx 0 0 40rpx;display:block;font-size:36rpx;" nodes="{{canhuo.integralExplain}}"></rich-text>
-      <button open-type="share"  class="button">分享</button> 
-      <view class="group" bindtap="group" wx:if="{{kaituan!=1}}">参团</view>
-      <button open-type="share"  class="group" wx:if="{{kaituan==1}}">分享</button>  
+      <!-- <button open-type="share"  class="button">分享</button>  -->
+      <!-- <view class="group" bindtap="group" wx:if="{{kaituan!=1}}">参团</view>
+      <button open-type="share"  class="group" wx:if="{{kaituan==1}}">分享</button>  -->
+      <view  wx:if="{{type==='fenxiang'}}">
+         <button open-type="share"  class="button">分享</button> 
+      </view>
+      <view wx:else>
+          <view class="group" bindtap="group">参团</view>
+      </view>
+     
    </view>
+</view>
+
+<view class="tanceng" hidden="{{shouquan}}">
+    <button class='bottom' type='primary' open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="bindGetUserInfo">
+      授权登录  
+  </button>
 </view>

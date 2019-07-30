@@ -23,6 +23,7 @@ Page({
   },
   onLoad: function () {
     var e = wx.getStorageSync('e');
+    console.log("xuebaobao")
     this.setData({
       shouquan: !!e,
     })
