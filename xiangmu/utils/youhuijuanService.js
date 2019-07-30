@@ -30,7 +30,8 @@ const initUserCouponArrayData = () => {
   return initDataFromUrl('coupon/coupon-list', params)
 }
 //用户优惠卷包
-const initUserShareCoupon = (params) => {
+const initUserShareCoupon = async(params) => {
+  console.log("用户params", params)
   return initDataFromUrl('coupon/cuinfo', params);
 }
 const initDataFromUrl = async(url, params, type) => {
@@ -61,7 +62,6 @@ const mapData = (item, type) => {
   return {
     id: item.id,
     tuan_id: item.tuan_id || item.utid,
-
     //需要积分
     needIntegral: (loginUser.is_canhuo && loginUser.is_canhuo == 2) ? item.integral_2 : item.integral,
     integralName: item.name,

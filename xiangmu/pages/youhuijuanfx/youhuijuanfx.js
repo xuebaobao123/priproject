@@ -24,29 +24,26 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    userLogin();
     const e = wx.getStorageSync("e");
     const uid = wx.getStorageSync("uid");
     const params = JSON.parse(options.params);
     const shareParams={
        cuid:params.cuid,
+       //cuid:"34",
        merchants_id: app.globalData.merchantsId,
        uid:uid
     }
     var that = this;
-    this.setData({
+    that.setData({
       shouquan: !!e,
-      params: params,
+      // params: params,
     })
-    if(that.data.shouquan){
-      userLogin();
       youhuijuanService.initUserShareCoupon(shareParams).then(data => {
         that.setData({
           couponArray: new Array(data),
         })
       });
-      
-    }
-  
   },
   //查看详情
   onToggle(e) {
@@ -73,7 +70,6 @@ Page({
     const current = wx.getStorageSync("e");
     const uid = wx.getStorageSync("uid");
     const currentCoupon = this.data.couponArray[0];
-    console.log("currentCoupon", currentCoupon)
     const params = {
       merchants_id: app.globalData.merchantsId,
       uid: uid,
@@ -141,9 +137,6 @@ Page({
         }
       });
     }
-    this.setData({
-      shouquan: !this.data.shouquan,
-    })
   },
   initToken: async function () {
     var e = wx.getStorageSync('e');
@@ -163,6 +156,10 @@ Page({
               wx.setStorageSync("openid", data.data.data.openid)
               util.postRequest(app.globalData.url + "auth/login", { openid: data.data.data.openid })
                 .then(function (tokenData) {
+                  that.setData({
+                    shouquan: true
+                  })
+                  console.log("login", tokenData)
                   if (!(errorMessage(tokenData))) {
                     return;
                   }
@@ -193,19 +190,20 @@ Page({
     var that = this;
     util.postRequest(app.globalData.url + "user/up-info?access-token=" + e.accessToken, data)
       .then(function (data) {
+        console.log("up-info",data)
         wx.setStorageSync("uid", data.data.data.uid);
         const shareParams={
           cuid: that.data.params.cuid,
+          //cuid:"34",
           merchants_id: app.globalData.merchantsId,
-          uid: uid
+          uid: data.data.data.uid
         }
         youhuijuanService.initUserShareCoupon(shareParams).then(data => {
           that.setData({
             couponArray: new Array(data),
           })
+          console.log("couponArray数据", new Array(data))
         });
-        userLogin();
-      }, function (error) {
       })
   },
 })

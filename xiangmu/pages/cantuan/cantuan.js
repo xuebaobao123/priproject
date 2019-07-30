@@ -38,7 +38,6 @@ Page({
       orUid: options.uid
     })
     console.log("options", options)
-    if (this.data.shouquan) {
       userLogin();
       this.initInvolvedContent(shareParams);
       //检索是分享还是参团
@@ -49,7 +48,6 @@ Page({
           })
         }
       });
-    }
 
   },
   //参团内容
@@ -140,7 +138,6 @@ Page({
       uid: e.loginUser.id,
       tuan_id: that.data.shareParams.tuan_id
     }
-
     util.postRequest(app.globalData.url + "coupon/tuan-user?access-token=" + e.accessToken, params)
       .then(function(data) {
         if (!errorMessage(data)) {
@@ -165,6 +162,7 @@ Page({
       //用户按了允许授权按钮
       var that = this;
       //加载token
+    
       that.initToken();
     } else {
       //用户按了拒绝按钮
@@ -181,9 +179,6 @@ Page({
         }
       });
     }
-    this.setData({
-      shouquan: !this.data.shouquan,
-    })
   },
   initToken: async function() {
     var e = wx.getStorageSync('e');
@@ -197,16 +192,20 @@ Page({
           }
           util.postRequest(app.globalData.url + "auth/openid", data)
             .then(function(data) {
+              
               console.log("openid", data);
               if (!(errorMessage(data))) {
                 return;
               }
               wx.setStorageSync("openid", data.data.data.openid)
               util.postRequest(app.globalData.url + "auth/login", {
+                
                   openid: data.data.data.openid
                 })
                 .then(function(tokenData) {
-                  console.log("login", tokenData);
+                  that.setData({
+                    shouquan: true
+                  })
                   if (!(errorMessage(tokenData))) {
                     return;
                   }
