@@ -27,25 +27,26 @@ Page({
     const e = wx.getStorageSync("e");
     const uid = wx.getStorageSync("uid");
     const params = JSON.parse(options.params);
-    
     const shareParams={
        cuid:params.cuid,
        merchants_id: app.globalData.merchantsId,
        uid:uid
     }
-    console.log('params', params)
-    console.log("options",options)
-    console.log("shareParams", shareParams)
     var that = this;
-    youhuijuanService.initUserShareCoupon(shareParams).then(data => {
-      that.setData({
-        couponArray: new Array(data),
-      })
-    });
     this.setData({
       shouquan: !!e,
       params: params,
     })
+    if(that.data.shouquan){
+      userLogin();
+      youhuijuanService.initUserShareCoupon(shareParams).then(data => {
+        that.setData({
+          couponArray: new Array(data),
+        })
+      });
+      
+    }
+  
   },
   //查看详情
   onToggle(e) {
@@ -76,7 +77,7 @@ Page({
     const params = {
       merchants_id: app.globalData.merchantsId,
       uid: uid,
-      cuid: currentCoupon.id,
+      cuid: this.data.params.cuid,
       type: 2//表示领取
     }
     util.postRequest(app.globalData.url + "coupon/coupon-acquire?access-token=" + current.accessToken, params)
@@ -125,7 +126,6 @@ Page({
       var that = this;
       //加载token
       that.initToken();
-
     } else {
       //用户按了拒绝按钮
       wx.showModal({
@@ -169,8 +169,6 @@ Page({
                   //成功获取token
                   wx.setStorageSync("e", { ...e, accessToken: tokenData.data.data.access_token })
                   that.initlogin();
-                  //轮播图
-
                 }, function (error) {
                 })
             }, function (error) {
@@ -192,16 +190,20 @@ Page({
       country: e.province,
       parent_id: "",
     }
-
+    var that = this;
     util.postRequest(app.globalData.url + "user/up-info?access-token=" + e.accessToken, data)
       .then(function (data) {
         wx.setStorageSync("uid", data.data.data.uid);
-        const params={
-          cuid: this.data.params.cuid,
+        const shareParams={
+          cuid: that.data.params.cuid,
           merchants_id: app.globalData.merchantsId,
           uid: uid
         }
-        
+        youhuijuanService.initUserShareCoupon(shareParams).then(data => {
+          that.setData({
+            couponArray: new Array(data),
+          })
+        });
         userLogin();
       }, function (error) {
       })

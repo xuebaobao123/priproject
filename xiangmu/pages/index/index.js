@@ -23,7 +23,6 @@ Page({
   },
   onLoad: function () {
     var e = wx.getStorageSync('e');
-    console.log("xuebaobao")
     this.setData({
       shouquan: !!e,
     })
@@ -37,7 +36,6 @@ Page({
       url: advertPlace.fowardUrl
     })
   },
-
   initToken: async function () {
     var e = wx.getStorageSync('e');
     const that = this;

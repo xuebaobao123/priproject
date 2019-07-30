@@ -41,3 +41,13 @@
   font-size:30rpx;
   color:#de7534;
 }
+.disable{
+  background:gray;
+  color:white;
+  font-size:30rpx;
+  height:80rpx;
+  line-height:80rpx;
+  border-radius: 10rpx;
+  margin:40rpx 0 80rpx 0;
+  text-align: center;
+}

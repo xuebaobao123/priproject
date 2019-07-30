@@ -34,7 +34,6 @@ const initUserShareCoupon = (params) => {
   return initDataFromUrl('coupon/cuinfo', params);
 }
 const initDataFromUrl = async(url, params, type) => {
-  console.log("参数",params)
   const e = wx.getStorageSync("e");
   let curData = null;
   //优惠券记录
@@ -89,6 +88,9 @@ const mapData = (item, type) => {
     imgUrl: item.pic,
     couponType: couponType(item),
     accessType: initAccessType(item, type),
+    cantuan_endtime: item.cantuan_endtime,
+    tuan_status: item.tuan_status,
+    tuan_type: item.tuan_type
   }
 }
 //拼接代金券描述

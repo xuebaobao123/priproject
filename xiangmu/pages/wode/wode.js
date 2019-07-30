@@ -129,7 +129,7 @@ Page({
     //单个
     const detail = this.data.detailArray[e.currentTarget.dataset.index];
     //跳转页面
-    wx.redirectTo({
+    wx.navigateTo({
       url: detail.fowardUrl
     })
   },

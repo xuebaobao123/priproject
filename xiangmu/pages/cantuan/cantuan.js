@@ -10,8 +10,8 @@ Page({
   data: {
     //项目名称
     projectName: '',
-    content: '',//内容
-    endDate: '',//截至日期
+    content: '', //内容
+    endDate: '', //截至日期
     //项目进度
     projectSpeed: {
       //文字描述
@@ -20,20 +20,17 @@ Page({
       projectImage: ''
     },
     //参团人员
-    userList: [
-      {
-        //名称
-        userName: '',
-        //头像
-        headImg: '../images/weixin_03.png',
-      }
-    ],
+    userList: [{
+      //名称
+      userName: '',
+      //头像
+      headImg: '../images/weixin_03.png',
+    }],
     shouquan: true,
   },
-  onLoad: function (options) {
+  onLoad: function(options) {
     const e = wx.getStorageSync("e");
     const uid = wx.getStorageSync("uid");
-
     const shareParams = JSON.parse(options.shareParams);
     this.setData({
       shareParams: shareParams,
@@ -41,29 +38,29 @@ Page({
       orUid: options.uid
     })
     console.log("options", options)
-    app.changeTabBar();
-    this.initInvolvedContent(shareParams)
+    if (this.data.shouquan) {
+      userLogin();
+      this.initInvolvedContent(shareParams);
+      //检索是分享还是参团
+      this.isGroupOrShare().then(data => {
+        if (data) { //分享
+          this.setData({
+            type: "fenxiang",
+          })
+        }
+      });
+    }
 
-
-    //检索是分享还是参团
-    this.isGroupOrShare().then(data=>{
-      if(data){//分享
-        this.setData({
-          type: "fenxiang",
-        })
-      }
-    });
-    
   },
   //参团内容
-  initInvolvedContent: function (shareParams) {
+  initInvolvedContent: function(shareParams) {
     const e = wx.getStorageSync("e");
     var that = this;
-    console.log('shareParams',shareParams)
-    console.log('url','coupon/tuan-info')
+    console.log('shareParams', shareParams)
+    console.log('url', 'coupon/tuan-info')
     // 参团内容详情
     util.postRequest(app.globalData.url + "coupon/tuan-info?access-token=" + e.accessToken, shareParams)
-      .then(function (data) {
+      .then(function(data) {
         if (!(errorMessage(data))) {
           return;
         }
@@ -76,27 +73,26 @@ Page({
         })
       })
   },
-
   //判断是参团还是分享
-  isGroupOrShare: async function () {
+  isGroupOrShare: async function() {
     const e = wx.getStorageSync("e");
+    const uid = wx.getStorageSync("uid");
     const shareParams = this.data.shareParams
     const params = {
-      uid:shareParams.uid,
+      uid: uid,
       tuan_id: shareParams.tuan_id,
     }
     // 参团人员头像
     return await util.postRequest(app.globalData.url + "coupon/tuan-user?access-token=" + e.accessToken, params)
-      .then(function (data) {
+      .then(function(data) {
         if (!(errorMessage(data))) {
           return;
         }
         //循环判断，若登录用户存在于参团人员中，则是分享，若不存在，则是参团
-        const haveList = data.data.data.filter(item=>item.uid===shareParams.uid+'');
-
-        console.log('haveList',haveList);
+        const haveList = data.data.data.filter(item => item.uid === uid + '');
+        console.log('haveList', haveList);
         //表示用户存在于参团人员中，可以分享
-        if(haveList && haveList.length>0){
+        if (haveList && haveList.length > 0) {
           return true;
         }
 
@@ -105,7 +101,7 @@ Page({
       })
   },
   // 参团
-  group: function () {
+  group: function() {
     //检测用户是否具有权限
     const e = wx.getStorageSync("e");
     const loginUser = wx.getStorageSync("e").loginUser;
@@ -118,28 +114,26 @@ Page({
       if (!data)
         return;
       util.postRequest(app.globalData.url + "coupon/add-tuan?access-token=" + e.accessToken, params)
-        .then(function (data) {
+        .then(function(data) {
           if (!errorMessage(data)) {
             return;
           }
-
           wx.showModal({
             title: "参团成功",
             showCancel: true,
-            success: function (res) {
+            success: function(res) {
               if (res.confirm) {
                 wx.switchTab({
                   url: '../index/index'
                 })
-              } else {
-              }
+              } else {}
             }
           })
         })
     })
   },
   //加载用户头像
-  initUserList: function () {
+  initUserList: function() {
     const that = this
     const e = wx.getStorageSync("e");
     const params = {
@@ -148,14 +142,16 @@ Page({
     }
 
     util.postRequest(app.globalData.url + "coupon/tuan-user?access-token=" + e.accessToken, params)
-      .then(function (data) {
+      .then(function(data) {
         if (!errorMessage(data)) {
           return;
         }
         that.setData({
           kaituan: data.data.data[0].kaiTuan,
           userList: data.data.data.map(item => {
-            return { headImg: item.avatarurl }
+            return {
+              headImg: item.avatarurl
+            }
           })
         })
         console.log("开团", data.data.data[0].kaiTuan)
@@ -163,14 +159,13 @@ Page({
       })
   },
 
-  bindGetUserInfo: function (e) {
+  bindGetUserInfo: function(e) {
     wx.setStorageSync('e', e.detail.userInfo);
     if (e.detail.userInfo) {
       //用户按了允许授权按钮
       var that = this;
       //加载token
       that.initToken();
-
     } else {
       //用户按了拒绝按钮
       wx.showModal({
@@ -178,7 +173,7 @@ Page({
         content: '您点击了拒绝授权，将无法进入小程序，请授权之后再进入!!!',
         showCancel: false,
         confirmText: '返回授权',
-        success: function (res) {
+        success: function(res) {
           // 用户没有授权成功，不需要改变 isHide 的值
           if (res.confirm) {
             console.log('用户点击了“返回授权”');
@@ -190,7 +185,7 @@ Page({
       shouquan: !this.data.shouquan,
     })
   },
-  initToken: async function () {
+  initToken: async function() {
     var e = wx.getStorageSync('e');
     const that = this;
     wx.login({
@@ -201,30 +196,34 @@ Page({
             client_code: res.code,
           }
           util.postRequest(app.globalData.url + "auth/openid", data)
-            .then(function (data) {
+            .then(function(data) {
+              console.log("openid", data);
               if (!(errorMessage(data))) {
                 return;
               }
               wx.setStorageSync("openid", data.data.data.openid)
-              util.postRequest(app.globalData.url + "auth/login", { openid: data.data.data.openid })
-                .then(function (tokenData) {
+              util.postRequest(app.globalData.url + "auth/login", {
+                  openid: data.data.data.openid
+                })
+                .then(function(tokenData) {
+                  console.log("login", tokenData);
                   if (!(errorMessage(tokenData))) {
                     return;
                   }
                   //成功获取token
-                  wx.setStorageSync("e", { ...e, accessToken: tokenData.data.data.access_token })
+                  wx.setStorageSync("e", { ...e,
+                    accessToken: tokenData.data.data.access_token
+                  })
                   that.initlogin();
                   //轮播图
 
-                }, function (error) {
-                })
-            }, function (error) {
-            })
+                }, function(error) {})
+            }, function(error) {})
         }
       }
     })
   },
-  initlogin: function () {
+  initlogin: function() {
     var that = this;
     var e = wx.getStorageSync('e');
     var data = {
@@ -239,15 +238,15 @@ Page({
       parent_id: "",
     }
     util.postRequest(app.globalData.url + "user/up-info?access-token=" + e.accessToken, data)
-      .then(function (data) {
+      .then(function(data) {
+        console.log("up-info", data);
         wx.setStorageSync("uid", data.data.data.uid);
         that.initInvolvedContent(that.data.shareParams);
         userLogin();
-      }, function (error) {
-      })
+      }, function(error) {})
   },
   //分享
-  onShareAppMessage: function (res) {
+  onShareAppMessage: function(res) {
     var uid = wx.getStorageSync('uid');
     const shareParams = {
       uid: uid,
@@ -260,7 +259,7 @@ Page({
       title: '分享优惠券',
       path: 'pages/cantuan/cantuan?uid=' + uid + '&shareParams=' + JSON.stringify(shareParams),
       imageUrl: this.data.canhuo.imgUrl,
-      success: function (res) {
+      success: function(res) {
         console.log(res, "分享成功")
         // 转发成功
         wx.showToast({
@@ -269,7 +268,7 @@ Page({
           duration: 2000
         })
       },
-      fail: function (res) {
+      fail: function(res) {
         console.log(res, "失败")
         // 分享失败
       },
