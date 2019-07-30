@@ -28,7 +28,7 @@
       <!-- <view class="group" bindtap="group" wx:if="{{kaituan!=1}}">参团</view>
       <button open-type="share"  class="group" wx:if="{{kaituan==1}}">分享</button>  -->
       <view  wx:if="{{type==='fenxiang'}}">
-         <button open-type="share"  class="button">分享</button> 
+         <button open-type="share"  class="group">分享</button> 
       </view>
       <view wx:else>
           <view class="group" bindtap="group">参团</view>

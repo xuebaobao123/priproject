@@ -28,28 +28,39 @@ Page({
         headImg: '../images/weixin_03.png',
       }
     ],
-    shouquan:true,
+    shouquan: true,
   },
   onLoad: function (options) {
     const e = wx.getStorageSync("e");
     const uid = wx.getStorageSync("uid");
 
-    console.log();
     const shareParams = JSON.parse(options.shareParams);
     this.setData({
       shareParams: shareParams,
-      type: options.uid == uid ? "fenxiang" : "",
       shouquan: !!e,
       orUid: options.uid
     })
-    console.log("options",options)
+    console.log("options", options)
     app.changeTabBar();
     this.initInvolvedContent(shareParams)
+
+
+    //检索是分享还是参团
+    this.isGroupOrShare().then(data=>{
+      if(data){//分享
+        this.setData({
+          type: "fenxiang",
+        })
+      }
+    });
+    
   },
   //参团内容
   initInvolvedContent: function (shareParams) {
     const e = wx.getStorageSync("e");
     var that = this;
+    console.log('shareParams',shareParams)
+    console.log('url','coupon/tuan-info')
     // 参团内容详情
     util.postRequest(app.globalData.url + "coupon/tuan-info?access-token=" + e.accessToken, shareParams)
       .then(function (data) {
@@ -63,6 +74,34 @@ Page({
         that.setData({
           canhuo: curData
         })
+      })
+  },
+
+  //判断是参团还是分享
+  isGroupOrShare: async function () {
+    const e = wx.getStorageSync("e");
+    const shareParams = this.data.shareParams
+    const params = {
+      uid:shareParams.uid,
+      tuan_id: shareParams.tuan_id,
+    }
+    // 参团人员头像
+    return await util.postRequest(app.globalData.url + "coupon/tuan-user?access-token=" + e.accessToken, params)
+      .then(function (data) {
+        if (!(errorMessage(data))) {
+          return;
+        }
+        //循环判断，若登录用户存在于参团人员中，则是分享，若不存在，则是参团
+        const haveList = data.data.data.filter(item=>item.uid===shareParams.uid+'');
+
+        console.log('haveList',haveList);
+        //表示用户存在于参团人员中，可以分享
+        if(haveList && haveList.length>0){
+          return true;
+        }
+
+        //表示用户不存在于参团人员中，表示参团
+        return false;
       })
   },
   // 参团
@@ -107,7 +146,7 @@ Page({
       uid: e.loginUser.id,
       tuan_id: that.data.shareParams.tuan_id
     }
-    
+
     util.postRequest(app.globalData.url + "coupon/tuan-user?access-token=" + e.accessToken, params)
       .then(function (data) {
         if (!errorMessage(data)) {
@@ -119,7 +158,7 @@ Page({
             return { headImg: item.avatarurl }
           })
         })
-        console.log("开团",data.data.data[0].kaiTuan)
+        console.log("开团", data.data.data[0].kaiTuan)
 
       })
   },
@@ -185,8 +224,8 @@ Page({
       }
     })
   },
-   initlogin: function () {
-     var that=this;
+  initlogin: function () {
+    var that = this;
     var e = wx.getStorageSync('e');
     var data = {
       merchants_id: app.globalData.merchantsId,
@@ -210,16 +249,16 @@ Page({
   //分享
   onShareAppMessage: function (res) {
     var uid = wx.getStorageSync('uid');
-    const shareParams={
+    const shareParams = {
       uid: uid,
-      cid:this.data.shareParams.cid,
-      tuan_id:this.data.shareParams.tuan_id,
+      cid: this.data.shareParams.cid,
+      tuan_id: this.data.shareParams.tuan_id,
       merchants_id: app.globalData.merchantsId
     }
-    console.log(shareParams,"分享")
+    console.log(shareParams, "分享")
     return {
       title: '分享优惠券',
-      path: 'pages/cantuan/cantuan?uid='+uid+'&shareParams=' + JSON.stringify(shareParams),
+      path: 'pages/cantuan/cantuan?uid=' + uid + '&shareParams=' + JSON.stringify(shareParams),
       imageUrl: this.data.canhuo.imgUrl,
       success: function (res) {
         console.log(res, "分享成功")
