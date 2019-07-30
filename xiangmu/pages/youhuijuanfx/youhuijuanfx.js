@@ -5,6 +5,7 @@ import errorMessage from '../../utils/errorMessage'
 import userLogin from '../../utils/userLogin'
 import youhuijuanService from '../../utils/youhuijuanService'
 import regeneratorRuntime from '../../regenerator-runtime/runtime.js';
+import bindUserInfo from '../../utils/bindUserInfo'
 Page({
 
   /**
@@ -18,7 +19,7 @@ Page({
     //可用积分
     usableIntegral: 300,
     shouquan: true,
-    index:0,
+    index: 0,
   },
   /**
    * 生命周期函数--监听页面加载
@@ -28,22 +29,22 @@ Page({
     const e = wx.getStorageSync("e");
     const uid = wx.getStorageSync("uid");
     const params = JSON.parse(options.params);
-    const shareParams={
-       cuid:params.cuid,
-       //cuid:"34",
-       merchants_id: app.globalData.merchantsId,
-       uid:uid
+    const shareParams = {
+      cuid: params.cuid,
+      merchants_id: app.globalData.merchantsId,
+      uid: uid
     }
+
     var that = this;
     that.setData({
       shouquan: !!e,
-      // params: params,
+      params: params,
     })
-      youhuijuanService.initUserShareCoupon(shareParams).then(data => {
-        that.setData({
-          couponArray: new Array(data),
-        })
-      });
+    youhuijuanService.initUserShareCoupon(shareParams).then(data => {
+      that.setData({
+        couponArray: new Array(data),
+      })
+    });
   },
   //查看详情
   onToggle(e) {
@@ -91,14 +92,14 @@ Page({
   //分享
   onShareAppMessage: function (res) {
     var uid = wx.getStorageSync('uid');
-    const params={
+    const params = {
       cuid: this.data.params.cuid,
       merchants_id: app.globalData.merchantsId,
       uid: uid
     }
     return {
       title: '分享优惠券',
-      path: 'pages/youhuijuanfx/youhuijuanfx?params='+params,
+      path: 'pages/youhuijuanfx/youhuijuanfx?params=' + JSON.stringify(params),
       imageUrl: this.data.couponArray[res.target.dataset.index].imgUrl,  //用户分享出去的自定义图片大小为5:4,
       success: function (res) {
         console.log(res, "分享成功")
@@ -116,12 +117,33 @@ Page({
     }
   },
   bindGetUserInfo: function (e) {
-    wx.setStorageSync('e', e.detail.userInfo);
+    const that = this;
     if (e.detail.userInfo) {
       //用户按了允许授权按钮
-      var that = this;
-      //加载token
-      that.initToken();
+      bindUserInfo(e.detail.userInfo)
+        .then(({ accessToken, uid }) => {
+          wx.setStorageSync('uid', uid)
+          wx.setStorageSync('e', {
+            ...e.detail.userInfo,
+            accessToken
+          })
+          //用户登录
+          return userLogin()
+        })
+        .then(() => {
+          const shareParams = {
+            cuid: that.data.params.cuid,
+            merchants_id: app.globalData.merchantsId,
+            uid: wx.getStorageSync('uid')
+          }
+          return youhuijuanService.initUserShareCoupon(shareParams)
+        })
+        .then(curData => {
+          this.setData({
+            couponArray: new Array(curData),
+            shouquan: !this.data.shouquan,
+          })
+        })
     } else {
       //用户按了拒绝按钮
       wx.showModal({
@@ -137,73 +159,5 @@ Page({
         }
       });
     }
-  },
-  initToken: async function () {
-    var e = wx.getStorageSync('e');
-    const that = this;
-    wx.login({
-      success(res) {
-        if (res.code) {
-          var data = {
-            merchants_id: app.globalData.merchantsId,
-            client_code: res.code,
-          }
-          util.postRequest(app.globalData.url + "auth/openid", data)
-            .then(function (data) {
-              if (!(errorMessage(data))) {
-                return;
-              }
-              wx.setStorageSync("openid", data.data.data.openid)
-              util.postRequest(app.globalData.url + "auth/login", { openid: data.data.data.openid })
-                .then(function (tokenData) {
-                  that.setData({
-                    shouquan: true
-                  })
-                  console.log("login", tokenData)
-                  if (!(errorMessage(tokenData))) {
-                    return;
-                  }
-                  //成功获取token
-                  wx.setStorageSync("e", { ...e, accessToken: tokenData.data.data.access_token })
-                  that.initlogin();
-                }, function (error) {
-                })
-            }, function (error) {
-            })
-        }
-      }
-    })
-  },
-  initlogin: function () {
-    var e = wx.getStorageSync('e');
-    var data = {
-      merchants_id: app.globalData.merchantsId,
-      openid: wx.getStorageSync('openid'),
-      nickname: e.nickName,
-      avatarurl: e.avatarUrl,
-      gender: e.gender,
-      province: e.country,
-      city: e.city,
-      country: e.province,
-      parent_id: "",
-    }
-    var that = this;
-    util.postRequest(app.globalData.url + "user/up-info?access-token=" + e.accessToken, data)
-      .then(function (data) {
-        console.log("up-info",data)
-        wx.setStorageSync("uid", data.data.data.uid);
-        const shareParams={
-          cuid: that.data.params.cuid,
-          //cuid:"34",
-          merchants_id: app.globalData.merchantsId,
-          uid: data.data.data.uid
-        }
-        youhuijuanService.initUserShareCoupon(shareParams).then(data => {
-          that.setData({
-            couponArray: new Array(data),
-          })
-          console.log("couponArray数据", new Array(data))
-        });
-      })
   },
 })

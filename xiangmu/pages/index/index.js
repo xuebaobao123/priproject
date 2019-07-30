@@ -3,6 +3,7 @@ var util = require('../../utils/fengzhuang.js');
 import regeneratorRuntime from '../../regenerator-runtime/runtime.js';
 import errorMessage from '../../utils/errorMessage'
 import userLogin from '../../utils/userLogin'
+import bindUserInfo from '../../utils/bindUserInfo'
 Page({
   data: {
     indicatorDots: true,  //是否显示面板指示点
@@ -11,7 +12,7 @@ Page({
     duration: 1000,       //滑动动画时长
     inputShowed: false,
     inputVal: "",
-    shouquan:false,
+    shouquan: false,
     //广告位
     advertPlaceArray: [
       { img: "../images/huiyuan.png", fowardUrl: '../wode/wode' },
@@ -36,71 +37,27 @@ Page({
       url: advertPlace.fowardUrl
     })
   },
-  initToken: async function () {
-    var e = wx.getStorageSync('e');
-    const that = this;
-    wx.login({
-      success(res) {
-        if (res.code) {
-          var data = {
-            merchants_id: app.globalData.merchantsId,
-            client_code: res.code,
-          }
-          util.postRequest(app.globalData.url + "auth/openid", data)
-            .then(function (data) {
-              if (!(errorMessage(data))) {
-                return;
-              }
-              wx.setStorageSync("openid", data.data.data.openid)
-              util.postRequest(app.globalData.url + "auth/login", { openid: data.data.data.openid })
-                .then(function (tokenData) {
-                  if (!(errorMessage(tokenData))) {
-                    return;
-                  }
-                  //成功获取token
-                  wx.setStorageSync("e", { ...e, accessToken: tokenData.data.data.access_token })
-                  that.initlogin();
-                  that.initImageUrls();
-                  //轮播图
-                 
-                }, function (error) {
-                })
-            }, function (error) {
-            })
-        }
-      }
-    })
-  },
-  initlogin: function () {
-    var e = wx.getStorageSync('e');
-    var data = {
-      merchants_id: app.globalData.merchantsId,
-      openid: wx.getStorageSync('openid'),
-      nickname: e.nickName,
-      avatarurl: e.avatarUrl,
-      gender: e.gender,
-      province: e.country,
-      city: e.city,
-      country: e.province,
-      parent_id: "",
-    }
-    console.log('index.beforedata',data);
-    util.postRequest(app.globalData.url + "user/up-info?access-token=" + e.accessToken, data)
-      .then(function (data) {
-        wx.setStorageSync("uid", data.data.data.uid);
-        userLogin();
-      }, function (error) {
-      })
-  },
+
   // 授权登陆
   bindGetUserInfo: function (e) {
-    wx.setStorageSync('e', e.detail.userInfo);
     if (e.detail.userInfo) {
       //用户按了允许授权按钮
-      var that = this;
-      //加载token
-      that.initToken();
-      
+      bindUserInfo(e.detail.userInfo)
+        .then(({ accessToken, uid }) => {
+          wx.setStorageSync('uid', uid)
+          wx.setStorageSync('e', {
+            ...e.detail.userInfo,
+            accessToken
+          })
+          //用户登录
+          return userLogin();
+        }).then(() => {
+          console.log('after userLogin')
+          this.setData({
+            shouquan: !this.data.shouquan,
+          })
+        })
+
     } else {
       //用户按了拒绝按钮
       wx.showModal({
@@ -116,9 +73,7 @@ Page({
         }
       });
     }
-    this.setData({
-      shouquan: !this.data.shouquan,
-    })
+
   },
   //获取轮播图
   initImageUrls: function () {

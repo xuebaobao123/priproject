@@ -30,7 +30,7 @@ const initUserCouponArrayData = () => {
   return initDataFromUrl('coupon/coupon-list', params)
 }
 //用户优惠卷包
-const initUserShareCoupon = async(params) => {
+const initUserShareCoupon = (params) => {
   console.log("用户params", params)
   return initDataFromUrl('coupon/cuinfo', params);
 }
@@ -38,7 +38,7 @@ const initDataFromUrl = async(url, params, type) => {
   const e = wx.getStorageSync("e");
   let curData = null;
   //优惠券记录
-  await util.postRequest(app.globalData.url + url + "?access-token=" + e.accessToken, params)
+  return util.postRequest(app.globalData.url + url + "?access-token=" + e.accessToken, params)
     .then(function(data) {
       console.log("优惠卷包",data)
       if (!errorMessage(data)) {
@@ -51,9 +51,9 @@ const initDataFromUrl = async(url, params, type) => {
       } else {
         curData = mapData(data.data.data);
       }
+      console.log('curData',curData);
+      return curData;
     })
-    console.log('curData',curData);
-  return curData;
 }
 //封装后台对象至页面对象
 const mapData = (item, type) => {

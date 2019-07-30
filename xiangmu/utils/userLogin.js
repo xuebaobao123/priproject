@@ -7,11 +7,11 @@ import regeneratorRuntime from '../regenerator-runtime/runtime.js';
 import errorMessage from './errorMessage'
 
 //获取登录用户信息
-export default async function initLoginUser() {
+export default function initLoginUser() {
     const e = wx.getStorageSync("e");
     const uid=wx.getStorageSync("uid")
     //检索登录用户
-    await util.postRequest(app.globalData.url + "user/user-info?access-token=" + e.accessToken, { uid: uid })
+    return util.postRequest(app.globalData.url + "user/user-info?access-token=" + e.accessToken, { uid: uid })
         .then(function (data) {
             if (!errorMessage(data)) {
                 return;

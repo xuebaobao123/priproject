@@ -76,12 +76,13 @@ Page({
   //消费查询
   findConsumeRecord: function () {
     const e = wx.getStorageSync("e");
+    const uid = wx.getStorageSync("uid");
     // e.accessToken = '9NfL1S6yWoIZHSd4cXsKOb1Iz816_3se';
     console.log('loginUser',e.loginUser);
     const that = this
     
     //消费记录
-    util.postRequest(app.globalData.url + "user/balance-log?access-token=" + e.accessToken, { uid: e.loginUser.id })
+    util.postRequest(app.globalData.url + "user/balance-log?access-token=" + e.accessToken, { uid: uid })
       .then(function (data) {
         if (!errorMessage(data)) {
           return;
@@ -135,7 +136,7 @@ Page({
   },
   //进入优惠券包
   goCouponPage: function (e) {
-    wx.redirectTo({
+    wx.navigateTo({
       url: '../youhuijuan/youhuijuan?owner=user'
     })
   },
