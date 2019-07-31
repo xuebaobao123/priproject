@@ -38,7 +38,7 @@ page{
   position: absolute;
   right:20rpx;
   top:40rpx;
-  font-size:30rpx;
+  font-size:26rpx;
   color:white;
 }
 .youhuijuan1 .top .left .dingwei{

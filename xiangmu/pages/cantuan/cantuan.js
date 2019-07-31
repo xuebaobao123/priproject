@@ -220,7 +220,7 @@ Page({
     }
     console.log(shareParams, "分享")
     return {
-      title: '分享优惠券',
+      title: this.data.canhuo.integralName,
       path: 'pages/cantuan/cantuan?uid=' + uid + '&shareParams=' + JSON.stringify(shareParams),
       imageUrl: this.data.canhuo.imgUrl,
       success: function (res) {

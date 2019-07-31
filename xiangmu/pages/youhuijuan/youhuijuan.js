@@ -146,7 +146,7 @@ Page({
   },
   //分享
   onShareAppMessage: function (res) {
-    console.log(res)
+    console.log(this.data.couponArray[res.target.dataset.index])
     var uid = wx.getStorageSync('uid');
     const params = {
       cuid: res.target.dataset.cuid,
@@ -154,7 +154,7 @@ Page({
       uid: uid
     }
     return {
-      title: '分享优惠券',
+      title: this.data.couponArray[res.target.dataset.index].integralName,
       path: 'pages/youhuijuanfx/youhuijuanfx?params=' + JSON.stringify(params),
       imageUrl: this.data.couponArray[res.target.dataset.index].imgUrl,  //用户分享出去的自定义图片大小为5:4,
       success: function (res) {
