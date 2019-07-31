@@ -36,6 +36,7 @@ const registerOrUpdate = (e) => {
         country: e.province,
         parent_id: e.parentId,
     }
+    console.log('register.params',data);
     return util.postRequest(app.globalData.url + "user/up-info?access-token=" + e.accessToken, data)
         .then(function (data) {
             console.log('获取用户UID【' + data.data.data.uid + '】');

@@ -38,16 +38,22 @@ Page({
       shouquan: !!e,
       orUid: options.uid
     })
+    const params = {
+      ...shareParams,
+      uid
+    }
+    if (e) {
+      this.initInvolvedContent(params);
+    }
 
-    this.initInvolvedContent(shareParams);
-    //检索是分享还是参团
-    this.isGroupOrShare().then(data => {
-      if (data) { //分享
-        this.setData({
-          type: "fenxiang",
-        })
-      }
-    });
+    // //检索是分享还是参团
+    // this.isGroupOrShare().then(data => {
+    //   if (data) { //分享
+    //     this.setData({
+    //       type: "fenxiang",
+    //     })
+    //   }
+    // });
 
   },
   //参团内容
@@ -115,17 +121,19 @@ Page({
           if (!errorMessage(data)) {
             return;
           }
+
           wx.showModal({
             title: "参团成功",
             showCancel: true,
             success: function (res) {
-              if (res.confirm) {
-                wx.switchTab({
-                  url: '../index/index'
-                })
-              } else { }
             }
           })
+
+          //刷新页面
+          this.initInvolvedContent({
+            ...that.data.shareParams,
+            uid
+          });
         })
     })
   },
@@ -138,14 +146,14 @@ Page({
       uid,
       tuan_id: that.data.shareParams.tuan_id
     }
-    console.log('userListParams',params)
+    console.log('userListParams', params)
     util.postRequest(app.globalData.url + "coupon/tuan-user?access-token=" + e.accessToken, params)
       .then(function (data) {
         if (!errorMessage(data)) {
           return;
         }
 
-        console.log('imgList',data.data.data.map(i=>{return i.avatarurl}))
+        console.log('imgList', data.data.data.map(i => { return i.avatarurl }))
         that.setData({
           kaituan: data.data.data[0].kaiTuan,
           userList: data.data.data.map(item => {
@@ -163,7 +171,12 @@ Page({
     if (e.detail.userInfo) {
       //用户按了允许授权按钮
       const that = this
-      bindUserInfo(e.detail.userInfo)
+      this.setData({
+        shouquan: true,
+      })
+      //将分享传递过来的UID作为父级ID
+      const parentId = that.data.shareParams.uid
+      bindUserInfo({ ...e.detail.userInfo, parentId })
         .then(({ accessToken, uid }) => {
           wx.setStorageSync('uid', uid)
           wx.setStorageSync('e', {
@@ -173,24 +186,19 @@ Page({
           //用户登录
           return userLogin.initLoginUser();
         })
-        .then(()=>{
-          const e = wx.getStorageSync('e');
-          const openId = e.loginUser.openid;
-         
-          //将分享传递过来的UID作为父级ID
-          const parentId = that.data.params.uid
-          const newE = {...e,openId,parentId}
-
-          //更新用户信息
-          return userLogin.registerOrUpdate(newE)
+        .then(() => {
+          const uid = wx.getStorageSync('uid');
+          const shareParams = {
+            ...that.data.shareParams,
+            uid
+          }
+          console.log('参团参数:', shareParams)
+          return that.initInvolvedContent(shareParams);
         })
         .then(() => {
-          return that.initInvolvedContent(that.data.shareParams);
-        })
-        .then(() => {
-          this.setData({
-            shouquan: !this.data.shouquan,
-          })
+          // this.setData({
+          //   shouquan: true,
+          // })
         })
     } else {
       //用户按了拒绝按钮
