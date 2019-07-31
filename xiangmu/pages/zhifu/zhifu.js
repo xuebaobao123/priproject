@@ -56,26 +56,26 @@ Page({
       price: 0,
       balance: 0,
       discount_amount: 0,
-      payPrice:0
+      payPrice: 0
     }
   },
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: function (options) {
     this.setData({
       moneyZf: 0
     })
   },
   //我的优惠券包
-  initUserCouponArrayData: function() {
+  initUserCouponArrayData: function () {
     const uid = wx.getStorageSync("uid");
     const params = {
       uid: uid,
       merchants_id: app.globalData.merchantsId,
       price: this.data.moneyZf
     }
-    console.log('usercoupon.params',params);
+    console.log('usercoupon.params', params);
     this.initDataFromUrl('coupon/coupon-list', params)
   },
   /**
@@ -90,7 +90,7 @@ Page({
     const that = this
     //优惠券记录
     util.postRequest(app.globalData.url + url + "?access-token=" + e.accessToken, params)
-      .then(function(data) {
+      .then(function (data) {
         if (!errorMessage(data)) {
           return;
         }
@@ -104,7 +104,7 @@ Page({
       })
   },
   //封装后台对象至页面对象
-  mapData: function(item) {
+  mapData: function (item) {
     //根据优惠券类型显示内容
     return {
       id: item.id,
@@ -138,7 +138,7 @@ Page({
     }
   },
   //拼接代金券描述
-  concatContent: function(item) {
+  concatContent: function (item) {
     let content = "";
     switch (item.type) {
       case "1":
@@ -156,11 +156,11 @@ Page({
     return content;
   },
   //加载优惠券类型
-  couponType: function(item) {
+  couponType: function (item) {
     return (item.access && item.access === '2') ? this.data.COUPONTYPE.GROUP : this.data.COUPONTYPE.DISCOUNT
   },
   //优惠券获取方式
-  initAccessType: function(item) {
+  initAccessType: function (item) {
     //默认获取方式
     if (!item.access) {
       return {
@@ -194,7 +194,7 @@ Page({
     return accessType;
   },
   // 返回
-  fanhui: function() {
+  fanhui: function () {
     // wx.navigateBack({ 
     //   changed: true 
     // })
@@ -203,48 +203,54 @@ Page({
     })
   },
   //我的会员
-  goMyMember: function() {
+  goMyMember: function () {
     wx.redirectTo({
       url: '../wode/wode'
     })
   },
   // 立即兑换
-  exchange: function() {
+  exchange: function () {
     wx.navigateTo({
       url: '../lijiduihuan/lijiduihuan',
     })
   },
-  youhui: function() {
+  youhui: function () {
+    if (this.data.moneyZf.trim() == '') {
+      return;
+    }
+    if (parseFloat(this.data.moneyZf) <= 0) {
+      return;
+    }
     this.initUserCouponArrayData();
 
   },
-  guanbi: function() {
+  guanbi: function () {
     this.setData({
       hidden: true
     })
   },
-  money: function(e) {
-    console.log('moneyzf',e.detail.value)
+  money: function (e) {
+    console.log('moneyzf', e.detail.value)
     this.setData({
       moneyZf: e.detail.value
     })
   },
   // 优惠券
-  youhuijuan: function(event) {
+  youhuijuan: function (event) {
     const e = wx.getStorageSync("e");
     const params = {
       merchants_id: app.globalData.merchantsId,
       uid: e.loginUser.id,
       price: this.data.moneyZf,
-      cuid: event.currentTarget.dataset.id
+      cuid: event ? event.currentTarget.dataset.id : ''
     }
     this.setData({
-      cuid: event.currentTarget.dataset.id
+      cuid: event ? event.currentTarget.dataset.id : ''
     })
     var that = this;
     util.postRequest(app.globalData.url + "checkstand/price?access-token=" + e.accessToken, params)
-      .then(function(data) {
-        if(!errorMessage(data)){
+      .then(function (data) {
+        if (!errorMessage(data)) {
           return;
         }
 
@@ -256,14 +262,23 @@ Page({
       })
   },
   // 支付
-  zhifu: function() {
-    if (this.data.moneyZf == '') {
+  zhifu: function () {
+    if (this.data.moneyZf.trim() == '') {
       wx.showModal({
         title: '金额不能为空',
       })
 
       return;
     }
+    if (parseFloat(this.data.moneyZf) <= 0) {
+      wx.showModal({
+        title: '金额不能为零',
+      })
+
+      return;
+    }
+
+    this.youhuijuan();
     //检测用户是否具有权限
     const that = this;
     userTest().then(data => {
@@ -272,45 +287,32 @@ Page({
         return
       }
       const e = wx.getStorageSync("e");
-   
-
-
-      if (that.data.cuid) {
-        params = {
-          merchants_id: app.globalData.merchantsId,
-          uid: e.loginUser.id,
-          price: that.data.moneyZf,
-          cuid: that.data.cuid
-        }
-      }
-      else{
-        var params = {
-          merchants_id: app.globalData.merchantsId,
-          uid: e.loginUser.id,
-          price: that.data.moneyZf,
-        }
+      const params = {
+        merchants_id: app.globalData.merchantsId,
+        uid: e.loginUser.id,
+        price: that.data.moneyZf,
+        cuid: that.data.cuid
       }
       //支付
       util.postRequest(app.globalData.url + "checkstand/order?access-token=" + e.accessToken, params)
-        .then(function(data) {
+        .then(function (data) {
           if (!(errorMessage(data))) {
             return;
           }
           if (data.data.data.type == "ok") {
-              wx.showModal({
-                title: "余额支付成功",
-                showCancel: true,
-                success: function (res) {
-                  if (res.confirm) {
-                    wx.redirectTo({
-                      url: '../index/index',
-                    })
-                  } else {
-                    that.onLoad();
-                  }
-
+            wx.showModal({
+              title: "余额支付成功",
+              showCancel: true,
+              success: function (res) {
+                if (res.confirm) {
+                  wx.redirectTo({
+                    url: '../index/index',
+                  })
+                } else {
+                  that.onLoad();
                 }
-              })
+              }
+            })
           } else {
             wx.requestPayment({
               "timeStamp": data.data.data.pay.timeStamp,
@@ -322,7 +324,7 @@ Page({
                 wx.showModal({
                   title: "支付成功",
                   showCancel: true,
-                  success: function(res) {
+                  success: function (res) {
                     if (res.confirm) {
                       wx.redirectTo({
                         url: '../index/index',
