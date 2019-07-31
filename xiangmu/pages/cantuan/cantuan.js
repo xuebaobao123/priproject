@@ -130,7 +130,7 @@ Page({
           })
 
           //刷新页面
-          this.initInvolvedContent({
+          that.initInvolvedContent({
             ...that.data.shareParams,
             uid
           });
