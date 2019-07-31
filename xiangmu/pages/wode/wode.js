@@ -87,8 +87,7 @@ Page({
         if (!errorMessage(data)) {
           return;
         }
-
-        console.log('user.balance.data',data);
+        
         that.setData({
           consumeRecord: data.data.data.map(item => {
             return {

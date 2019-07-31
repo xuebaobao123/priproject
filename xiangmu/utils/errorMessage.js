@@ -18,10 +18,10 @@ const MESSAGE = {
     116: '用户积分不足',
     117: '操作类型错误',
     118: '自己不能领取自己的券',
-    121:"团已满",
-    122:"团已失效",
-    119:"不符合使用条件",
-    120	:"收银台下单",
+    121: "团已满",
+    122: "团已失效",
+    119: "不符合使用条件",
+    120: "收银台下单",
     600: '返回数据格式错误'
 }
 
@@ -31,9 +31,13 @@ export default function showModal(data) {
     // return true;
     try {
         if (data.success && data.data.status && data.data.status === 200) {
-        // if (data.success && data.data.status) {
+            // if (data.success && data.data.status) {
             result = !result;
         } else {
+            if(typeof (MESSAGE[data.data.status || 600]) === 'undefined'){
+                result = true;
+                return;
+            }
             throw MESSAGE[data.data.status || 600];
         }
     } catch (error) {
@@ -41,9 +45,9 @@ export default function showModal(data) {
         console.log("error", error);
 
         //此处自定义错误弹窗
-      wx.showModal({
-        title: error
-      })
+        wx.showModal({
+            title: error
+        })
     } finally {
         return result;
     }

@@ -49,7 +49,7 @@
          </view>
          <view class="pic {{activeIndex ? 'show' : 'hide'}}">
             <view>近一月</view>
-            <view class="liebiao" wx:if="{{consumeRecord}}" wx:for="{{consumeRecord}}">
+            <view class="liebiao" wx:if="{{consumeRecord.length>0}}" wx:for="{{consumeRecord}}">
                <view>{{item.date}}</view>
                <view>
                   ￥
@@ -57,7 +57,7 @@
                   {{item.consume.decimalDigits}}
                </view>
             </view>
-            <view wx:if="{{!consumeRecord}}" class="liebiao">暂无数据</view>
+            <view wx:if="{{consumeRecord.length==0}}" class="liebiao">暂无数据</view>
          </view>
       </view>
    </view>
