@@ -22,6 +22,7 @@ const MESSAGE = {
     122: "团已失效",
     119: "不符合使用条件",
     120: "收银台下单",
+    201: '暂无数据',
     600: '返回数据格式错误'
 }
 
@@ -30,12 +31,13 @@ export default function showModal(data) {
 
     // return true;
     try {
-        if (data.success && data.data.status && data.data.status === 200) {
+        if (data.success && data.data.status && (data.data.status === 200 || data.data.status === 201)) {
             // if (data.success && data.data.status) {
             result = !result;
         } else {
-            if(typeof (MESSAGE[data.data.status || 600]) === 'undefined'){
-                result = true;
+            if (typeof (MESSAGE[data.data.status || 600]) === 'undefined') {
+                console.log('errorMessage out 错误代码：' + data.data.status)
+                result = false;
                 return;
             }
             throw MESSAGE[data.data.status || 600];
