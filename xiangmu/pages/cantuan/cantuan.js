@@ -101,10 +101,10 @@ Page({
   group: function () {
     //检测用户是否具有权限
     const e = wx.getStorageSync("e");
-    const loginUser = wx.getStorageSync("e").loginUser;
+    const uid = wx.getStorageSync('uid')
     const that = this
     const params = {
-      uid: loginUser.id,
+      uid,
       tuan_id: that.data.shareParams.tuan_id
     }
     userTest().then(data => {
@@ -133,8 +133,9 @@ Page({
   initUserList: function () {
     const that = this
     const e = wx.getStorageSync("e");
+    const uid = wx.getStorageSync('uid')
     const params = {
-      uid: e.loginUser.id,
+      uid,
       tuan_id: that.data.shareParams.tuan_id
     }
     console.log('userListParams',params)
@@ -170,7 +171,18 @@ Page({
             accessToken
           })
           //用户登录
-          return userLogin();
+          return userLogin.initLoginUser();
+        })
+        .then(()=>{
+          const e = wx.getStorageSync('e');
+          const openId = e.loginUser.openid;
+         
+          //将分享传递过来的UID作为父级ID
+          const parentId = that.data.params.uid
+          const newE = {...e,openId,parentId}
+
+          //更新用户信息
+          return userLogin.registerOrUpdate(newE)
         })
         .then(() => {
           return that.initInvolvedContent(that.data.shareParams);

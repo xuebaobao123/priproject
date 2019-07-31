@@ -18,7 +18,7 @@
             </view>
             <view class="you" style=" position: relative;height:220rpx;">
                <view>
-                    <button open-type="share"  class="button"  data-cuid="{{item.cuid}}" data-index="{{index}}"><image src="../images/zhuanzeng.png"></image></button>
+                    <!-- <button open-type="share"  class="button"  data-cuid="{{item.cuid}}" data-index="{{index}}"><image src="../images/zhuanzeng.png"></image></button> -->
                     <view style="height:30rpx;"></view>
                     <view bindtap="exReceive"  data-id="{{item.id}}" style="position: absolute;bottom:0;">立即领取 ></view>
                 </view>

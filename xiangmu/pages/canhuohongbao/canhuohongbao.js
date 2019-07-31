@@ -3,6 +3,7 @@ var util = require('../../utils/fengzhuang.js');
 import regeneratorRuntime from '../../regenerator-runtime/runtime.js';
 import errorMessage from '../../utils/errorMessage'
 import userLogin from '../../utils/userLogin'
+import DateFormat from '../../utils/dateFormat'
 Page({
 
   /**
@@ -16,8 +17,8 @@ Page({
       //支出
       EXPEND: 1
     },
-    beginDate: "2019-07-06",
-    endDate: "2019-07-22",
+    beginDate: DateFormat.curDay(),
+    endDate: DateFormat.curDay(),
 
     //余额
     balance: {
@@ -50,14 +51,20 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    userLogin();
-    const loginUser = wx.getStorageSync("e").loginUser;
-    this.initData();
+    const that = this
+    userLogin.initLoginUser().then(() => {
+      const loginUser = wx.getStorageSync("e").loginUser;
+      //红包余额
+      that.findBalance(loginUser);
+      //账单查询
+      that.findBillRecord();
+      that.setData({
+        //判断是否可提现
+        enable: loginUser.withdrawal_state === 1
+      })
+    });
     app.changeTabBar();
-    this.setData({
-      //判断是否可提现
-      enable: loginUser.withdrawal_state === 1
-    })
+
   },
   // 起止时间
   bindDateChange(e) {
@@ -75,25 +82,15 @@ Page({
     })
   },
 
-  //加载数据
-  initData: function () {
-    //登录用户
-    userLogin();
-    //红包余额
-    this.findBalance();
-    //账单查询
-    this.findBillRecord();
-  },
-
   //申请体现
   onCashOut: function () {
-    if (this.data.balance.numDigits==0){
+    if (this.data.balance.numDigits == 0) {
       wx.showModal({
         title: '提示',
         content: '金额不能等于0',
       })
     }
-    else{
+    else {
       wx.navigateTo({
         url: '../tixianjine/tixianjine',
       })
@@ -142,8 +139,7 @@ Page({
   },
 
   //查询余额
-  findBalance: function () {
-    const loginUser = wx.getStorageSync("e").loginUser;
+  findBalance: function (loginUser) {
     this.setData({
       //余额
       balance: {

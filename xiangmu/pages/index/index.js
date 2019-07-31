@@ -50,7 +50,7 @@ Page({
             accessToken
           })
           //用户登录
-          return userLogin();
+          return userLogin.initLoginUser();
         }).then(() => {
           console.log('after userLogin')
           this.setData({

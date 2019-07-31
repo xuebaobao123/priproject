@@ -15,7 +15,7 @@ Page({
     enable:false
   },
   onLoad: function (options) {
-    userLogin();
+    userLogin.initLoginUser();
     const loginUser = wx.getStorageSync("e").loginUser;
     //红包余额
     this.findBalance();

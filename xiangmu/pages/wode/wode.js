@@ -68,7 +68,7 @@ Page({
    */
   onLoad: function (options) {
     //登录用户
-    userLogin();
+    userLogin.initLoginUser();
     app.changeTabBar();
     this.initData();
   },

@@ -1,6 +1,7 @@
 var util = require('./fengzhuang.js');
 import regeneratorRuntime from '../regenerator-runtime/runtime.js';
 import errorMessage from './errorMessage'
+import userLogin from './userLogin'
 const app = getApp();
 
 /**
@@ -14,10 +15,11 @@ export default async function (e) {
                     return authLogin(openId);
                 })
                 .then(({ openId, accessToken }) => {
-                    return userInfo(e,accessToken, openId)
+                    const newE = {...e,accessToken,openId}
+                    return userLogin.registerOrUpdate(newE)
                 })
-                .then(({accessToken,uid}) => {
-                    resolve({accessToken,uid})
+                .then(({ accessToken, uid }) => {
+                    resolve({ accessToken, uid })
                 })
 
         })
@@ -77,31 +79,4 @@ const authLogin = (openId) => {
         return { openId, accessToken };
 
     }, function (error) { })
-}
-
-/**
- * 根据token和opendid获取用户的uid，返回token和uid的对象
- * @param {token} accessToken 
- * @param {openid} openId 
- */
-const userInfo = (e,accessToken, openId) => {
-    var data = {
-        merchants_id: app.globalData.merchantsId,
-        openid: openId,
-        nickname: e.nickName,
-        avatarurl: e.avatarUrl,
-        gender: e.gender,
-        province: e.country,
-        city: e.city,
-        country: e.province,
-        parent_id: "",
-    }
-    console.log('index.beforedata', data);
-    return util.postRequest(app.globalData.url + "user/up-info?access-token=" + accessToken, data)
-        .then(function (data) {
-            console.log('获取用户UID【' + data.data.data.uid + '】');
-            const uid = data.data.data.uid;
-            return {accessToken,uid}
-        }, function (error) {
-        })
 }

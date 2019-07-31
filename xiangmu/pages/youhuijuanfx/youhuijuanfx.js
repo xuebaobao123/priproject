@@ -25,7 +25,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    userLogin();
+    userLogin.initLoginUser();
     const e = wx.getStorageSync("e");
     const uid = wx.getStorageSync("uid");
     const params = JSON.parse(options.params);
@@ -97,8 +97,9 @@ Page({
       merchants_id: app.globalData.merchantsId,
       uid: uid
     }
+    const currentCoupon = this.data.couponArray[0];
     return {
-      title: '分享优惠券',
+      title: currentCoupon.name,
       path: 'pages/youhuijuanfx/youhuijuanfx?params=' + JSON.stringify(params),
       imageUrl: this.data.couponArray[res.target.dataset.index].imgUrl,  //用户分享出去的自定义图片大小为5:4,
       success: function (res) {
@@ -128,7 +129,7 @@ Page({
             accessToken
           })
           //用户登录
-          return userLogin()
+          return userLogin.initLoginUser()
         })
         .then(() => {
           const shareParams = {
