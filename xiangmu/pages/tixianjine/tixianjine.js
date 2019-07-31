@@ -12,7 +12,7 @@ Page({
       //小数位数值
       decimalDigits: 0,
     },
-    enable:false
+    enable: false
   },
   onLoad: function (options) {
     userLogin.initLoginUser();
@@ -23,14 +23,22 @@ Page({
   //申请
   shenqing: function () {
     const e = wx.getStorageSync("e");
-    const uid=wx.getStorageSync("uid")
+    const uid = wx.getStorageSync("uid")
     //申请提现
     util.postRequest(app.globalData.url + "withdrawal/add?access-token=" + e.accessToken, { uid: uid, merchants_id: app.globalData.merchantsId })
       .then(function (data) {
         if (!errorMessage(data)) {
           return;
         }
-       
+        wx.showToast({
+          title: "提现成功",
+          icon: 'success',
+          duration: 2000
+        })
+
+        wx.redirectTo({
+          url: '../canhuohongbao/canhuohongbao',
+        })
       })
   },
 
