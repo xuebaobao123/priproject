@@ -215,7 +215,7 @@ Page({
     })
   },
   youhui: function () {
-    if (this.data.moneyZf.trim() == '') {
+    if (this.data.moneyZf=='' || this.data.moneyZf.trim() == '') {
       return;
     }
     if (parseFloat(this.data.moneyZf) <= 0) {
@@ -263,7 +263,7 @@ Page({
   },
   // 支付
   zhifu: function () {
-    if (this.data.moneyZf.trim() == '') {
+    if (this.data.moneyZf=='' || this.data.moneyZf.trim() == '') {
       wx.showModal({
         title: '金额不能为空',
       })

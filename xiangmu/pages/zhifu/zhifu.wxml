@@ -3,7 +3,7 @@
    <view class="zhufu-nr">
       <view class="nr-title">支付</view>
       <view class="money">
-          <input placeholder='{{money.price}}' placeholder-class='in' type="number" bindinput="money"></input>
+          <input placeholder='请输入金额' placeholder-class='in' type="number" bindinput="money"></input>
       </view>
       <view class="nr-title" style="line-height:80rpx;height:60rpx;">实付金额￥{{money.payPrice}}</view>
       <view class="nr-title" style="line-height:80rpx;height:60rpx;">使用金额￥{{money.balance}}</view>
