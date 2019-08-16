@@ -242,10 +242,17 @@ Page({
       merchants_id: app.globalData.merchantsId,
       uid: e.loginUser.id,
       price: this.data.moneyZf,
-      cuid: event ? event.currentTarget.dataset.id : ''
+      cuid: event ? event.currentTarget.dataset.cuid : ''
     }
+    if(!!!params.cuid){
+      param = {
+        ...params,
+        cid:event.currentTarget.dataset.id
+      }
+    }
+
     this.setData({
-      cuid: event ? event.currentTarget.dataset.id : ''
+      params: params
     })
     var that = this;
     util.postRequest(app.globalData.url + "checkstand/price?access-token=" + e.accessToken, params)
@@ -287,14 +294,9 @@ Page({
         return
       }
       const e = wx.getStorageSync("e");
-      const params = {
-        merchants_id: app.globalData.merchantsId,
-        uid: e.loginUser.id,
-        price: that.data.moneyZf,
-        cuid: that.data.cuid
-      }
+      
       //支付
-      util.postRequest(app.globalData.url + "checkstand/order?access-token=" + e.accessToken, params)
+      util.postRequest(app.globalData.url + "checkstand/order?access-token=" + e.accessToken, that.data.params)
         .then(function (data) {
           if (!(errorMessage(data))) {
             return;

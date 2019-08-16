@@ -75,7 +75,10 @@ Page({
       merchants_id: app.globalData.merchantsId,
       uid: uid,
       cuid: this.data.params.cuid,
-      type: 2//表示领取
+      //表示领取
+      type: 2,
+      share_id:this.data.params.share_id, 
+      share_uid:this.data.params.share_uid,      
     }
     util.postRequest(app.globalData.url + "coupon/coupon-acquire?access-token=" + current.accessToken, params)
       .then(function (data) {
@@ -95,7 +98,8 @@ Page({
     const params = {
       cuid: this.data.params.cuid,
       merchants_id: app.globalData.merchantsId,
-      uid: uid
+      share_uid: uid,
+      share_id:this.data.couponArray[res.target.dataset.index].share_id,
     }
     const currentCoupon = this.data.couponArray[0];
     return {

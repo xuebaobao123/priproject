@@ -34,7 +34,7 @@ const registerOrUpdate = (e) => {
         province: e.country,
         city: e.city,
         country: e.province,
-        parent_id: e.parentId,
+        share_uid: e.parentId,
     }
     console.log('register.params',data);
     return util.postRequest(app.globalData.url + "user/up-info?access-token=" + e.accessToken, data)

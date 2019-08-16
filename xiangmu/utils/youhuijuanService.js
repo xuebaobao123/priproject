@@ -4,7 +4,9 @@ const app = getApp();
 import errorMessage from './errorMessage'
 // //优惠券包数据
 const initBusinessCouponArrayData = () => {
+  const uid = wx.getStorageSync("uid");
   const params = {
+    uid: uid,
     merchants_id: app.globalData.merchantsId
   }
   console.log('Businessparams', params)
@@ -69,7 +71,7 @@ const mapData = (item, type) => {
     content: concatContent(item),
     cuid: item.cuid,
     //数量
-    number: 3,
+    number: item.have_num,
     //优惠说明
     integralExplain: item.describe,
     //有效期
@@ -90,7 +92,10 @@ const mapData = (item, type) => {
     accessType: initAccessType(item, type),
     cantuan_endtime: item.cantuan_endtime,
     tuan_status: item.tuan_status,
-    tuan_type: item.tuan_type
+    tuan_type: item.tuan_type,
+    //分享者ID
+    share_id:share_id,
+    is_use:is_use
   }
 }
 //拼接代金券描述
