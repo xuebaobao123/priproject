@@ -66,15 +66,15 @@ page{
 .youhuijuan1 .right .zuo view:nth-child(2),.youhuijuan1 .right .you view:nth-child(2){
   color:#f47a27;
   font-size:32rpx;
-  padding:30rpx 0 44rpx;
+  /* padding:30rpx 0 44rpx; */
 }
 .youhuijuan1 .right .you view:nth-child(1) image{
-  width:46rpx;
-  height:62rpx;
+  width:51rpx;
+  height:66rpx;
 }
-.youhuijuan1 .right .you view:nth-child(2){
+/* .youhuijuan1 .right .you view:nth-child(2){
   padding:30rpx 0 40rpx;
-}
+} */
 .pic{
   font-size:30rpx;
   display: block;
