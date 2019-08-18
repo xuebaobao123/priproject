@@ -4,6 +4,7 @@ var util = require('../../utils/fengzhuang.js');
 import regeneratorRuntime from '../../regenerator-runtime/runtime.js';
 import errorMessage from '../../utils/errorMessage';
 import userTest from '../../utils/userTest'
+import youhuijuanService from '../../utils/youhuijuanService'
 Page({
 
   /**
@@ -75,124 +76,15 @@ Page({
       merchants_id: app.globalData.merchantsId,
       price: this.data.moneyZf
     }
-    console.log('usercoupon.params', params);
-    this.initDataFromUrl('coupon/coupon-list', params)
-  },
-  /**
-   * 从不同的接口路径加载不同的数据
-   * @param {*} url 
-   */
-  initDataFromUrl(url, params) {
-    const e = wx.getStorageSync("e");
-    this.setData({
-      usableIntegral: e.loginUser.integral
-    })
     const that = this
-    //优惠券记录
-    util.postRequest(app.globalData.url + url + "?access-token=" + e.accessToken, params)
-      .then(function (data) {
-        if (!errorMessage(data)) {
-          return;
-        }
-        console.log(data.data.data)
-        that.setData({
-          hidden: false,
-          couponArray: data.data.data.map(item => {
-            return that.mapData(item);
-          })
-        })
+    youhuijuanService.initDataFromUrl('coupon/coupon-list', params).then(data=>{
+      that.setData({
+        couponArray:data,
+        hidden: false,
       })
+    })
   },
-  //封装后台对象至页面对象
-  mapData: function (item) {
-    //根据优惠券类型显示内容
-    return {
-      id: item.id,
-      //需要积分
-      needIntegral: 30,
-      integralName: item.name,
-      cuid: item.cuid,
-      is_use: item.is_use,
-      //规则
-      content: this.concatContent(item),
-      //数量
-      number: 3,
-      //优惠说明
-      integralExplain: item.describe,
-      //有效期
-      validityDate: {
-        //开始时间
-        beginDate: item.start_time,
-        //结束时间
-        endDate: item.end_time,
-        //文字描述
-        desc: '使用时段1'
-      },
-      //使用须知
-      useRequire: '使用须知1',
-      //优惠券所有者
-      owner: '',
-      imgUrl: item.pic,
-      couponType: this.couponType(item),
-      accessType: this.initAccessType(item),
-    }
-  },
-  //拼接代金券描述
-  concatContent: function (item) {
-    let content = "";
-    switch (item.type) {
-      case "1":
-        //通用劵展示优惠金额
-        content = item.discount_amount + "元代金券"
-        break;
-      case "2":
-        //满减券展示满多少减多少
-        content = "满" + item.restrict_amount + "元减" + item.discount_amount + "元";
-        break;
-      case "3":
-        //折扣券展示折扣比例
-        content = item.discount + "折"
-    }
-    return content;
-  },
-  //加载优惠券类型
-  couponType: function (item) {
-    return (item.access && item.access === '2') ? this.data.COUPONTYPE.GROUP : this.data.COUPONTYPE.DISCOUNT
-  },
-  //优惠券获取方式
-  initAccessType: function (item) {
-    //默认获取方式
-    if (!item.access) {
-      return {
-        //文字描述
-        content: '立即兑换',
-        //事件
-        targetEvent: 'exchange'
-      }
-    }
-    let accessType = null
-    switch (item.access) {
-      case "1":
-        accessType = {
-          content: '立即兑换',
-          targetEvent: 'exchange'
-        }
-        break;
-      case "2":
-        accessType = {
-          content: '立即领取',
-          targetEvent: 'exReceive'
-        }
-        break;
-      case "3": //暂时将优惠券获取方式的团购方式设置为我要开团，后续有变更可调整
-        accessType = {
-          content: '我要开团',
-          targetEvent: 'organGroup'
-        }
-        break;
-    }
-    return accessType;
-  },
+  
   // 返回
   fanhui: function () {
     // wx.navigateBack({ 
@@ -238,22 +130,25 @@ Page({
   // 优惠券
   youhuijuan: function (event) {
     const e = wx.getStorageSync("e");
+    const id = event.currentTarget.dataset.id;
+    const currentCoupon = this.data.couponArray.filter(item=>item.id===id)[0];
     let params = {
       merchants_id: app.globalData.merchantsId,
       uid: e.loginUser.id,
       price: this.data.moneyZf,
-      cuid: event ? event.currentTarget.dataset.cuid : ''
     }
-    console.log('params.cuid',!!!params.cuid)
-    if(!!!params.cuid){
+    if(!!!currentCoupon.cuid){
       params = {
         ...params,
-        cid:event.currentTarget.dataset.id
+        cid:currentCoupon.id
+      }
+    }else{
+      params = {
+        ...params,
+        cuid: currentCoupon.uid
       }
     }
-
     console.log('params',params);
-
     this.setData({
       params: params
     })

@@ -16,7 +16,7 @@
    <view class="tanchuang1">
       <image src="../images/cha_03.jpg" class="cha" bindtap="guanbi"></image>
       <view class="youhuijuan">
-               <view class="youhuijuan1" wx:for="{{couponArray}}" bindtap="youhuijuan" data-id="{{item.cuid}}">
+               <view class="youhuijuan1" wx:for="{{couponArray}}" bindtap="youhuijuan" data-id="{{item.id}}">
               <view class="top">
                 <view class="left">
                     <image src="{{item.imgUrl}}" class="img1"></image>

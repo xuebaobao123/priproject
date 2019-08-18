@@ -171,5 +171,6 @@ module.exports = {
   initInvolvedCouponArrayData: initInvolvedCouponArrayData,
   initUserShareCoupon: initUserShareCoupon,
   mapData: mapData,
-  initUserCouponArrayData: initUserCouponArrayData
+  initUserCouponArrayData: initUserCouponArrayData,
+  initDataFromUrl:initDataFromUrl
 }
