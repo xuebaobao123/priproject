@@ -58,3 +58,11 @@
 button::after{
 border: none;
 }
+.yanse{
+  background:#de7534;
+  color:white !important;
+  border-radius: 10rpx;
+  padding:2rpx 8rpx;
+  text-align: center;
+
+}

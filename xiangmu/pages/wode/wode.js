@@ -136,7 +136,8 @@ Page({
   //进入优惠券包
   goCouponPage: function (e) {
     wx.navigateTo({
-      url: '../youhuijuan/youhuijuan?owner=user'
+      // url: '../youhuijuan/youhuijuan?owner=user'
+      url: '../youhuijuan/youhuijuan?owner=business'
     })
   },
 

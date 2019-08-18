@@ -20,13 +20,16 @@
                <view wx:if="{{item.couponType==COUPONTYPE.DISCOUNT}}">
                     <button open-type="share"  class="button"  data-cuid="{{item.cuid}}" hidden="{{item.attribute==2}}" data-index="{{index}}"><image src="../images/zhuanzeng.png"></image></button>
                     <view style="height:30rpx;">{{(loginUser.is_canhuo === 1 || item.attribute==2)?'X'+item.number:''}}</view>
-                    <view bindtap="{{item.accessType.targetEvent}}" wx:if="{{params!=='user'}}" data-id="{{item.id}}" data-tuanId="{{item.tuan_id}}" style="position: absolute;bottom:0;">{{item.accessType.content}} ></view>
+                    <view bindtap="{{item.accessType.targetEvent}}" wx:if="{{params!=='user'}}" data-id="{{item.id}}" data-tuanId="{{item.tuan_id}}"
+                     style="position: absolute;bottom:0;" class="yanse">{{item.accessType.content}} ></view>
                 </view>
                
                <view wx:if="{{item.couponType==COUPONTYPE.GROUP && params!=='user'}}" bindtap="{{item.accessType.targetEvent}}" data-tuanId="{{item.tuan_id}}" data-id="{{item.id}}" >
                 <view style="height:30rpx;padding:96rpx 0 60rpx;color:#f47a27;">{{(loginUser.is_canhuo === 1 || item.attribute==2)?'X'+item.number:''}}</view>
 
-               {{item.accessType.content}} >
+                 <view class="yanse">
+                    {{item.accessType.content}} >
+                 </view>
                </view>
             </view>
          </view>

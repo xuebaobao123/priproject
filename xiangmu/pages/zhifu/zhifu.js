@@ -244,12 +244,15 @@ Page({
       price: this.data.moneyZf,
       cuid: event ? event.currentTarget.dataset.cuid : ''
     }
+    console.log('params.cuid',!!!params.cuid)
     if(!!!params.cuid){
       params = {
         ...params,
         cid:event.currentTarget.dataset.id
       }
     }
+
+    console.log('params',params);
 
     this.setData({
       params: params
