@@ -35,7 +35,8 @@ Page({
     var that=this;
     that.setData({
       usableIntegral: loginUser.integral,
-      params: options.owner
+      params: options.owner,
+      loginUser:loginUser
     })
     switch (options.owner) {
       case 'business':

@@ -160,7 +160,7 @@ Page({
           //昵称
           nickname: data.data.data.nickname,
           //累计积分
-          cumIntegral: data.data.data.integral,
+          cumIntegral: data.data.data.total_integral,
           //优惠券数量
           couponCount: data.data.data.coupon_num,
           //可用积分
