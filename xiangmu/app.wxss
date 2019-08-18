@@ -62,7 +62,7 @@ border: none;
   background:#de7534;
   color:white !important;
   border-radius: 10rpx;
-  padding:2rpx 8rpx;
+  padding:7rpx 2rpx;
   text-align: center;
 
 }
