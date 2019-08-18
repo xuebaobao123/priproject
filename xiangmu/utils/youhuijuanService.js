@@ -94,8 +94,10 @@ const mapData = (item, type) => {
     tuan_status: item.tuan_status,
     tuan_type: item.tuan_type,
     //分享者ID
-    share_id:share_id,
-    is_use:is_use
+    share_id:item.share_id,
+    is_use:item.is_use,
+    //特殊券
+    attribute:item.attribute
   }
 }
 //拼接代金券描述

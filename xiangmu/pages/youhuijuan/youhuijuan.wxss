@@ -73,7 +73,7 @@ page{
   height:62rpx;
 }
 .youhuijuan1 .right .you view:nth-child(2){
-  padding:40rpx 0 38rpx;
+  padding:30rpx 0 40rpx;
 }
 .pic{
   font-size:30rpx;

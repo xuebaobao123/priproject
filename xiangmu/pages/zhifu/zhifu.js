@@ -238,14 +238,14 @@ Page({
   // 优惠券
   youhuijuan: function (event) {
     const e = wx.getStorageSync("e");
-    const params = {
+    let params = {
       merchants_id: app.globalData.merchantsId,
       uid: e.loginUser.id,
       price: this.data.moneyZf,
       cuid: event ? event.currentTarget.dataset.cuid : ''
     }
     if(!!!params.cuid){
-      param = {
+      params = {
         ...params,
         cid:event.currentTarget.dataset.id
       }

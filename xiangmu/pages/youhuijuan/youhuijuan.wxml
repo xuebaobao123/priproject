@@ -18,12 +18,16 @@
             </view>
             <view class="you" style=" position: relative;height:220rpx;">
                <view wx:if="{{item.couponType==COUPONTYPE.DISCOUNT}}">
-                    <button open-type="share"  class="button"  data-cuid="{{item.cuid}}" hidden="{{!item.cuid}}" data-index="{{index}}"><image src="../images/zhuanzeng.png"></image></button>
-                    <view style="height:30rpx;"></view>
+                    <button open-type="share"  class="button"  data-cuid="{{item.cuid}}" hidden="{{item.attribute==2}}" data-index="{{index}}"><image src="../images/zhuanzeng.png"></image></button>
+                    <view style="height:30rpx;">{{loginUser.is_canhuo === 1?'X'+item.number:''}}</view>
                     <view bindtap="{{item.accessType.targetEvent}}" wx:if="{{params!=='user'}}" data-id="{{item.id}}" data-tuanId="{{item.tuan_id}}" style="position: absolute;bottom:0;">{{item.accessType.content}} ></view>
                 </view>
                
-               <view wx:if="{{item.couponType==COUPONTYPE.GROUP && params!=='user'}}" bindtap="{{item.accessType.targetEvent}}" data-tuanId="{{item.tuan_id}}" style="padding-top:184rpx;" data-id="{{item.id}}" >{{item.accessType.content}} ></view>
+               <view wx:if="{{item.couponType==COUPONTYPE.GROUP && params!=='user'}}" bindtap="{{item.accessType.targetEvent}}" data-tuanId="{{item.tuan_id}}" data-id="{{item.id}}" >
+                <view style="height:30rpx;padding:96rpx 0 60rpx;color:#f47a27;">{{loginUser.is_canhuo === 1?'X'+item.number:''}}</view>
+
+               {{item.accessType.content}} >
+               </view>
             </view>
          </view>
          <view class="clearfloat"></view>
@@ -41,5 +45,5 @@
       可用积分
       <text>{{usableIntegral}}</text>
    </view>
-   <view bindtap="goMyMember">我的会员 ></view>
+   <view bindtap="goMyMember">我的账户 ></view>
 </view>
