@@ -36,13 +36,13 @@ const initUserShareCoupon = (params) => {
   console.log("用户params", params)
   return initDataFromUrl('coupon/cuinfo', params);
 }
-const initDataFromUrl = async(url, params, type) => {
+const initDataFromUrl = async (url, params, type) => {
   const e = wx.getStorageSync("e");
   let curData = null;
   //优惠券记录
   return util.postRequest(app.globalData.url + url + "?access-token=" + e.accessToken, params)
-    .then(function(data) {
-      console.log("优惠卷包",data)
+    .then(function (data) {
+      console.log("优惠卷包", data)
       if (!errorMessage(data)) {
         return;
       }
@@ -53,7 +53,7 @@ const initDataFromUrl = async(url, params, type) => {
       } else {
         curData = mapData(data.data.data);
       }
-      console.log('curData',curData);
+      console.log('curData', curData);
       return curData;
     })
 }
@@ -94,10 +94,10 @@ const mapData = (item, type) => {
     tuan_status: item.tuan_status,
     tuan_type: item.tuan_type,
     //分享者ID
-    share_id:item.share_id,
-    is_use:item.is_use,
+    share_id: item.share_id,
+    is_use: item.is_use,
     //特殊券
-    attribute:item.attribute
+    attribute: item.attribute
   }
 }
 //拼接代金券描述
@@ -124,21 +124,26 @@ function couponType(item) {
 }
 //优惠券获取方式
 function initAccessType(item, type) {
+  const loginUser = wx.getStorageSync("e").loginUser;
+  let accessType = {
+    //文字描述
+    content: '',
+    //事件
+    targetEvent: ''
+  }
   //默认获取方式
   if (!item.access) {
-    return {
-      //文字描述
-      content: '立即兑换',
-      //事件
-      targetEvent: 'exchange'
-    }
+    return accessType
   }
-  let accessType = null
+
   switch (item.access) {
     case "1":
-      accessType = {
-        content: '立即兑换',
-        targetEvent: 'exchange'
+      //是参伙且为特殊券 或者 不是参伙
+      if ((loginUser.is_canhuo === 2 && item.attribute === 2) || loginUser.is_canhuo === 1) {
+        accessType = {
+          content: '立即兑换',
+          targetEvent: 'exchange'
+        }
       }
       break;
     case "2":
@@ -150,17 +155,9 @@ function initAccessType(item, type) {
       } else {
         //暂时将优惠券获取方式的团购方式设置为我要开团，后续有变更可调整
         accessType = {
-          content: '进入',
+          content: '立即开团',
           targetEvent: 'organGroup'
         }
-      }
-      break;
-    case "3":
-      
-      //暂时将优惠券获取方式的团购方式设置为我要开团，后续有变更可调整
-      accessType = {
-        content: '进入',
-        targetEvent: 'organGroup'
       }
       break;
   }
@@ -172,5 +169,5 @@ module.exports = {
   initUserShareCoupon: initUserShareCoupon,
   mapData: mapData,
   initUserCouponArrayData: initUserCouponArrayData,
-  initDataFromUrl:initDataFromUrl
+  initDataFromUrl: initDataFromUrl
 }
