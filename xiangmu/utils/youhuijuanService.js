@@ -97,7 +97,8 @@ const mapData = (item, type) => {
     share_id: item.share_id,
     is_use: item.is_use,
     //特殊券
-    attribute: item.attribute
+    attribute: item.attribute,
+    access:item.access
   }
 }
 //拼接代金券描述
