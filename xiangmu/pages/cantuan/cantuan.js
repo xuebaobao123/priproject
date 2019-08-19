@@ -78,16 +78,16 @@ Page({
     })
     const context = wx.createCanvasContext('shareFrends');
     context.setFillStyle('#dd7432')
-    context.fillRect(0, 10, this.data.screenWidth -30, this.data.screenHeight-200)
+    context.fillRect(0, 0, this.data.screenWidth -30, this.data.screenHeight-200)
     context.setLineWidth(2)
-    context.drawImage(this.data.chanxun, 20, 40, 50, 50);
+    context.drawImage(this.data.chanxun, 20,20, 50, 50);
     context.setFillStyle('white');
     context.setFontSize(12);
     context.setTextAlign('center');
-    context.fillText("微信名称", 46, 106);
-    context.drawImage(this.data.chanxun1, 80, 40, this.data.screenWidth/1.6, 50);
-    context.drawImage(this.data.chanpin, 20, 130, this.data.screenWidth-70, 160);
-    context.drawImage(this.data.border, 20, 240, this.data.screenWidth - 70, 50);
+    context.fillText("微信名称", 46, 86);
+    context.drawImage(this.data.chanxun1, 80, 20, this.data.screenWidth/1.6, 50);
+    context.drawImage(this.data.chanpin, 20, 110, this.data.screenWidth-70, 160);
+    context.drawImage(this.data.border, 20, 220, this.data.screenWidth - 70, 50);
     var text = '这是一段文字用于文本自动换行文本长度自行设置欢迎大家指出缺陷';//这是要绘制的文本
     var chr = text.split("");//这个方法是将一个字符串分割成字符串数组
     var temp = "";
@@ -114,7 +114,7 @@ Page({
       var test = "";
       var empty = [];
       for (var a = 0; a < rowPart.length; a++) {
-        if (context.measureText(test).width < 200) {
+        if (context.measureText(test).width < 170) {
           test += rowPart[a];
         }
         else {
@@ -127,7 +127,7 @@ Page({
       row = rowCut;
     }
     for (var b = 0; b < row.length; b++) {
-      context.fillText(row[b], 30, 260 + b * 20, 200);
+      context.fillText(row[b], 30, 240 + b * 20, 170);
     }
 
 
@@ -171,18 +171,17 @@ Page({
       row = rowCut;
     }
     for (var b = 0; b < row.length; b++) {
-      context.fillText(row[b], 250, 260 + b * 20, 80);
+      context.fillText(row[b], 210, 240 + b * 20, 80);
     }
-
     context.setFillStyle('white');
-    context.fillRect(0, 320, this.data.screenWidth - 30, 200);
+    context.fillRect(0, 280, this.data.screenWidth - 30, 200);
     context.setLineWidth(2);
-    context.drawImage(this.data.neirong, 70, 330, this.data.screenWidth - 180, 24);
-    context.drawImage(this.data.erweima, 120, 365, this.data.screenWidth - 280, 70);
-    context.drawImage(this.data.canhuo, 40, 440, 40, 40);
+    context.drawImage(this.data.neirong, 70, 290, this.data.screenWidth - 180, 24);
+    context.drawImage(this.data.erweima, 120, 325, this.data.screenWidth - 280, 70);
+    context.drawImage(this.data.canhuo, 40, 400, 40, 40);
     context.setFillStyle('black');
     context.setFontSize(14);
-    context.fillText("此处写小程序的slogin", 100, 460);
+    context.fillText("此处写小程序的slogin", 100, 420);
     context.draw()
   },
   //参团内容

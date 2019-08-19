@@ -93,7 +93,7 @@ canvas{
   position: relative;
   top:2%;
   margin:0 auto;
-  height:84%;
+  height:80%;
 }
 .canvas-dibu{
   background:white;

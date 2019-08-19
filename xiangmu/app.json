@@ -1,7 +1,8 @@
 {
   "pages": [
+      "pages/cantuan/cantuan",
     "pages/index/index",
-    "pages/cantuan/cantuan",
+  
 
    
   
