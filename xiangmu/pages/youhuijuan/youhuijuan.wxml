@@ -11,27 +11,30 @@
             </view>
          </view>
          <view class="right">
+            <view class="top1">
+                <view style="height:70rpx;" class="left">{{item.integralName}}</view>
+                <view class="right"><button open-type="share"  class="button"  data-cuid="{{item.cuid}}" hidden="{{item.attribute==2}}" data-index="{{index}}"><image src="../images/zhuanzeng.png"></image></button></view>
+            </view>
             <view class="zuo" style=" position: relative;height:220rpx;">
-               <view style="height:70rpx;">{{item.integralName}}</view>
-               <view style="height:34rpx;margin:20rpx 0 0 0;">{{item.content}}</view>
-               <view bindtap="onToggle" data-index="{{index}}"  style="position: absolute;bottom:14rpx;" >查看详情 <text class="{{activeIndex == index ? 'show1' : 'hide1'}}">></text></view>
+               <view style="height:34rpx;margin:40rpx 0 0 0;">{{item.content}}</view>
+               <view bindtap="onToggle" data-index="{{index}}"  style="position: absolute;bottom:60rpx;" >查看详情 <text class="{{activeIndex == index ? 'show1' : 'hide1'}}">></text></view>
             </view>
             <view class="you" style=" position: relative;height:220rpx;">
                <view wx:if="{{item.couponType==COUPONTYPE.DISCOUNT}}">
-                    <button open-type="share"  class="button"  data-cuid="{{item.cuid}}" hidden="{{item.attribute==2}}" data-index="{{index}}"><image src="../images/zhuanzeng.png"></image></button>
-                    <view style="height:30rpx;" style="margin-top:22rpx;">{{(loginUser.is_canhuo === 1 || item.attribute==2)?'X'+item.number:''}}</view>
+                    <view style="height:30rpx;" style="margin-top:40rpx;color:#f47a27;">{{(loginUser.is_canhuo === 1 || item.attribute==2)?'X'+item.number:''}}</view>
                     <view bindtap="{{item.accessType.targetEvent}}" wx:if="{{params!=='user'}}" data-id="{{item.id}}" data-tuanId="{{item.tuan_id}}"
-                     style="position: absolute;bottom:0;" class="yanse">{{item.accessType.content}} ></view>
+                     style="position: absolute;bottom:50rpx;" class="yanse">{{item.accessType.content}} ></view>
                 </view>
                
                <view wx:if="{{item.couponType==COUPONTYPE.GROUP && params!=='user'}}" bindtap="{{item.accessType.targetEvent}}" data-tuanId="{{item.tuan_id}}" data-id="{{item.id}}" >
-                <view style="height:30rpx;padding:86rpx 0 50rpx;color:#f47a27;">{{(loginUser.is_canhuo === 1 || item.attribute==2)?'X'+item.number:''}}</view>
+                <view style="height:30rpx;padding:40rpx 0 52rpx;color:#f47a27;">{{(loginUser.is_canhuo === 1 || item.attribute==2)?'X'+item.number:''}}</view>
 
                  <view class="yanse">
                     {{item.accessType.content}} >
                  </view>
                </view>
             </view>
+           
          </view>
          <view class="clearfloat"></view>
       </view>

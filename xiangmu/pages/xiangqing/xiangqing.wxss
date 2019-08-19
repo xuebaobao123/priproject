@@ -27,8 +27,7 @@
   background:white;
   border-radius: 20rpx 20rpx 0 0;
   font-size:38rpx;
-  margin-bottom:20rpx;
-  height:400rpx;
+  margin-bottom:100rpx;
   
 }
 page{

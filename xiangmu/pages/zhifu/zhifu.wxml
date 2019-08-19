@@ -18,7 +18,7 @@
           <view class="left">使用金额</view>
           <view class="right">￥{{money.balance}}</view>
           <view style="clear:both;margin-bottom:20rpx;"></view>
-          <view class="left">优惠金额</view>
+          <view class="left" style="color:red;">优惠金额</view>
           <view class="right" style="color:red;">￥{{money.discount_amount}}</view>
       </view>
        <view class="nr-title">

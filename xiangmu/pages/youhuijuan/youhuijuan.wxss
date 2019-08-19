@@ -129,3 +129,19 @@ page{
 .fixed view:nth-child(2){
   float:right;
 }
+.button image{
+  width:51rpx;
+  height:67rpx;
+}
+.top1{
+  overflow: hidden;
+}
+.top1 .left{
+  float:left;
+  font-size:30rpx;
+  width:74% !important;
+}
+.top1 .right{
+  float:right;
+  width:22% !important;
+}

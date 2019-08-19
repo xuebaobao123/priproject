@@ -6,6 +6,7 @@
 .cantuan-title{
   font-size:30rpx;
   margin:0 0 20rpx;
+  line-height:100rpx;
 }
 .xiangQi .bottom{
   padding-top:0;
@@ -90,9 +91,9 @@
 canvas{
   width:90%;
   position: relative;
-  top:5%;
+  top:2%;
   margin:0 auto;
-  height:1200rpx;
+  height:75%;
 }
 .canvas-dibu{
   background:white;
@@ -133,8 +134,6 @@ canvas{
   padding:10rpx 0 20rpx;
 }
 .bottom{
-  height:100rpx;
-  line-height:100rpx;
   text-align: center;
   font-size:30rpx;
   border-top:1rpx solid #efefef;

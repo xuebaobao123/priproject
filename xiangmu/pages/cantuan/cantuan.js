@@ -78,7 +78,7 @@ Page({
     })
     const context = wx.createCanvasContext('shareFrends');
     context.setFillStyle('#dd7432')
-    context.fillRect(0, 10, this.data.screenWidth -30, this.data.screenHeight-400)
+    context.fillRect(0, 10, this.data.screenWidth -30, this.data.screenHeight-200)
     context.setLineWidth(2)
     context.drawImage(this.data.chanxun, 20, 40, 50, 50);
     context.setFillStyle('white');
@@ -114,7 +114,7 @@ Page({
       var test = "";
       var empty = [];
       for (var a = 0; a < rowPart.length; a++) {
-        if (context.measureText(test).width < 120) {
+        if (context.measureText(test).width < 200) {
           test += rowPart[a];
         }
         else {
@@ -127,7 +127,7 @@ Page({
       row = rowCut;
     }
     for (var b = 0; b < row.length; b++) {
-      context.fillText(row[b], 30, 260 + b * 20, 150);
+      context.fillText(row[b], 30, 260 + b * 20, 200);
     }
 
 
@@ -158,7 +158,7 @@ Page({
       var test = "";
       var empty = [];
       for (var a = 0; a < rowPart.length; a++) {
-        if (context.measureText(test).width < 120) {
+        if (context.measureText(test).width < 260) {
           test += rowPart[a];
         }
         else {
@@ -171,7 +171,7 @@ Page({
       row = rowCut;
     }
     for (var b = 0; b < row.length; b++) {
-      context.fillText(row[b], 200, 260 + b * 20, 80);
+      context.fillText(row[b], 250, 260 + b * 20, 80);
     }
 
     context.setFillStyle('white');
