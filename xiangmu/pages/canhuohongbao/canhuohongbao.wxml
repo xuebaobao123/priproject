@@ -22,7 +22,7 @@
               </view>
             </picker>
          </view>
-         <view bindtap="findBillRecord">确定</view>
+         <view bindtap="findBillRecord" style="width:28%;font-size:32rpx;">确定</view>
       </view>
    </view>
    <view class="partners-liebiao">

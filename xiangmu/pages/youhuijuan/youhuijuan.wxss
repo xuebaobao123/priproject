@@ -65,7 +65,7 @@ page{
 }
 .youhuijuan1 .right .zuo view:nth-child(2),.youhuijuan1 .right .you view:nth-child(2){
   color:#f47a27;
-  font-size:30rpx;
+  font-size:26rpx;
   /* padding:30rpx 0 44rpx; */
 }
 .youhuijuan1 .right .you view:nth-child(1) image{

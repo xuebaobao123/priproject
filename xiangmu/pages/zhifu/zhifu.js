@@ -145,7 +145,7 @@ Page({
     }else{
       params = {
         ...params,
-        cuid: currentCoupon.uid
+        cuid: currentCoupon.cuid
       }
     }
     console.log('params',params);

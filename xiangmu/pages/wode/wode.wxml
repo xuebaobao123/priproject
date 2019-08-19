@@ -16,7 +16,7 @@
          <view class="left">
             <image src="../images/logo.png"></image>
          </view>
-         <view class="right yanse" bindtap="goCouponPage">进入优惠卷包 ></view>
+         <view class="right yanse" bindtap="goCouponPage">进入优惠卷包</view>
       </view>
    </view>
    <view class="wode-center">

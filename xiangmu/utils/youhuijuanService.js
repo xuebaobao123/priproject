@@ -139,7 +139,7 @@ function initAccessType(item, type) {
   switch (item.access) {
     case "1":
       //是参伙且为特殊券 或者 不是参伙
-      if ((loginUser.is_canhuo === 2 && item.attribute === 2) || loginUser.is_canhuo === 1) {
+      if ((loginUser.is_canhuo === 2 && item.attribute === '2') || loginUser.is_canhuo === 1) {
         accessType = {
           content: '立即兑换',
           targetEvent: 'exchange'

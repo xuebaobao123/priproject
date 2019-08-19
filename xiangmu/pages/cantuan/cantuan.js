@@ -28,6 +28,14 @@ Page({
       headImg: '../images/weixin_03.png',
     }],
     shouquan: true,
+    chanxun:"../images/touxiang.png",
+    chanxun1: "../images/wenzi_03.png",
+    chanpin:"../images/xinxi.png",
+    border: "../images/border.png",
+    neirong: "../images/cc_03.png",
+    erweima: "../images/erweima.jpg",
+    canhuo: "../images/canhuo_03.png",
+    hidden:true
   },
   onLoad: function (options) {
     const e = wx.getStorageSync("e");
@@ -55,6 +63,127 @@ Page({
     //   }
     // });
 
+  },
+  onReady: function () {
+    var that = this;
+    //获取用户设备信息，屏幕宽度
+    wx.getSystemInfo({
+      success: res => {
+        console.log(res)
+        that.setData({
+          screenWidth: res.screenWidth,
+          screenHeight: res.screenHeight
+        })
+      }
+    })
+    const context = wx.createCanvasContext('shareFrends');
+    context.setFillStyle('#dd7432')
+    context.fillRect(0, 10, this.data.screenWidth -30, this.data.screenHeight-400)
+    context.setLineWidth(2)
+    context.drawImage(this.data.chanxun, 20, 40, 50, 50);
+    context.setFillStyle('white');
+    context.setFontSize(12);
+    context.setTextAlign('center');
+    context.fillText("微信名称", 46, 106);
+    context.drawImage(this.data.chanxun1, 80, 40, this.data.screenWidth/1.6, 50);
+    context.drawImage(this.data.chanpin, 20, 130, this.data.screenWidth-70, 160);
+    context.drawImage(this.data.border, 20, 240, this.data.screenWidth - 70, 50);
+    var text = '这是一段文字用于文本自动换行文本长度自行设置欢迎大家指出缺陷';//这是要绘制的文本
+    var chr = text.split("");//这个方法是将一个字符串分割成字符串数组
+    var temp = "";
+    var row = [];
+    context.setFontSize(12);
+    context.setFillStyle("#000");
+    context.setTextAlign('left');
+    for (var a = 0; a < chr.length; a++) {
+      if (context.measureText(temp).width < 250) {
+        temp += chr[a];
+      }
+      else {
+        a--; //这里添加了a-- 是为了防止字符丢失，效果图中有对比
+        row.push(temp);
+        temp = "";
+      }
+    }
+    row.push(temp);
+
+    //如果数组长度大于2 则截取前两个
+    if (row.length > 2) {
+      var rowCut = row.slice(0, 2);
+      var rowPart = rowCut[1];
+      var test = "";
+      var empty = [];
+      for (var a = 0; a < rowPart.length; a++) {
+        if (context.measureText(test).width < 120) {
+          test += rowPart[a];
+        }
+        else {
+          break;
+        }
+      }
+      empty.push(test);
+      var group = empty[0] + "..."//这里只显示两行，超出的用...表示
+      rowCut.splice(1, 1, group);
+      row = rowCut;
+    }
+    for (var b = 0; b < row.length; b++) {
+      context.fillText(row[b], 30, 260 + b * 20, 150);
+    }
+
+
+
+    var text = '满100减50元';//这是要绘制的文本
+    var chr = text.split("");//这个方法是将一个字符串分割成字符串数组
+    var temp = "";
+    var row = [];
+    context.setFontSize(14);
+    context.setFillStyle("#dd7432");
+    context.setTextAlign('left');
+    for (var a = 0; a < chr.length; a++) {
+      if (context.measureText(temp).width < 40) {
+        temp += chr[a];
+      }
+      else {
+        a--; //这里添加了a-- 是为了防止字符丢失，效果图中有对比
+        row.push(temp);
+        temp = "";
+      }
+    }
+    row.push(temp);
+
+    //如果数组长度大于2 则截取前两个
+    if (row.length > 2) {
+      var rowCut = row.slice(0, 2);
+      var rowPart = rowCut[1];
+      var test = "";
+      var empty = [];
+      for (var a = 0; a < rowPart.length; a++) {
+        if (context.measureText(test).width < 120) {
+          test += rowPart[a];
+        }
+        else {
+          break;
+        }
+      }
+      empty.push(test);
+      var group = empty[0] + "..."//这里只显示两行，超出的用...表示
+      rowCut.splice(1, 1, group);
+      row = rowCut;
+    }
+    for (var b = 0; b < row.length; b++) {
+      context.fillText(row[b], 200, 260 + b * 20, 80);
+    }
+
+    context.setFillStyle('white');
+    context.fillRect(0, 320, this.data.screenWidth - 30, 200);
+    context.setLineWidth(2);
+    context.drawImage(this.data.neirong, 70, 330, this.data.screenWidth - 180, 24);
+    context.drawImage(this.data.erweima, 110, 365, this.data.screenWidth - 280, 90);
+    context.drawImage(this.data.canhuo, 40, 460, 40, 40);
+    context.setFillStyle('black');
+    context.setFontSize(14);
+    context.fillText("此处写小程序的slogin", 100, 490);
+    context.draw()
   },
   //参团内容
   initInvolvedContent: async function (shareParams) {
@@ -246,4 +375,83 @@ Page({
       },
     }
   },
+  //关闭
+  guanbi:function(){
+    this.setData({
+      hidden:true
+    })
+  },
+  fenxiang:function(){
+    this.setData({
+      hidden: false
+    })
+  },
+  shouye: function () {
+    wx.redirectTo({
+      url: '../index/index',
+    })
+  },
+  baocun:function(){
+    wx.canvasToTempFilePath({
+      x: 0,
+      y: 0,
+      width: this.data.screenWidth,
+      height: this.data.screenHeight,
+      destWidth: this.data.screenWidth,
+      destHeight: this.data.screenHeight,
+      canvasId: 'shareFrends',
+      success: function (res) {
+        wx.saveImageToPhotosAlbum({
+          filePath: res.tempFilePath,   // 需要保存的图片地址
+          success(res) {
+            setTimeout(function () {
+              wx.showToast({
+                title: '图片保存成功',
+                icon: 'success',
+                duration: 2000
+              })
+            }, 1000)
+
+          },
+          fail: function (res) {
+            if (res.errMsg === "saveImageToPhotosAlbum:fail auth deny" || res.errMsg == "saveImageToPhotosAlbum:fail:auth denied" || res.errMsg == "saveImageToPhotosAlbum:fail authorize no response") {
+              wx.showModal({
+                title: '提示',
+                content: '需要授权才可保存图片',
+                showCancel: false,
+                success(res) {
+                  if (res.confirm) {
+                    wx.openSetting({
+                      success(settingdata) {
+                        if (settingdata.authSetting["scope.writePhotosAlbum"]) {
+                          wx.showToast({
+                            title: '获取权限成功，再次点击可保存图片',
+                            icon: 'none',
+                            duration: 2000
+                          })
+                        } else {
+                          wx.showToast({
+                            title: '获取权限失败',
+                            icon: 'none',
+                            duration: 2000
+                          })
+                        }
+                      },
+                      fail() {
+                        wx.showToast({
+                          title: '获取权限失败',
+                          icon: 'none',
+                          duration: 2000
+                        })
+                      }
+                    })
+                  }
+                }
+              })
+            }
+          }
+        })
+      }
+    })
+  }
 })

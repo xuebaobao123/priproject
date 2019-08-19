@@ -42,3 +42,100 @@
   width:90%;
   z-index:3;
 }
+
+
+
+.tanceng{
+  position: fixed;
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.5);
+  z-index:10000000000;
+}
+.tanceng button{
+  position: relative;
+  top:40%;
+  left:0;
+  width:90%;
+  z-index:3;
+}
+.dibu .right{
+  width:51%;
+  float:left;
+  text-align: center;
+}
+.dibu .left,.dibu .left1{
+  width:24%;
+  float:left;
+  text-align: center;
+}
+.dibu .left1{
+  border-left:3rpx solid #eee;
+}
+.dibu{
+  z-index:1;
+}
+.canvas{
+  position: fixed;
+  left:0;
+  top:0;
+  width:100%;
+  padding:0 5%;
+  height:100%;
+  background:rgba(0,0,0,0.5);
+  z-index:100;
+}
+canvas{
+  width:90%;
+  position: relative;
+  top:5%;
+  margin:0 auto;
+  height:1200rpx;
+}
+.canvas-dibu{
+  background:white;
+  position: fixed;
+  width:100%;
+  left:0;
+  bottom:0;
+  padding:15rpx 0 0 0;
+}
+.canvas-dibu .top{
+  overflow: hidden;
+}
+.canvas-dibu .left{
+  float:left;
+  width:50%;
+  text-align: center;
+}
+.canvas-dibu .right{
+  float:left;
+  width:50%;
+  text-align: center;
+}
+.canvas-dibu image{
+  width:60rpx;
+  height:60rpx;
+}
+.canvas-dibu .top{
+  font-size:30rpx;
+}
+.canvas-dibu .top button{
+  background:white;
+  font-size:30rpx;
+  line-height:40rpx;
+  padding:10rpx 0 20rpx;
+}
+.canvas-dibu .right view{
+  line-height:40rpx;
+  padding:10rpx 0 20rpx;
+}
+.bottom{
+  height:100rpx;
+  line-height:100rpx;
+  text-align: center;
+  font-size:30rpx;
+  border-top:1rpx solid #efefef;
+}
