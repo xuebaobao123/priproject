@@ -1,0 +1,44 @@
+<view class="youhuijuan">
+   <view class="youhuijuan1" wx:for="{{couponArray}}">
+      <view class="top">
+         <view class="left">
+            <image src="{{item.imgUrl}}" class="img1"></image>
+            <view class="dingwei">
+               <view class="dingwei1">
+                  <image src="../images/youhuijuan1.png"></image>
+                  <text>{{item.needIntegral}}积分</text>
+               </view>
+            </view>
+         </view>
+         <view class="right">
+            <view class="zuo" style=" position: relative;height:220rpx;">
+               <view>{{item.integralName}}</view>
+               <view>{{item.content}}</view>
+               <view bindtap="onToggle" data-index="{{index}}"  style="position: absolute;bottom:0;">查看详情 <text class="{{activeIndex == index ? 'show1' : 'hide1'}}">></text></view>
+            </view>
+            <view class="you" style=" position: relative;height:220rpx;">
+               <view>
+                    <!-- <button open-type="share"  class="button"  data-cuid="{{item.cuid}}" data-index="{{index}}"><image src="../images/zhuanzeng.png"></image></button> -->
+                     <view style="height:70rpx;"></view>
+                    <view style="height:30rpx;"></view>
+                    <view bindtap="exReceive"  data-id="{{item.id}}" style="position: absolute;bottom:0;">立即领取 ></view>
+                </view>
+               
+               
+            </view>
+         </view>
+         <view class="clearfloat"></view>
+      </view>
+      <view class="pic {{activeIndex == index ? '' : 'hidden'}}">
+         <view>
+            <text>优惠说明：</text>
+            <rich-text nodes="{{item.integralExplain}}"></rich-text>
+         </view>
+      </view>
+   </view>
+</view>
+<view class="tanceng" hidden="{{shouquan}}">
+    <button class='bottom' type='primary' open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="bindGetUserInfo">
+      授权登录  
+  </button>
+</view>

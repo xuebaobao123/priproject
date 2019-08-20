@@ -1,0 +1,13 @@
+var Sub = function (val) {
+  if (val.length == 0 || val == undefined) {
+    return;
+  }
+  if (val.length > 10) {
+    return val.substring(0, 10) + "";
+  }
+  else {
+    return val;
+  }
+}
+//exports: 通过该属性，对外共享本模块的私有变量与函数。
+module.exports.Sub = Sub;

@@ -1,0 +1,72 @@
+<view class="wode">
+   <view class="wode-xinxi">
+      <view class="wode-xinxi1">
+         <image src="../images/xinxi.png" class="tu"></image>
+         <view class="xinxi">
+            <view class="left">
+               <image src="{{avatarurl}}"></image>
+            </view>
+            <view class="right">
+               <view>{{nickname}}</view>
+               <view style="margin-top:6rpx;">累计积分:{{cumIntegral}}</view>
+            </view>
+         </view>
+      </view>
+      <view class="wode-xinxi2">
+         <view class="left">
+            <image src="../images/logo.png"></image>
+         </view>
+         <view class="right yanse" bindtap="goCouponPage">进入优惠卷包</view>
+      </view>
+   </view>
+   <view class="wode-center">
+      <view class="wode-top">
+         <view class="wode-top1">
+            <image src="../images/jifen.png"></image>
+            <view>
+               <text>{{usableIntegral}}</text>
+            </view>
+         </view>
+         <view class="wode-top1">
+            <image src="../images/yhj.png"></image>
+            <view>
+               <text>{{couponCount}}</text>
+               张
+            </view>
+         </view>
+      </view>
+      <view class="wode-bottom">
+         <view style="overflow:hidden;margin-bottom:20rpx;" bindtap="findConsumeRecord">
+            <view class="left">
+               <image src="../images/tubiao.png"></image>
+               <view>
+                  ￥
+                  <text>{{surplus.numDigits}}.</text>
+                  {{surplus.decimalDigits}}
+               </view>
+            </view>
+            <view class="right">消费查询 <text class="{{activeIndex ? 'show1' : 'hide1'}}">></text></view>
+         </view>
+         <view class="pic {{activeIndex ? 'show' : 'hide'}}">
+            <view>近一月</view>
+            <view class="liebiao" wx:if="{{consumeRecord.length>0}}" wx:for="{{consumeRecord}}">
+               <view>{{item.date}}</view>
+               <view>
+                  ￥
+                  <text>{{item.consume.numDigits}}.</text>
+                  {{item.consume.decimalDigits}}
+               </view>
+            </view>
+            <view wx:if="{{consumeRecord.length==0}}" class="liebiao">暂无数据</view>
+         </view>
+      </view>
+   </view>
+   <view class="wode-dibu">
+      <view class="wode-bottom1" wx:for="{{detailArray}}" wx:key='this' data-index='{{index}}' bindtap="foward">
+         <text>{{item.text}}</text>
+         <image src="{{item.img}}"></image>
+      </view>
+   </view>
+</view>
+<import src="../tabbar/tabbar.wxml" />
+<template is="tabbar" data="{{tabbar}}" />
