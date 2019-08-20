@@ -1,3 +1,0 @@
-<view style="width:90%;margin:0 auto;">
-   <rich-text nodes="{{guize}}"></rich-text>
-</view>

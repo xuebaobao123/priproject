@@ -92,8 +92,9 @@ canvas{
   width:90%;
   position: relative;
   top:2%;
-  margin:0 auto;
-  height:80%;
+  margin:0 auto 300rpx;
+  height:90%;
+  overflow-y: scroll;
 }
 .canvas-dibu{
   background:white;
@@ -102,6 +103,7 @@ canvas{
   left:0;
   bottom:0;
   padding:15rpx 0 0 0;
+  margin-top:300rpx;
 }
 .canvas-dibu .top{
   overflow: hidden;

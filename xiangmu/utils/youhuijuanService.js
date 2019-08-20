@@ -142,7 +142,7 @@ function initAccessType(item, type) {
       //是参伙且为特殊券 或者 不是参伙
       if ((loginUser.is_canhuo === 2 && item.attribute === '2') || loginUser.is_canhuo === 1) {
         accessType = {
-          content: '立即兑换',
+          content: '立即兑换 >',
           targetEvent: 'exchange'
         }
       }
@@ -150,13 +150,13 @@ function initAccessType(item, type) {
     case "2":
       if (type && type === 'involved') { //我参与的团
         accessType = {
-          content: '进入',
+          content: '进入 >',
           targetEvent: 'organgoto'
         }
       } else {
         //暂时将优惠券获取方式的团购方式设置为我要开团，后续有变更可调整
         accessType = {
-          content: '立即开团',
+          content: '立即开团 >',
           targetEvent: 'organGroup'
         }
       }

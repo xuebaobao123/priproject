@@ -23,14 +23,15 @@
                <view wx:if="{{item.couponType==COUPONTYPE.DISCOUNT}}">
                     <view style="height:30rpx;" style="margin-top:40rpx;color:#f47a27;">{{(params!=='involved' && loginUser.is_canhuo === 1 || item.attribute==2)?'X'+item.number:''}}</view>
                     <view bindtap="{{item.accessType.targetEvent}}" wx:if="{{params!=='user'}}" data-id="{{item.id}}" data-tuanId="{{item.tuan_id}}"
-                     style="position: absolute;bottom:50rpx;" class="yanse">{{item.accessType.content}} ></view>
+                     style="position: absolute;bottom:50rpx;" class="yanse">
+                     {{item.accessType.content}}</view>
                 </view>
                
                <view wx:if="{{item.couponType==COUPONTYPE.GROUP && params!=='user'}}" bindtap="{{item.accessType.targetEvent}}" data-tuanId="{{item.tuan_id}}" data-id="{{item.id}}" >
                 <view style="height:30rpx;padding:40rpx 0 52rpx;color:#f47a27;">{{(params!=='involved' && loginUser.is_canhuo === 1 || item.attribute==2)?'X'+item.number:''}}</view>
 
                  <view class="yanse">
-                    {{item.accessType.content}} >
+                    {{item.accessType.content}} 
                  </view>
                </view>
             </view>
