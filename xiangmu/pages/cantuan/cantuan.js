@@ -178,10 +178,10 @@ Page({
     context.setLineWidth(2);
     context.drawImage(this.data.neirong, 80, 290, this.data.screenWidth - 180, 24);
     context.drawImage(this.data.erweima, 140, 325, 80, 80);
-    context.drawImage(this.data.canhuo, 50, 400, 30, 30);
+    context.drawImage(this.data.canhuo, 70, 400, 30, 30);
     context.setFillStyle('black');
     context.setFontSize(14);
-    context.fillText("此处写小程序的slogin", 100, 420);
+    context.fillText("此处写小程序的slogin", 110, 420);
     context.draw()
   },
   //参团内容

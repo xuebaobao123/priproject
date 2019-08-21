@@ -52,18 +52,18 @@
    </view>
  <view class="canvas" hidden="{{hidden}}">
     <view class="cengji"><canvas style="width:100%;" canvas-id="shareFrends"></canvas></view>
-    <cover-view class="canvas-dibu">
-       <cover-view class="top">
-          <cover-view class="left">
+    <view class="canvas-dibu">
+       <view class="top">
+          <view class="left">
              <image src="../images/haoyou_03.png"></image>
              <button open-type="share">分享好友</button>
-          </cover-view>
-          <cover-view class="right" bindtap="baocun">
+          </view>
+          <view class="right" bindtap="baocun">
               <image src="../images/baocun_03.png"></image>
               <view open-type="share">保存图片</view>
-          </cover-view>
-       </cover-view>
-       <cover-view class="bottom" bindtap="guanbi" style="line-height:80rpx;height:80rpx;">关闭</cover-view>
-    </cover-view>
+          </view>
+       </view>
+       <view class="bottom" bindtap="guanbi" style="line-height:80rpx;height:80rpx;">关闭</view>
+    </view>
  </view>
 
