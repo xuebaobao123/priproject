@@ -78,7 +78,7 @@ Page({
     })
     const context = wx.createCanvasContext('shareFrends');
     context.setFillStyle('#dd7432')
-    context.fillRect(0, 0, this.data.screenWidth -30, this.data.screenHeight-200)
+    context.fillRect(0, 0, this.data.screenWidth -30, this.data.screenHeight)
     context.setLineWidth(2)
     context.drawImage(this.data.chanxun, 20,20, 50, 50);
     context.setFillStyle('white');
@@ -177,8 +177,8 @@ Page({
     context.fillRect(0, 280, this.data.screenWidth - 30, 200);
     context.setLineWidth(2);
     context.drawImage(this.data.neirong, 70, 290, this.data.screenWidth - 180, 24);
-    context.drawImage(this.data.erweima, 120, 325, this.data.screenWidth - 280, 70);
-    context.drawImage(this.data.canhuo, 40, 400, 40, 40);
+    context.drawImage(this.data.erweima, 120, 325, 80, 80);
+    context.drawImage(this.data.canhuo, 50, 400, 30, 30);
     context.setFillStyle('black');
     context.setFontSize(14);
     context.fillText("此处写小程序的slogin", 100, 420);

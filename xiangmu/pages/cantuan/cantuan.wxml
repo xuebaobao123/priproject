@@ -10,14 +10,15 @@
          <view class="right">{{canhuo.content}}</view>
       </view>
       <view class="top2">
-         <view>
+         <view class="left">参团人员</view>
+         <view class="right">
             <text>截止日期 {{hotel.Sub(canhuo.cantuan_endtime)}}</text>
          </view>
       </view>
    </view>
    <view class="bottom">
       <view class="cantuan">
-        <view class="cantuan-title">参团人员</view>
+        
         <view class="cantuan-touxiang">
            <view class="cantuan1" wx:for="{{userList}}">
             <image src="{{item.headImg}}"></image>
@@ -39,7 +40,7 @@
           <text>首页</text>
       </view>
       <view class="left1 left" bindtap="fenxiang">
-          <image src="../images/index.png"></image>
+          <image src="../images/fenxiang_03.png"></image>
           <text>分享</text>
       </view>
       <view class="right">
@@ -50,7 +51,7 @@
       </view>
    </view>
  <view class="canvas" hidden="{{hidden}}">
-    <canvas style="width:100%;" canvas-id="shareFrends"></canvas>
+    <view class="cengji"><canvas style="width:100%;" canvas-id="shareFrends"></canvas></view>
     <view class="canvas-dibu">
        <view class="top">
           <view class="left">

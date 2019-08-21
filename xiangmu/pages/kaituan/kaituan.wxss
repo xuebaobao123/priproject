@@ -1,6 +1,6 @@
 @import "../xiangqing/xiangqing.wxss";
 .xiangQi .top1{
-  border-bottom:1rpx solid #525252;
+  border-bottom:1rpx solid #e0e0e0;
 }
 .top1{
   overflow: hidden;

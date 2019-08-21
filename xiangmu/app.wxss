@@ -52,7 +52,6 @@
   top: 36rpx;
   font-size: 36rpx;
 }
-
 .button {
   background: transparent;
   width: 100%;
@@ -61,16 +60,14 @@
   margin: 0;
   text-align: right;
 }
-
 button::after {
   border: none;
 }
-
 .yanse {
   background: #de7534;
   color: white !important;
   border-radius: 10rpx;
-  padding: 8rpx 12rpx;
-  font-size: 26rpx;
+  padding: 0 18rpx;
+  font-size: 28rpx;
   text-align: center;
 }

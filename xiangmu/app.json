@@ -1,13 +1,13 @@
 {
   "pages": [
-
     "pages/index/index",
-      "pages/cantuan/cantuan", 
+    "pages/kaituan/kaituan",
+    "pages/cantuan/cantuan", 
 
    
   
   
-    "pages/kaituan/kaituan",
+    
     "pages/youhuijuanfx/youhuijuanfx",
     
    

@@ -17,9 +17,9 @@
             </view>
             <view class="zuo" style=" position: relative;height:220rpx;">
                <view style="height:34rpx;margin:40rpx 0 0 0;">{{item.content}}</view>
-               <view bindtap="onToggle" data-index="{{index}}"  style="position: absolute;bottom:60rpx;" >查看详情 <text class="{{activeIndex == index ? 'show1' : 'hide1'}}">></text></view>
+               <view bindtap="onToggle" data-index="{{index}}"  style="position: absolute;bottom:64rpx;" >查看详情 <text class="{{activeIndex == index ? 'show1' : 'hide1'}}">></text></view>
             </view>
-            <view class="you" style=" position: relative;height:220rpx;">
+            <view class="you" style=" position: relative;height:200rpx;">
                <view wx:if="{{item.couponType==COUPONTYPE.DISCOUNT}}">
                     <view style="height:30rpx;" style="margin-top:40rpx;color:#f47a27;">{{(params!=='involved' && loginUser.is_canhuo === 1 || item.attribute==2)?'X'+item.number:''}}</view>
                     <view bindtap="{{item.accessType.targetEvent}}" wx:if="{{params!=='user'}}" data-id="{{item.id}}" data-tuanId="{{item.tuan_id}}"

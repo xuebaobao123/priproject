@@ -63,7 +63,7 @@ page{
   font-size:30rpx;
   text-align: right;
 }
-.youhuijuan1 .right .zuo view:nth-child(2),.youhuijuan1 .right .you view:nth-child(2){
+.youhuijuan1 .right .zuo view:nth-child(1),.youhuijuan1 .right .you view:nth-child(1){
   color:#f47a27;
   font-size:26rpx;
   /* padding:30rpx 0 44rpx; */
