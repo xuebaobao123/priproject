@@ -176,8 +176,8 @@ Page({
     context.setFillStyle('white');
     context.fillRect(0, 280, this.data.screenWidth - 30, 200);
     context.setLineWidth(2);
-    context.drawImage(this.data.neirong, 70, 290, this.data.screenWidth - 180, 24);
-    context.drawImage(this.data.erweima, 120, 325, 80, 80);
+    context.drawImage(this.data.neirong, 80, 290, this.data.screenWidth - 180, 24);
+    context.drawImage(this.data.erweima, 140, 325, 80, 80);
     context.drawImage(this.data.canhuo, 50, 400, 30, 30);
     context.setFillStyle('black');
     context.setFontSize(14);
