@@ -51,6 +51,8 @@ Page({
       ...shareParams,
       uid
     }
+
+    console.log('options.shareParams', options.shareParams);
     if (e) {
       this.initInvolvedContent(params);
     }
@@ -119,9 +121,6 @@ Page({
     for (var b = 0; b < row.length; b++) {
       context.fillText(row[b], 30, 240 + b * 20, 200);
     }
-
-
-
     var text = this.data.canhuo.content; //这是要绘制的文本
     var chr = text.split(""); //这个方法是将一个字符串分割成字符串数组
     var temp = "";
@@ -161,16 +160,35 @@ Page({
     for (var b = 0; b < row.length; b++) {
       context.fillText(row[b], 250, 240 + b * 20, 80);
     }
-    context.setFillStyle('white');
-    context.fillRect(0, 280, this.data.screenWidth - 30, 200);
-    context.setLineWidth(2);
-    context.drawImage(this.data.neirong, 80, 290, this.data.screenWidth - 180, 24);
-    context.drawImage(this.data.erweima, 140, 325, 80, 80);
-    context.drawImage(this.data.canhuo1, 70, 400, 36, 36);
-    context.setFillStyle('black');
-    context.setFontSize(14);
-    context.fillText("此处写小程序的slogin", 110, 420);
-    context.draw()
+    console.log('this.data',this.data);
+    this.initErWeiMa().then(data=>{
+      console.log('initErWeiMa.data',data);
+      
+      context.setFillStyle('white');
+      context.fillRect(0, 280, this.data.screenWidth - 30, 200);
+      context.setLineWidth(2);
+      context.drawImage(this.data.neirong, 80, 290, this.data.screenWidth - 180, 24);
+      context.drawImage(data.data.data, 140, 325, 80, 80);
+      context.drawImage(this.data.canhuo1, 70, 400, 36, 36);
+      context.setFillStyle('black');
+      context.setFontSize(14);
+      context.fillText("此处写小程序的slogin", 110, 420);
+      context.draw()
+    })
+   
+  },
+  //生成二维码
+  initErWeiMa:async function(){
+    const e = wx.getStorageSync("e");
+    const shareParams = {
+      merchants_id:app.globalData.merchantsId,
+      page:'pages/cantuan/cantuan',
+      scene:"1&10&1&100"
+    }
+  
+    console.log('initErWeiMa.url', app.globalData.url + "banner/mini-code?access-token=" + e.accessToken)
+    console.log('initErWeiMa.params',shareParams);
+    return util.postRequest(app.globalData.url + "banner/mini-code?access-token=" + e.accessToken, shareParams)
   },
   //参团内容
   initInvolvedContent: async function(shareParams) {
