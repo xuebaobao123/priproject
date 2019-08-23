@@ -84,16 +84,17 @@ Page({
       scene:"1&10&1&100"
     }
   
-    console.log('initErWeiMa.url', app.globalData.url + "banner/mini-code?access-token=" + e.accessToken)
-    console.log('initErWeiMa.params',shareParams);
+    // console.log('initErWeiMa.url', app.globalData.url + "banner/mini-code?access-token=" + e.accessToken)
+    // console.log('initErWeiMa.params',shareParams);
     return util.postRequest(app.globalData.url + "banner/mini-code?access-token=" + e.accessToken, shareParams)
   },
   //参团内容
   initInvolvedContent: async function(shareParams) {
     const e = wx.getStorageSync("e");
+    const loginUser = e.loginUser;
     var that = this;
-    console.log('shareParams', shareParams)
-    console.log('url', 'coupon/tuan-info')
+    // console.log('shareParams', shareParams)
+    // console.log('url', 'coupon/tuan-info')
     // 参团内容详情
     return util.postRequest(app.globalData.url + "coupon/tuan-info?access-token=" + e.accessToken, shareParams)
       .then(function(data) {
@@ -107,122 +108,30 @@ Page({
         that.setData({
           canhuo: curData
         })
-        // that.canvas(curData);
-        return that.initErWeiMa()
-      }).then(data=>{
-        const loginUser = wx.getStorageSync("e").loginUser;
-        console.log('loginUser', loginUser);
-        console.log("erweima.data", data)
-        console.log();
-      
-        //获取用户设备信息，屏幕宽度
-        wx.getSystemInfo({
-          success: res => {
-            console.log('res.screenWidth', res.screenWidth)
-            const context = wx.createCanvasContext('shareFrends');
-            context.setFillStyle('#dd7432')
-            context.fillRect(0, 0, res.screenWidth - 30, res.screenHeight)
-            context.setLineWidth(2)
-            context.drawImage(loginUser.avatarurl, 20, 20, 50, 50);
-            context.setFillStyle('white');
-            context.setFontSize(12);
-            context.setTextAlign('center');
-            context.fillText(loginUser.nickname, 46, 86);
-            context.drawImage(that.data.chanxun1, 80, 20, res.screenWidth / 1.5, 50);
-            context.drawImage(that.data.canhuo.imgUrl, 20, 110, res.screenWidth - 70, 160);
-            context.drawImage(that.data.border, 20, 220, res.screenWidth - 70, 50);
-            var text = that.data.canhuo.integralName; //这是要绘制的文本
-            var chr = text.split(""); //这个方法是将一个字符串分割成字符串数组
-            var temp = "";
-            var row = [];
-            context.setFontSize(12);
-            context.setFillStyle("#000");
-            context.setTextAlign('left');
-            for (var a = 0; a < chr.length; a++) {
-              if (context.measureText(temp).width < 300) {
-                temp += chr[a];
-              } else {
-                a--; //这里添加了a-- 是为了防止字符丢失，效果图中有对比
-                row.push(temp);
-                temp = "";
-              }
-            }
-            row.push(temp);
-
-            //如果数组长度大于2 则截取前两个
-            if (row.length > 2) {
-              var rowCut = row.slice(0, 2);
-              var rowPart = rowCut[1];
-              var test = "";
-              var empty = [];
-              for (var a = 0; a < rowPart.length; a++) {
-                if (context.measureText(test).width < 170) {
-                  test += rowPart[a];
-                } else {
-                  break;
-                }
-              }
-              empty.push(test);
-              var group = empty[0] + "..." //这里只显示两行，超出的用...表示
-              rowCut.splice(1, 1, group);
-              row = rowCut;
-            }
-            for (var b = 0; b < row.length; b++) {
-              context.fillText(row[b], 30, 240 + b * 20, 200);
-            }
-            var text = that.data.canhuo.content; //这是要绘制的文本
-            var chr = text.split(""); //这个方法是将一个字符串分割成字符串数组
-            var temp = "";
-            var row = [];
-            context.setFontSize(14);
-            context.setFillStyle("#dd7432");
-            context.setTextAlign('left');
-            for (var a = 0; a < chr.length; a++) {
-              if (context.measureText(temp).width < 40) {
-                temp += chr[a];
-              } else {
-                a--; //这里添加了a-- 是为了防止字符丢失，效果图中有对比
-                row.push(temp);
-                temp = "";
-              }
-            }
-            row.push(temp);
-
-            //如果数组长度大于2 则截取前两个
-            if (row.length > 2) {
-              var rowCut = row.slice(0, 2);
-              var rowPart = rowCut[1];
-              var test = "";
-              var empty = [];
-              for (var a = 0; a < rowPart.length; a++) {
-                if (context.measureText(test).width < 260) {
-                  test += rowPart[a];
-                } else {
-                  break;
-                }
-              }
-              empty.push(test);
-              var group = empty[0] + "..." //这里只显示两行，超出的用...表示
-              rowCut.splice(1, 1, group);
-              row = rowCut;
-            }
-            for (var b = 0; b < row.length; b++) {
-              context.fillText(row[b], 250, 240 + b * 20, 80);
-            }
-            context.setFillStyle('white');
-            context.fillRect(0, 280, res.screenWidth - 30, 200);
-            context.setLineWidth(2);
-            context.drawImage(that.data.neirong, 80, 290, res.screenWidth - 180, 24);
-            context.drawImage(data.data.data, 140, 325, 80, 80);
-            context.drawImage(that.data.canhuo1, 70, 400, 36, 36);
-            context.setFillStyle('black');
-            context.setFontSize(14);
-            context.fillText("此处写小程序的slogin", 110, 420);
-            context.draw()
-          }
-        })
-      
       })
+  },
+
+  initSize: async function(){
+    return new Promise(function(resolve){
+      wx.getSystemInfo({
+        success:res=>{
+          resolve(res);
+        }
+      })
+    })
+  },
+
+  downLoadFile: async function(url){
+    return new Promise(function(resolve,reject){
+      wx.downloadFile({
+        url: url,
+        success: (result)=>{
+          resolve(result)
+        },
+        fail: ()=>{},
+        complete: ()=>{}
+      });
+    })
   },
   //判断是参团还是分享
   isGroupOrShare: async function() {
@@ -292,7 +201,6 @@ Page({
       uid,
       tuan_id: that.data.shareParams.tuan_id
     }
-    console.log('userListParams', params)
     util.postRequest(app.globalData.url + "coupon/tuan-user?access-token=" + e.accessToken, params)
       .then(function(data) {
         if (!errorMessage(data)) {
@@ -310,8 +218,6 @@ Page({
             }
           })
         })
-        console.log("开团", data.data.data[0].kaiTuan)
-
       })
   },
 
@@ -345,7 +251,6 @@ Page({
             ...that.data.shareParams,
             uid
           }
-          console.log('参团参数:', shareParams)
           return that.initInvolvedContent(shareParams);
         })
         .then(() => {
@@ -405,9 +310,141 @@ onShareAppMessage: function(res) {
     })
   },
   fenxiang: function() {
-    this.setData({
-      hidden: false
+    const that = this;
+    const loginUser = wx.getStorageSync('e').loginUser;
+    that.initErWeiMa().then(data=>{
+      //下载二维码图片
+      return that.downLoadFile(data.data.data)
+    }).then(imgRes=>{
+      that.setData({
+        imgRes : imgRes
+      })
+      //下载头像图片
+      return that.downLoadFile(loginUser.avatarurl)
+    }).then(headImg=>{
+      that.setData({
+        headImg:headImg
+      })
+      //下载优惠券图片
+      return that.downLoadFile(that.data.canhuo.imgUrl)
+    }).then(couponImg=>{
+      that.setData({
+        couponImg:couponImg
+      })
+      //获取用户设备信息，屏幕宽度
+      return that.initSize()
+    }).then(res=>{
+      console.log('headImg.tempFilePath',that.data.headImg.tempFilePath)
+      console.log('that.data.imgRes.tempFilePath',that.data.imgRes.tempFilePath);
+      console.log('couponImg.tempFilePath',that.data.couponImg.tempFilePath)
+
+      const context = wx.createCanvasContext('shareFrends');
+          context.setFillStyle('#dd7432')
+          context.fillRect(0, 0, res.screenWidth - 30, res.screenHeight)
+          context.setLineWidth(2)
+          context.drawImage(that.data.headImg.tempFilePath, 20, 20, 50, 50);
+          context.setFillStyle('white');
+          context.setFontSize(12);
+          context.setTextAlign('center');
+          context.fillText(loginUser.nickname, 46, 86);
+          context.drawImage(that.data.chanxun1, 80, 20, res.screenWidth / 1.5, 50);
+          context.drawImage(that.data.couponImg.tempFilePath, 20, 110, res.screenWidth - 70, 160);
+          context.drawImage(that.data.border, 20, 220, res.screenWidth - 70, 50);
+          var text = that.data.canhuo.integralName; //这是要绘制的文本
+          var chr = text.split(""); //这个方法是将一个字符串分割成字符串数组
+          var temp = "";
+          var row = [];
+          context.setFontSize(12);
+          context.setFillStyle("#000");
+          context.setTextAlign('left');
+          for (var a = 0; a < chr.length; a++) {
+            if (context.measureText(temp).width < 300) {
+              temp += chr[a];
+            } else {
+              a--; //这里添加了a-- 是为了防止字符丢失，效果图中有对比
+              row.push(temp);
+              temp = "";
+            }
+          }
+          row.push(temp);
+
+          //如果数组长度大于2 则截取前两个
+          if (row.length > 2) {
+            var rowCut = row.slice(0, 2);
+            var rowPart = rowCut[1];
+            var test = "";
+            var empty = [];
+            for (var a = 0; a < rowPart.length; a++) {
+              if (context.measureText(test).width < 170) {
+                test += rowPart[a];
+              } else {
+                break;
+              }
+            }
+            empty.push(test);
+            var group = empty[0] + "..." //这里只显示两行，超出的用...表示
+            rowCut.splice(1, 1, group);
+            row = rowCut;
+          }
+          for (var b = 0; b < row.length; b++) {
+            context.fillText(row[b], 30, 240 + b * 20, 200);
+          }
+          var text = that.data.canhuo.content; //这是要绘制的文本
+          var chr = text.split(""); //这个方法是将一个字符串分割成字符串数组
+          var temp = "";
+          var row = [];
+          context.setFontSize(14);
+          context.setFillStyle("#dd7432");
+          context.setTextAlign('left');
+          for (var a = 0; a < chr.length; a++) {
+            if (context.measureText(temp).width < 40) {
+              temp += chr[a];
+            } else {
+              a--; //这里添加了a-- 是为了防止字符丢失，效果图中有对比
+              row.push(temp);
+              temp = "";
+            }
+          }
+          row.push(temp);
+
+          //如果数组长度大于2 则截取前两个
+          if (row.length > 2) {
+            var rowCut = row.slice(0, 2);
+            var rowPart = rowCut[1];
+            var test = "";
+            var empty = [];
+            for (var a = 0; a < rowPart.length; a++) {
+              if (context.measureText(test).width < 260) {
+                test += rowPart[a];
+              } else {
+                break;
+              }
+            }
+            empty.push(test);
+            var group = empty[0] + "..." //这里只显示两行，超出的用...表示
+            rowCut.splice(1, 1, group);
+            row = rowCut;
+          }
+          for (var b = 0; b < row.length; b++) {
+            context.fillText(row[b], 250, 240 + b * 20, 80);
+          }
+          context.setFillStyle('white');
+          context.fillRect(0, 280, res.screenWidth - 30, 200);
+          context.setLineWidth(2);
+          context.drawImage(that.data.neirong, 80, 290, res.screenWidth - 180, 24);
+          context.drawImage(that.data.imgRes.tempFilePath, 140, 325, 80, 80);
+          context.drawImage(that.data.canhuo1, 70, 400, 36, 36);
+          context.setFillStyle('black');
+          context.setFontSize(14);
+          context.fillText("此处写小程序的slogin", 110, 420);
+          context.draw()
+
+          //显示分享
+          this.setData({
+            hidden: false
+          })
     })
+    
   },
   shouye: function() {
     wx.redirectTo({
