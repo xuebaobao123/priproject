@@ -40,142 +40,40 @@ Page({
   onLoad: function(options) {
     const e = wx.getStorageSync("e");
     const uid = wx.getStorageSync("uid");
-    const shareParams = JSON.parse(options.shareParams);
+    let params = {}
+    //扫描二维码进入，解析页面参数
+    if (!!!options.shareParams){
+      let scene = decodeURIComponent(options.scene);
+      let result = {};
+      if (scene.length > 0) {
+        let sceneToArray = scene.split('&');
+        sceneToArray.forEach(item => {
+          let itemToArray = item.split('=');
+          let key = itemToArray[0];
+          let value = itemToArray[1];
+          params[key] = value;
+        })
+      }
+    }else{
+      //小程序应用跳转，解析参数
+      params = JSON.parse(options.shareParams);
+    }
+    params = {
+      ...params,
+      uid
+    }
+
+    console.log('params', params);
     this.setData({
-      shareParams: shareParams,
+      shareParams: params,
       shouquan: !!e,
       orUid: options.uid,
 
     })
-    const params = {
-      ...shareParams,
-      uid
-    }
-
-    console.log('options.shareParams', options.shareParams);
+  
     if (e) {
       this.initInvolvedContent(params);
     }
-  },
-  canvas: function (curData) {
-    const loginUser = wx.getStorageSync("e").loginUser;
-    console.log('loginUser', loginUser)
-    var that = this;
-    //获取用户设备信息，屏幕宽度
-    wx.getSystemInfo({
-      success: res => {
-        that.setData({
-          screenWidth: res.screenWidth,
-          screenHeight: res.screenHeight
-        })
-      }
-    })
-    const context = wx.createCanvasContext('shareFrends');
-    context.setFillStyle('#dd7432')
-    context.fillRect(0, 0, this.data.screenWidth - 30, this.data.screenHeight)
-    context.setLineWidth(2)
-    context.drawImage(loginUser.avatarurl, 20, 20, 50, 50);
-    context.setFillStyle('white');
-    context.setFontSize(12);
-    context.setTextAlign('center');
-    context.fillText(loginUser.nickname, 46, 86);
-    context.drawImage(this.data.chanxun1, 80, 20, this.data.screenWidth / 1.5, 50);
-    context.drawImage(this.data.canhuo.imgUrl, 20, 110, this.data.screenWidth - 70, 160);
-    context.drawImage(this.data.border, 20, 220, this.data.screenWidth - 70, 50);
-    var text = this.data.canhuo.integralName; //这是要绘制的文本
-    var chr = text.split(""); //这个方法是将一个字符串分割成字符串数组
-    var temp = "";
-    var row = [];
-    context.setFontSize(12);
-    context.setFillStyle("#000");
-    context.setTextAlign('left');
-    for (var a = 0; a < chr.length; a++) {
-      if (context.measureText(temp).width < 300) {
-        temp += chr[a];
-      } else {
-        a--; //这里添加了a-- 是为了防止字符丢失，效果图中有对比
-        row.push(temp);
-        temp = "";
-      }
-    }
-    row.push(temp);
-
-    //如果数组长度大于2 则截取前两个
-    if (row.length > 2) {
-      var rowCut = row.slice(0, 2);
-      var rowPart = rowCut[1];
-      var test = "";
-      var empty = [];
-      for (var a = 0; a < rowPart.length; a++) {
-        if (context.measureText(test).width < 170) {
-          test += rowPart[a];
-        } else {
-          break;
-        }
-      }
-      empty.push(test);
-      var group = empty[0] + "..." //这里只显示两行，超出的用...表示
-      rowCut.splice(1, 1, group);
-      row = rowCut;
-    }
-    for (var b = 0; b < row.length; b++) {
-      context.fillText(row[b], 30, 240 + b * 20, 200);
-    }
-    var text = this.data.canhuo.content; //这是要绘制的文本
-    var chr = text.split(""); //这个方法是将一个字符串分割成字符串数组
-    var temp = "";
-    var row = [];
-    context.setFontSize(14);
-    context.setFillStyle("#dd7432");
-    context.setTextAlign('left');
-    for (var a = 0; a < chr.length; a++) {
-      if (context.measureText(temp).width < 40) {
-        temp += chr[a];
-      } else {
-        a--; //这里添加了a-- 是为了防止字符丢失，效果图中有对比
-        row.push(temp);
-        temp = "";
-      }
-    }
-    row.push(temp);
-
-    //如果数组长度大于2 则截取前两个
-    if (row.length > 2) {
-      var rowCut = row.slice(0, 2);
-      var rowPart = rowCut[1];
-      var test = "";
-      var empty = [];
-      for (var a = 0; a < rowPart.length; a++) {
-        if (context.measureText(test).width < 260) {
-          test += rowPart[a];
-        } else {
-          break;
-        }
-      }
-      empty.push(test);
-      var group = empty[0] + "..." //这里只显示两行，超出的用...表示
-      rowCut.splice(1, 1, group);
-      row = rowCut;
-    }
-    for (var b = 0; b < row.length; b++) {
-      context.fillText(row[b], 250, 240 + b * 20, 80);
-    }
-    console.log('this.data',this.data);
-    this.initErWeiMa().then(data=>{
-      console.log('initErWeiMa.data',data);
-      
-      context.setFillStyle('white');
-      context.fillRect(0, 280, this.data.screenWidth - 30, 200);
-      context.setLineWidth(2);
-      context.drawImage(this.data.neirong, 80, 290, this.data.screenWidth - 180, 24);
-      context.drawImage(data.data.data, 140, 325, 80, 80);
-      context.drawImage(this.data.canhuo1, 70, 400, 36, 36);
-      context.setFillStyle('black');
-      context.setFontSize(14);
-      context.fillText("此处写小程序的slogin", 110, 420);
-      context.draw()
-    })
-   
   },
   //生成二维码
   initErWeiMa:async function(){
@@ -203,13 +101,127 @@ Page({
           return;
         }
         that.initUserList();
-        let curData = youhuijuanService.mapData(data.data.data)
+        var curData = youhuijuanService.mapData(data.data.data)
         curData.validityDate.endDate = curData.validityDate.endDate.substring(0, 10);
         console.log(curData, "详情数据")
         that.setData({
           canhuo: curData
         })
-        that.canvas(curData);
+        // that.canvas(curData);
+        return that.initErWeiMa()
+      }).then(data=>{
+        const loginUser = wx.getStorageSync("e").loginUser;
+        console.log('loginUser', loginUser);
+        console.log("erweima.data", data)
+        console.log();
+      
+        //获取用户设备信息，屏幕宽度
+        wx.getSystemInfo({
+          success: res => {
+            console.log('res.screenWidth', res.screenWidth)
+            const context = wx.createCanvasContext('shareFrends');
+            context.setFillStyle('#dd7432')
+            context.fillRect(0, 0, res.screenWidth - 30, res.screenHeight)
+            context.setLineWidth(2)
+            context.drawImage(loginUser.avatarurl, 20, 20, 50, 50);
+            context.setFillStyle('white');
+            context.setFontSize(12);
+            context.setTextAlign('center');
+            context.fillText(loginUser.nickname, 46, 86);
+            context.drawImage(that.data.chanxun1, 80, 20, res.screenWidth / 1.5, 50);
+            context.drawImage(that.data.canhuo.imgUrl, 20, 110, res.screenWidth - 70, 160);
+            context.drawImage(that.data.border, 20, 220, res.screenWidth - 70, 50);
+            var text = that.data.canhuo.integralName; //这是要绘制的文本
+            var chr = text.split(""); //这个方法是将一个字符串分割成字符串数组
+            var temp = "";
+            var row = [];
+            context.setFontSize(12);
+            context.setFillStyle("#000");
+            context.setTextAlign('left');
+            for (var a = 0; a < chr.length; a++) {
+              if (context.measureText(temp).width < 300) {
+                temp += chr[a];
+              } else {
+                a--; //这里添加了a-- 是为了防止字符丢失，效果图中有对比
+                row.push(temp);
+                temp = "";
+              }
+            }
+            row.push(temp);
+
+            //如果数组长度大于2 则截取前两个
+            if (row.length > 2) {
+              var rowCut = row.slice(0, 2);
+              var rowPart = rowCut[1];
+              var test = "";
+              var empty = [];
+              for (var a = 0; a < rowPart.length; a++) {
+                if (context.measureText(test).width < 170) {
+                  test += rowPart[a];
+                } else {
+                  break;
+                }
+              }
+              empty.push(test);
+              var group = empty[0] + "..." //这里只显示两行，超出的用...表示
+              rowCut.splice(1, 1, group);
+              row = rowCut;
+            }
+            for (var b = 0; b < row.length; b++) {
+              context.fillText(row[b], 30, 240 + b * 20, 200);
+            }
+            var text = that.data.canhuo.content; //这是要绘制的文本
+            var chr = text.split(""); //这个方法是将一个字符串分割成字符串数组
+            var temp = "";
+            var row = [];
+            context.setFontSize(14);
+            context.setFillStyle("#dd7432");
+            context.setTextAlign('left');
+            for (var a = 0; a < chr.length; a++) {
+              if (context.measureText(temp).width < 40) {
+                temp += chr[a];
+              } else {
+                a--; //这里添加了a-- 是为了防止字符丢失，效果图中有对比
+                row.push(temp);
+                temp = "";
+              }
+            }
+            row.push(temp);
+
+            //如果数组长度大于2 则截取前两个
+            if (row.length > 2) {
+              var rowCut = row.slice(0, 2);
+              var rowPart = rowCut[1];
+              var test = "";
+              var empty = [];
+              for (var a = 0; a < rowPart.length; a++) {
+                if (context.measureText(test).width < 260) {
+                  test += rowPart[a];
+                } else {
+                  break;
+                }
+              }
+              empty.push(test);
+              var group = empty[0] + "..." //这里只显示两行，超出的用...表示
+              rowCut.splice(1, 1, group);
+              row = rowCut;
+            }
+            for (var b = 0; b < row.length; b++) {
+              context.fillText(row[b], 250, 240 + b * 20, 80);
+            }
+            context.setFillStyle('white');
+            context.fillRect(0, 280, res.screenWidth - 30, 200);
+            context.setLineWidth(2);
+            context.drawImage(that.data.neirong, 80, 290, res.screenWidth - 180, 24);
+            context.drawImage(data.data.data, 140, 325, 80, 80);
+            context.drawImage(that.data.canhuo1, 70, 400, 36, 36);
+            context.setFillStyle('black');
+            context.setFontSize(14);
+            context.fillText("此处写小程序的slogin", 110, 420);
+            context.draw()
+          }
+        })
+      
       })
   },
   //判断是参团还是分享

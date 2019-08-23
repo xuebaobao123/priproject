@@ -67,7 +67,7 @@ button::after {
   background: #de7534;
   color: white !important;
   border-radius: 10rpx;
-  padding: 0 18rpx;
+  padding: 5rpx 18rpx;
   font-size: 28rpx;
   text-align: center;
 }
