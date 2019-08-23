@@ -28,23 +28,24 @@ Page({
       headImg: '../images/weixin_03.png',
     }],
     shouquan: true,
-    chanxun:"../images/touxiang.png",
+    chanxun: "../images/touxiang.png",
     chanxun1: "../images/wenzi_03.png",
-    chanpin:"../images/xinxi.png",
+    chanpin: "../images/xinxi.png",
     border: "../images/border.png",
     neirong: "../images/cc_03.png",
     erweima: "../images/erweima.jpg",
-    canhuo: "../images/canhuo_03.png",
-    hidden:true
+    canhuo1: "../images/canhuo_03.png",
+    hidden: true
   },
-  onLoad: function (options) {
+  onLoad: function(options) {
     const e = wx.getStorageSync("e");
     const uid = wx.getStorageSync("uid");
     const shareParams = JSON.parse(options.shareParams);
     this.setData({
       shareParams: shareParams,
       shouquan: !!e,
-      orUid: options.uid
+      orUid: options.uid,
+
     })
     const params = {
       ...shareParams,
@@ -53,23 +54,14 @@ Page({
     if (e) {
       this.initInvolvedContent(params);
     }
-
-    // //检索是分享还是参团
-    // this.isGroupOrShare().then(data => {
-    //   if (data) { //分享
-    //     this.setData({
-    //       type: "fenxiang",
-    //     })
-    //   }
-    // });
-
   },
-  onReady: function () {
+  canvas: function (curData) {
+    const loginUser = wx.getStorageSync("e").loginUser;
+    console.log('loginUser', loginUser)
     var that = this;
     //获取用户设备信息，屏幕宽度
     wx.getSystemInfo({
       success: res => {
-        console.log(res)
         that.setData({
           screenWidth: res.screenWidth,
           screenHeight: res.screenHeight
@@ -78,28 +70,27 @@ Page({
     })
     const context = wx.createCanvasContext('shareFrends');
     context.setFillStyle('#dd7432')
-    context.fillRect(0, 0, this.data.screenWidth -30, this.data.screenHeight)
+    context.fillRect(0, 0, this.data.screenWidth - 30, this.data.screenHeight)
     context.setLineWidth(2)
-    context.drawImage(this.data.chanxun, 20,20, 50, 50);
+    context.drawImage(loginUser.avatarurl, 20, 20, 50, 50);
     context.setFillStyle('white');
     context.setFontSize(12);
     context.setTextAlign('center');
-    context.fillText("微信名称", 46, 86);
-    context.drawImage(this.data.chanxun1, 80, 20, this.data.screenWidth/1.6, 50);
-    context.drawImage(this.data.chanpin, 20, 110, this.data.screenWidth-70, 160);
+    context.fillText(loginUser.nickname, 46, 86);
+    context.drawImage(this.data.chanxun1, 80, 20, this.data.screenWidth / 1.5, 50);
+    context.drawImage(this.data.canhuo.imgUrl, 20, 110, this.data.screenWidth - 70, 160);
     context.drawImage(this.data.border, 20, 220, this.data.screenWidth - 70, 50);
-    var text = '这是一段文字用于文本自动换行文本长度自行设置欢迎大家指出缺陷';//这是要绘制的文本
-    var chr = text.split("");//这个方法是将一个字符串分割成字符串数组
+    var text = this.data.canhuo.integralName; //这是要绘制的文本
+    var chr = text.split(""); //这个方法是将一个字符串分割成字符串数组
     var temp = "";
     var row = [];
     context.setFontSize(12);
     context.setFillStyle("#000");
     context.setTextAlign('left');
     for (var a = 0; a < chr.length; a++) {
-      if (context.measureText(temp).width < 250) {
+      if (context.measureText(temp).width < 300) {
         temp += chr[a];
-      }
-      else {
+      } else {
         a--; //这里添加了a-- 是为了防止字符丢失，效果图中有对比
         row.push(temp);
         temp = "";
@@ -116,24 +107,23 @@ Page({
       for (var a = 0; a < rowPart.length; a++) {
         if (context.measureText(test).width < 170) {
           test += rowPart[a];
-        }
-        else {
+        } else {
           break;
         }
       }
       empty.push(test);
-      var group = empty[0] + "..."//这里只显示两行，超出的用...表示
+      var group = empty[0] + "..." //这里只显示两行，超出的用...表示
       rowCut.splice(1, 1, group);
       row = rowCut;
     }
     for (var b = 0; b < row.length; b++) {
-      context.fillText(row[b], 30, 240 + b * 20, 170);
+      context.fillText(row[b], 30, 240 + b * 20, 200);
     }
 
 
 
-    var text = '满100减50元';//这是要绘制的文本
-    var chr = text.split("");//这个方法是将一个字符串分割成字符串数组
+    var text = this.data.canhuo.content; //这是要绘制的文本
+    var chr = text.split(""); //这个方法是将一个字符串分割成字符串数组
     var temp = "";
     var row = [];
     context.setFontSize(14);
@@ -142,8 +132,7 @@ Page({
     for (var a = 0; a < chr.length; a++) {
       if (context.measureText(temp).width < 40) {
         temp += chr[a];
-      }
-      else {
+      } else {
         a--; //这里添加了a-- 是为了防止字符丢失，效果图中有对比
         row.push(temp);
         temp = "";
@@ -160,39 +149,38 @@ Page({
       for (var a = 0; a < rowPart.length; a++) {
         if (context.measureText(test).width < 260) {
           test += rowPart[a];
-        }
-        else {
+        } else {
           break;
         }
       }
       empty.push(test);
-      var group = empty[0] + "..."//这里只显示两行，超出的用...表示
+      var group = empty[0] + "..." //这里只显示两行，超出的用...表示
       rowCut.splice(1, 1, group);
       row = rowCut;
     }
     for (var b = 0; b < row.length; b++) {
-      context.fillText(row[b], 210, 240 + b * 20, 80);
+      context.fillText(row[b], 250, 240 + b * 20, 80);
     }
     context.setFillStyle('white');
     context.fillRect(0, 280, this.data.screenWidth - 30, 200);
     context.setLineWidth(2);
     context.drawImage(this.data.neirong, 80, 290, this.data.screenWidth - 180, 24);
     context.drawImage(this.data.erweima, 140, 325, 80, 80);
-    context.drawImage(this.data.canhuo, 70, 400, 30, 30);
+    context.drawImage(this.data.canhuo1, 70, 400, 36, 36);
     context.setFillStyle('black');
     context.setFontSize(14);
     context.fillText("此处写小程序的slogin", 110, 420);
     context.draw()
   },
   //参团内容
-  initInvolvedContent: async function (shareParams) {
+  initInvolvedContent: async function(shareParams) {
     const e = wx.getStorageSync("e");
     var that = this;
     console.log('shareParams', shareParams)
     console.log('url', 'coupon/tuan-info')
     // 参团内容详情
     return util.postRequest(app.globalData.url + "coupon/tuan-info?access-token=" + e.accessToken, shareParams)
-      .then(function (data) {
+      .then(function(data) {
         if (!(errorMessage(data))) {
           return;
         }
@@ -203,10 +191,11 @@ Page({
         that.setData({
           canhuo: curData
         })
+        that.canvas(curData);
       })
   },
   //判断是参团还是分享
-  isGroupOrShare: async function () {
+  isGroupOrShare: async function() {
     const e = wx.getStorageSync("e");
     const uid = wx.getStorageSync("uid");
     const shareParams = this.data.shareParams
@@ -216,7 +205,7 @@ Page({
     }
     // 参团人员头像
     return util.postRequest(app.globalData.url + "coupon/tuan-user?access-token=" + e.accessToken, params)
-      .then(function (data) {
+      .then(function(data) {
         if (!(errorMessage(data))) {
           return;
         }
@@ -232,7 +221,7 @@ Page({
       })
   },
   // 参团
-  group: function () {
+  group: function() {
     //检测用户是否具有权限
     const e = wx.getStorageSync("e");
     const uid = wx.getStorageSync('uid')
@@ -245,7 +234,7 @@ Page({
       if (!data)
         return;
       util.postRequest(app.globalData.url + "coupon/add-tuan?access-token=" + e.accessToken, params)
-        .then(function (data) {
+        .then(function(data) {
           if (!errorMessage(data)) {
             return;
           }
@@ -253,8 +242,7 @@ Page({
           wx.showModal({
             title: "参团成功",
             showCancel: true,
-            success: function (res) {
-            }
+            success: function(res) {}
           })
 
           //刷新页面
@@ -266,7 +254,7 @@ Page({
     })
   },
   //加载用户头像
-  initUserList: function () {
+  initUserList: function() {
     const that = this
     const e = wx.getStorageSync("e");
     const uid = wx.getStorageSync('uid')
@@ -276,12 +264,14 @@ Page({
     }
     console.log('userListParams', params)
     util.postRequest(app.globalData.url + "coupon/tuan-user?access-token=" + e.accessToken, params)
-      .then(function (data) {
+      .then(function(data) {
         if (!errorMessage(data)) {
           return;
         }
 
-        console.log('imgList', data.data.data.map(i => { return i.avatarurl }))
+        console.log('imgList', data.data.data.map(i => {
+          return i.avatarurl
+        }))
         that.setData({
           kaituan: data.data.data[0].kaiTuan,
           userList: data.data.data.map(item => {
@@ -295,7 +285,7 @@ Page({
       })
   },
 
-  bindGetUserInfo: function (e) {
+  bindGetUserInfo: function(e) {
     if (e.detail.userInfo) {
       //用户按了允许授权按钮
       const that = this
@@ -304,8 +294,13 @@ Page({
       })
       //将分享传递过来的UID作为父级ID
       const parentId = that.data.shareParams.uid
-      bindUserInfo({ ...e.detail.userInfo, parentId })
-        .then(({ accessToken, uid }) => {
+      bindUserInfo({ ...e.detail.userInfo,
+          parentId
+        })
+        .then(({
+          accessToken,
+          uid
+        }) => {
           wx.setStorageSync('uid', uid)
           wx.setStorageSync('e', {
             ...e.detail.userInfo,
@@ -335,7 +330,7 @@ Page({
         content: '您点击了拒绝授权，将无法进入小程序，请授权之后再进入!!!',
         showCancel: false,
         confirmText: '返回授权',
-        success: function (res) {
+        success: function(res) {
           // 用户没有授权成功，不需要改变 isHide 的值
           if (res.confirm) {
             console.log('用户点击了“返回授权”');
@@ -346,7 +341,7 @@ Page({
   },
 
   //分享
-  onShareAppMessage: function (res) {
+onShareAppMessage: function(res) {
     var uid = wx.getStorageSync('uid');
     const shareParams = {
       uid: uid,
@@ -354,12 +349,11 @@ Page({
       tuan_id: this.data.shareParams.tuan_id,
       merchants_id: app.globalData.merchantsId
     }
-    console.log(shareParams, "分享")
     return {
       title: this.data.canhuo.integralName,
       path: 'pages/cantuan/cantuan?uid=' + uid + '&shareParams=' + JSON.stringify(shareParams),
       imageUrl: this.data.canhuo.imgUrl,
-      success: function (res) {
+      success: function(res) {
         console.log(res, "分享成功")
         // 转发成功
         wx.showToast({
@@ -368,51 +362,54 @@ Page({
           duration: 2000
         })
       },
-      fail: function (res) {
+      fail: function(res) {
         console.log(res, "失败")
         // 分享失败
       },
     }
   },
   //关闭
-  guanbi:function(){
+  guanbi: function() {
     this.setData({
-      hidden:true
+      hidden: true
     })
   },
-  fenxiang:function(){
+  fenxiang: function() {
     this.setData({
       hidden: false
     })
   },
-  shouye: function () {
+  shouye: function() {
     wx.redirectTo({
       url: '../index/index',
     })
   },
-  baocun:function(){
+  baocun: function() {
+    var that = this;
     wx.canvasToTempFilePath({
       x: 0,
       y: 0,
-      width: this.data.screenWidth,
-      height: this.data.screenHeight,
-      destWidth: this.data.screenWidth,
-      destHeight: this.data.screenHeight,
+      width: 360,
+      height: 480,
+      destWidth: 360,
+      destHeight: 480,
       canvasId: 'shareFrends',
-      success: function (res) {
+      success: function(res) {
         wx.saveImageToPhotosAlbum({
-          filePath: res.tempFilePath,   // 需要保存的图片地址
+          filePath: res.tempFilePath, // 需要保存的图片地址
           success(res) {
-            setTimeout(function () {
+            setTimeout(function() {
               wx.showToast({
                 title: '图片保存成功',
                 icon: 'success',
                 duration: 2000
               })
             }, 1000)
-
+            that.setData({
+              hidden:true
+            })
           },
-          fail: function (res) {
+          fail: function(res) {
             if (res.errMsg === "saveImageToPhotosAlbum:fail auth deny" || res.errMsg == "saveImageToPhotosAlbum:fail:auth denied" || res.errMsg == "saveImageToPhotosAlbum:fail authorize no response") {
               wx.showModal({
                 title: '提示',
@@ -428,6 +425,8 @@ Page({
                             icon: 'none',
                             duration: 2000
                           })
+
+
                         } else {
                           wx.showToast({
                             title: '获取权限失败',

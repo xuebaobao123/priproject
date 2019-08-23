@@ -153,3 +153,7 @@ canvas{
   text-align: center;
   font-size:30rpx;
 }
+.canvas-dibu .left button image{
+  display: block;
+  margin:0 auto;
+}

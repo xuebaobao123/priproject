@@ -55,8 +55,10 @@
     <view class="canvas-dibu">
        <view class="top">
           <view class="left">
-             <image src="../images/haoyou_03.png"></image>
-             <button open-type="share">分享好友</button>
+            <button open-type="share">
+              <image src="../images/haoyou_03.png"></image>
+              分享好友
+            </button>
           </view>
           <view class="right" bindtap="baocun">
               <image src="../images/baocun_03.png"></image>
