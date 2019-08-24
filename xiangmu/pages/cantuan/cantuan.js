@@ -37,12 +37,15 @@ Page({
     canhuo1: "../images/canhuo_03.png",
     hidden: true
   },
-  onLoad: function(options) {
+  onLoad: function (options) {
     const e = wx.getStorageSync("e");
     const uid = wx.getStorageSync("uid");
     let params = {}
+
+    console.log('options', options);
+    console.log('!!!options.shareParams', !!!options.shareParams);
     //扫描二维码进入，解析页面参数
-    if (!!!options.shareParams){
+    if (!!!options.shareParams) {
       let scene = decodeURIComponent(options.scene);
       let result = {};
       if (scene.length > 0) {
@@ -54,7 +57,7 @@ Page({
           params[key] = value;
         })
       }
-    }else{
+    } else {
       //小程序应用跳转，解析参数
       params = JSON.parse(options.shareParams);
     }
@@ -70,26 +73,27 @@ Page({
       orUid: options.uid,
 
     })
-  
+
     if (e) {
       this.initInvolvedContent(params);
     }
   },
   //生成二维码
-  initErWeiMa:async function(){
+  initErWeiMa: async function () {
     const e = wx.getStorageSync("e");
+    const uid = wx.getStorageSync("uid");
     const shareParams = {
-      merchants_id:app.globalData.merchantsId,
-      page:'pages/cantuan/cantuan',
-      scene:"1&10&1&100"
+      merchants_id: app.globalData.merchantsId,
+      page: 'pages/cantuan/cantuan',
+      scene: uid + "&" + this.data.shareParams.cid + "&" + app.globalData.merchantsId + "&" + this.data.shareParams.tuan_id
     }
-  
+
     // console.log('initErWeiMa.url', app.globalData.url + "banner/mini-code?access-token=" + e.accessToken)
     // console.log('initErWeiMa.params',shareParams);
     return util.postRequest(app.globalData.url + "banner/mini-code?access-token=" + e.accessToken, shareParams)
   },
   //参团内容
-  initInvolvedContent: async function(shareParams) {
+  initInvolvedContent: async function (shareParams) {
     const e = wx.getStorageSync("e");
     const loginUser = e.loginUser;
     var that = this;
@@ -97,7 +101,7 @@ Page({
     // console.log('url', 'coupon/tuan-info')
     // 参团内容详情
     return util.postRequest(app.globalData.url + "coupon/tuan-info?access-token=" + e.accessToken, shareParams)
-      .then(function(data) {
+      .then(function (data) {
         if (!(errorMessage(data))) {
           return;
         }
@@ -111,30 +115,30 @@ Page({
       })
   },
 
-  initSize: async function(){
-    return new Promise(function(resolve){
+  initSize: async function () {
+    return new Promise(function (resolve) {
       wx.getSystemInfo({
-        success:res=>{
+        success: res => {
           resolve(res);
         }
       })
     })
   },
 
-  downLoadFile: async function(url){
-    return new Promise(function(resolve,reject){
+  downLoadFile: async function (url) {
+    return new Promise(function (resolve, reject) {
       wx.downloadFile({
         url: url,
-        success: (result)=>{
+        success: (result) => {
           resolve(result)
         },
-        fail: ()=>{},
-        complete: ()=>{}
+        fail: () => { },
+        complete: () => { }
       });
     })
   },
   //判断是参团还是分享
-  isGroupOrShare: async function() {
+  isGroupOrShare: async function () {
     const e = wx.getStorageSync("e");
     const uid = wx.getStorageSync("uid");
     const shareParams = this.data.shareParams
@@ -144,7 +148,7 @@ Page({
     }
     // 参团人员头像
     return util.postRequest(app.globalData.url + "coupon/tuan-user?access-token=" + e.accessToken, params)
-      .then(function(data) {
+      .then(function (data) {
         if (!(errorMessage(data))) {
           return;
         }
@@ -160,7 +164,7 @@ Page({
       })
   },
   // 参团
-  group: function() {
+  group: function () {
     //检测用户是否具有权限
     const e = wx.getStorageSync("e");
     const uid = wx.getStorageSync('uid')
@@ -173,7 +177,7 @@ Page({
       if (!data)
         return;
       util.postRequest(app.globalData.url + "coupon/add-tuan?access-token=" + e.accessToken, params)
-        .then(function(data) {
+        .then(function (data) {
           if (!errorMessage(data)) {
             return;
           }
@@ -181,7 +185,7 @@ Page({
           wx.showModal({
             title: "参团成功",
             showCancel: true,
-            success: function(res) {}
+            success: function (res) { }
           })
 
           //刷新页面
@@ -193,7 +197,7 @@ Page({
     })
   },
   //加载用户头像
-  initUserList: function() {
+  initUserList: function () {
     const that = this
     const e = wx.getStorageSync("e");
     const uid = wx.getStorageSync('uid')
@@ -202,7 +206,7 @@ Page({
       tuan_id: that.data.shareParams.tuan_id
     }
     util.postRequest(app.globalData.url + "coupon/tuan-user?access-token=" + e.accessToken, params)
-      .then(function(data) {
+      .then(function (data) {
         if (!errorMessage(data)) {
           return;
         }
@@ -221,7 +225,7 @@ Page({
       })
   },
 
-  bindGetUserInfo: function(e) {
+  bindGetUserInfo: function (e) {
     if (e.detail.userInfo) {
       //用户按了允许授权按钮
       const that = this
@@ -230,9 +234,10 @@ Page({
       })
       //将分享传递过来的UID作为父级ID
       const parentId = that.data.shareParams.uid
-      bindUserInfo({ ...e.detail.userInfo,
-          parentId
-        })
+      bindUserInfo({
+        ...e.detail.userInfo,
+        parentId
+      })
         .then(({
           accessToken,
           uid
@@ -265,7 +270,7 @@ Page({
         content: '您点击了拒绝授权，将无法进入小程序，请授权之后再进入!!!',
         showCancel: false,
         confirmText: '返回授权',
-        success: function(res) {
+        success: function (res) {
           // 用户没有授权成功，不需要改变 isHide 的值
           if (res.confirm) {
             console.log('用户点击了“返回授权”');
@@ -276,7 +281,7 @@ Page({
   },
 
   //分享
-onShareAppMessage: function(res) {
+  onShareAppMessage: function (res) {
     var uid = wx.getStorageSync('uid');
     const shareParams = {
       uid: uid,
@@ -288,7 +293,7 @@ onShareAppMessage: function(res) {
       title: this.data.canhuo.integralName,
       path: 'pages/cantuan/cantuan?uid=' + uid + '&shareParams=' + JSON.stringify(shareParams),
       imageUrl: this.data.canhuo.imgUrl,
-      success: function(res) {
+      success: function (res) {
         console.log(res, "分享成功")
         // 转发成功
         wx.showToast({
@@ -297,161 +302,183 @@ onShareAppMessage: function(res) {
           duration: 2000
         })
       },
-      fail: function(res) {
+      fail: function (res) {
         console.log(res, "失败")
         // 分享失败
       },
     }
   },
   //关闭
-  guanbi: function() {
+  guanbi: function () {
     this.setData({
       hidden: true
     })
   },
-  fenxiang: function() {
+  fenxiang: function () {
     const that = this;
     const loginUser = wx.getStorageSync('e').loginUser;
-    that.initErWeiMa().then(data=>{
-      //下载二维码图片
-      return that.downLoadFile(data.data.data)
-    }).then(imgRes=>{
+    that.initErWeiMa().then(data => {
+      //绘制二维码图片
+      return that.canvasErWeiMaImage(data.data.data)
+    }).then(erweimaFile => {
       that.setData({
-        imgRes : imgRes
+        erweimaFile: erweimaFile
       })
+      console.log('filePath', erweimaFile)
       //下载头像图片
       return that.downLoadFile(loginUser.avatarurl)
-    }).then(headImg=>{
+    }).then(headImg => {
       that.setData({
-        headImg:headImg
+        headImg: headImg
       })
       //下载优惠券图片
       return that.downLoadFile(that.data.canhuo.imgUrl)
-    }).then(couponImg=>{
+    }).then(couponImg => {
       that.setData({
-        couponImg:couponImg
+        couponImg: couponImg
       })
       //获取用户设备信息，屏幕宽度
       return that.initSize()
-    }).then(res=>{
-      console.log('headImg.tempFilePath',that.data.headImg.tempFilePath)
-      console.log('that.data.imgRes.tempFilePath',that.data.imgRes.tempFilePath);
-      console.log('couponImg.tempFilePath',that.data.couponImg.tempFilePath)
+    }).then(res => {
+      console.log('headImg.tempFilePath', that.data.headImg.tempFilePath)
+      console.log('that.data.erweimaFile', that.data.erweimaFile);
+      console.log('couponImg.tempFilePath', that.data.couponImg.tempFilePath)
 
       const context = wx.createCanvasContext('shareFrends');
-          context.setFillStyle('#dd7432')
-          context.fillRect(0, 0, res.screenWidth - 30, res.screenHeight)
-          context.setLineWidth(2)
-          context.drawImage(that.data.headImg.tempFilePath, 20, 20, 50, 50);
-          context.setFillStyle('white');
-          context.setFontSize(12);
-          context.setTextAlign('center');
-          context.fillText(loginUser.nickname, 46, 86);
-          context.drawImage(that.data.chanxun1, 80, 20, res.screenWidth / 1.5, 50);
-          context.drawImage(that.data.couponImg.tempFilePath, 20, 110, res.screenWidth - 70, 160);
-          context.drawImage(that.data.border, 20, 220, res.screenWidth - 70, 50);
-          var text = that.data.canhuo.integralName; //这是要绘制的文本
-          var chr = text.split(""); //这个方法是将一个字符串分割成字符串数组
-          var temp = "";
-          var row = [];
-          context.setFontSize(12);
-          context.setFillStyle("#000");
-          context.setTextAlign('left');
-          for (var a = 0; a < chr.length; a++) {
-            if (context.measureText(temp).width < 300) {
-              temp += chr[a];
-            } else {
-              a--; //这里添加了a-- 是为了防止字符丢失，效果图中有对比
-              row.push(temp);
-              temp = "";
-            }
-          }
+      context.setFillStyle('#dd7432')
+      context.fillRect(0, 0, res.screenWidth - 30, res.screenHeight)
+      context.setLineWidth(2)
+      //头像
+      context.drawImage(that.data.headImg.tempFilePath, 20, 20, 50, 50);
+      context.setFillStyle('white');
+      context.setFontSize(12);
+      context.setTextAlign('center');
+      context.fillText(loginUser.nickname, 46, 86);
+      context.drawImage(that.data.chanxun1, 80, 20, res.screenWidth / 1.5, 50);
+      //优惠券图片
+      context.drawImage(that.data.couponImg.tempFilePath, 20, 110, res.screenWidth - 70, 160);
+      context.drawImage(that.data.border, 20, 220, res.screenWidth - 70, 50);
+      var text = that.data.canhuo.integralName; //这是要绘制的文本
+      var chr = text.split(""); //这个方法是将一个字符串分割成字符串数组
+      var temp = "";
+      var row = [];
+      context.setFontSize(12);
+      context.setFillStyle("#000");
+      context.setTextAlign('left');
+      for (var a = 0; a < chr.length; a++) {
+        if (context.measureText(temp).width < 300) {
+          temp += chr[a];
+        } else {
+          a--; //这里添加了a-- 是为了防止字符丢失，效果图中有对比
           row.push(temp);
+          temp = "";
+        }
+      }
+      row.push(temp);
 
-          //如果数组长度大于2 则截取前两个
-          if (row.length > 2) {
-            var rowCut = row.slice(0, 2);
-            var rowPart = rowCut[1];
-            var test = "";
-            var empty = [];
-            for (var a = 0; a < rowPart.length; a++) {
-              if (context.measureText(test).width < 170) {
-                test += rowPart[a];
-              } else {
-                break;
-              }
-            }
-            empty.push(test);
-            var group = empty[0] + "..." //这里只显示两行，超出的用...表示
-            rowCut.splice(1, 1, group);
-            row = rowCut;
+      //如果数组长度大于2 则截取前两个
+      if (row.length > 2) {
+        var rowCut = row.slice(0, 2);
+        var rowPart = rowCut[1];
+        var test = "";
+        var empty = [];
+        for (var a = 0; a < rowPart.length; a++) {
+          if (context.measureText(test).width < 170) {
+            test += rowPart[a];
+          } else {
+            break;
           }
-          for (var b = 0; b < row.length; b++) {
-            context.fillText(row[b], 30, 240 + b * 20, 200);
-          }
-          var text = that.data.canhuo.content; //这是要绘制的文本
-          var chr = text.split(""); //这个方法是将一个字符串分割成字符串数组
-          var temp = "";
-          var row = [];
-          context.setFontSize(14);
-          context.setFillStyle("#dd7432");
-          context.setTextAlign('left');
-          for (var a = 0; a < chr.length; a++) {
-            if (context.measureText(temp).width < 40) {
-              temp += chr[a];
-            } else {
-              a--; //这里添加了a-- 是为了防止字符丢失，效果图中有对比
-              row.push(temp);
-              temp = "";
-            }
-          }
+        }
+        empty.push(test);
+        var group = empty[0] + "..." //这里只显示两行，超出的用...表示
+        rowCut.splice(1, 1, group);
+        row = rowCut;
+      }
+      for (var b = 0; b < row.length; b++) {
+        context.fillText(row[b], 30, 240 + b * 20, 200);
+      }
+      var text = that.data.canhuo.content; //这是要绘制的文本
+      var chr = text.split(""); //这个方法是将一个字符串分割成字符串数组
+      var temp = "";
+      var row = [];
+      context.setFontSize(14);
+      context.setFillStyle("#dd7432");
+      context.setTextAlign('left');
+      for (var a = 0; a < chr.length; a++) {
+        if (context.measureText(temp).width < 40) {
+          temp += chr[a];
+        } else {
+          a--; //这里添加了a-- 是为了防止字符丢失，效果图中有对比
           row.push(temp);
+          temp = "";
+        }
+      }
+      row.push(temp);
 
-          //如果数组长度大于2 则截取前两个
-          if (row.length > 2) {
-            var rowCut = row.slice(0, 2);
-            var rowPart = rowCut[1];
-            var test = "";
-            var empty = [];
-            for (var a = 0; a < rowPart.length; a++) {
-              if (context.measureText(test).width < 260) {
-                test += rowPart[a];
-              } else {
-                break;
-              }
-            }
-            empty.push(test);
-            var group = empty[0] + "..." //这里只显示两行，超出的用...表示
-            rowCut.splice(1, 1, group);
-            row = rowCut;
+      //如果数组长度大于2 则截取前两个
+      if (row.length > 2) {
+        var rowCut = row.slice(0, 2);
+        var rowPart = rowCut[1];
+        var test = "";
+        var empty = [];
+        for (var a = 0; a < rowPart.length; a++) {
+          if (context.measureText(test).width < 260) {
+            test += rowPart[a];
+          } else {
+            break;
           }
-          for (var b = 0; b < row.length; b++) {
-            context.fillText(row[b], 250, 240 + b * 20, 80);
-          }
-          context.setFillStyle('white');
-          context.fillRect(0, 280, res.screenWidth - 30, 200);
-          context.setLineWidth(2);
-          context.drawImage(that.data.neirong, 80, 290, res.screenWidth - 180, 24);
-          context.drawImage(that.data.imgRes.tempFilePath, 140, 325, 80, 80);
-          context.drawImage(that.data.canhuo1, 70, 400, 36, 36);
-          context.setFillStyle('black');
-          context.setFontSize(14);
-          context.fillText("此处写小程序的slogin", 110, 420);
-          context.draw()
+        }
+        empty.push(test);
+        var group = empty[0] + "..." //这里只显示两行，超出的用...表示
+        rowCut.splice(1, 1, group);
+        row = rowCut;
+      }
+      for (var b = 0; b < row.length; b++) {
+        context.fillText(row[b], 250, 240 + b * 20, 80);
+      }
+      context.setFillStyle('white');
+      context.fillRect(0, 280, res.screenWidth - 30, 200);
+      context.setLineWidth(2);
+      context.drawImage(that.data.neirong, 80, 290, res.screenWidth - 180, 24);
+      //绘制二维码
+      context.drawImage(that.data.erweimaFile, 140, 325, 80, 80);
+      context.drawImage(that.data.canhuo1, 70, 400, 36, 36);
+      context.setFillStyle('black');
+      context.setFontSize(14);
+      context.fillText("此处写小程序的slogin", 110, 420);
+      context.draw()
 
-          //显示分享
-          this.setData({
-            hidden: false
-          })
+      //显示分享
+      this.setData({
+        hidden: false
+      })
     })
-    
+
   },
-  shouye: function() {
+
+  //绘制二维码图片
+  canvasErWeiMaImage: function (base64Buffer) {
+    return new Promise(function (resolve) {
+      const uid = wx.getStorageSync('uid');
+      const filePath = `${wx.env.USER_DATA_PATH}/temp_${uid}.jpeg`
+      const buffer = wx.base64ToArrayBuffer(base64Buffer);
+      wx.getFileSystemManager().writeFile({
+        filePath,
+        data: buffer,
+        encoding: 'binary',
+        success() {
+          resolve(filePath)
+        },
+        fail() { }
+      });
+    })
+  },
+  shouye: function () {
     wx.redirectTo({
       url: '../index/index',
     })
   },
-  baocun: function() {
+  baocun: function () {
     var that = this;
     wx.canvasToTempFilePath({
       x: 0,
@@ -461,11 +488,11 @@ onShareAppMessage: function(res) {
       destWidth: 360,
       destHeight: 480,
       canvasId: 'shareFrends',
-      success: function(res) {
+      success: function (res) {
         wx.saveImageToPhotosAlbum({
           filePath: res.tempFilePath, // 需要保存的图片地址
           success(res) {
-            setTimeout(function() {
+            setTimeout(function () {
               wx.showToast({
                 title: '图片保存成功',
                 icon: 'success',
@@ -473,10 +500,10 @@ onShareAppMessage: function(res) {
               })
             }, 1000)
             that.setData({
-              hidden:true
+              hidden: true
             })
           },
-          fail: function(res) {
+          fail: function (res) {
             if (res.errMsg === "saveImageToPhotosAlbum:fail auth deny" || res.errMsg == "saveImageToPhotosAlbum:fail:auth denied" || res.errMsg == "saveImageToPhotosAlbum:fail authorize no response") {
               wx.showModal({
                 title: '提示',
