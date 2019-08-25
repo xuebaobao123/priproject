@@ -414,7 +414,14 @@ Page({
       context.fillRect(0, 0, res.screenWidth - 30, res.screenHeight)
       context.setLineWidth(2)
       //头像
-      context.drawImage(that.data.headImg.tempFilePath, 20, 20, 50, 50);
+      context.save()//保存当前的绘图上下文。
+      context.beginPath()//开始创建一个路径
+      context.arc(50, 45, 25, 0, 2 * Math.PI, false)//画一个圆形裁剪区域
+      context.clip()//裁剪
+      context.drawImage(that.data.headImg.tempFilePath, 20, 20, 60, 60);
+      context.restore()//恢复之前保存的绘图上下文
+
+    
       context.setFillStyle('white');
       context.setFontSize(12);
       context.setTextAlign('center');
@@ -501,7 +508,7 @@ Page({
         context.fillText(row[b], 250, 240 + b * 20, 80);
       }
       context.setFillStyle('white');
-      context.fillRect(0, 280, res.screenWidth - 30, 200);
+      context.fillRect(0, 280, res.screenWidth - 30, res.screenHeight/2.5);
       context.setLineWidth(2);
       context.drawImage(that.data.neirong, 80, 290, res.screenWidth - 180, 24);
       //绘制二维码
@@ -614,5 +621,5 @@ Page({
         })
       }
     })
-  }
+  },
 })

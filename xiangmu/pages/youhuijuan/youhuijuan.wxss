@@ -48,7 +48,6 @@ page{
 }
 .clearfloat{
   clear:both;
-  height:50rpx;
 }
 .youhuijuan1 .right{
   overflow: hidden;
