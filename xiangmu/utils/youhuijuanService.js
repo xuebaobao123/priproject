@@ -156,7 +156,7 @@ function initAccessType(item, type) {
       } else {
         //暂时将优惠券获取方式的团购方式设置为我要开团，后续有变更可调整
         accessType = {
-          content: '立即开团',
+          content: '我要开团',
           targetEvent: 'organGroup'
         }
       }

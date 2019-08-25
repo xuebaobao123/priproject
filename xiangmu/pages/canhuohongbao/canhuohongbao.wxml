@@ -4,7 +4,8 @@
          <image src="../images/hb1.png"></image>
          <view>参伙红包<text class="text1">￥<text class="text2">{{balance.numDigits}}</text>.{{balance.decimalDigits}}</text></view>
       </view>
-      <view class="right {{enable?'':'enable'}}" bindtap="{{enable?'onCashOut':''}}">申请提现</view>
+      <view class="right {{enable?'':'enable'}}" bindtap="{{enable?'onCashOut':''}}">{{enable?'申请提现':'提现中.....'}}</view>
+      
    </view>
    <view class="partners-bottom">
       <view class="chaxun">账单查询</view>

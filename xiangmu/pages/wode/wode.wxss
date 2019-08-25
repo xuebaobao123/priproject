@@ -27,6 +27,7 @@ page{
 .wode-xinxi1 .xinxi .left image{
   width:97rpx;
   height:97rpx;
+  border-radius: 50%;
 }
 .wode-xinxi1{
   position: relative;

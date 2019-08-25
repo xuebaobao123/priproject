@@ -61,6 +61,9 @@ page{
 .youhuijuan1 .right .zuo{
   width:100%;
 }
+.youhuijuan1 .right .zuo view:nth-child(2){
+  margin-top:40rpx;
+}
 .cha{
   width:40rpx;
   height:40rpx;

@@ -49,7 +49,7 @@
 </view>
 <view class="fixed" >
    <view wx:if="{{params!=='user'}}">
-      可用积分
+      可用积分:
       <text>{{usableIntegral}}</text>
    </view>
    <view bindtap="goMyMember">我的账户 ></view>

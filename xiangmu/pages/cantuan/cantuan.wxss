@@ -152,6 +152,7 @@ canvas{
 .bottom{
   text-align: center;
   font-size:30rpx;
+  border-top:1rpx solid #efefef;
 }
 .canvas-dibu .left button image{
   display: block;

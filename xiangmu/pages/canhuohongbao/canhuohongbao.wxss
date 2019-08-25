@@ -3,7 +3,7 @@ page{
 }
 .partners-top{
   overflow: hidden;
-  border-bottom:1px solid #6d6d6d;
+  border-bottom:1px solid #e2e2e0;
 }
 .partners-top .left{
   float:left;
@@ -49,7 +49,6 @@ page{
   padding:30rpx 0 20rpx;
 }
 .partners-bottom{
-  border-bottom:1px solid #6d6d6d;
   padding:0 0 20rpx 0;
 }
 .chaxun-riqi{
@@ -67,7 +66,7 @@ page{
   margin-top:10rpx;
 }
 .chaxun-riqi picker{
-  border-bottom:1px solid #7c7c7c;
+  border-bottom:1px solid #e2e2e0;
   width:40%;
   height:50rpx;
   line-height:50rpx;

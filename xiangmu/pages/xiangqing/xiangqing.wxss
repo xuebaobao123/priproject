@@ -35,8 +35,9 @@ page{
 }
 .xiangQi .top1{
   line-height:50rpx;
-  border-bottom:6rpx solid #d07a3f;
+  border-bottom:6rpx solid #dd7037;
   padding-bottom:20rpx;
+  border-radius: 5rpx;
 }
 .xiangQi .top2{
   overflow: hidden;

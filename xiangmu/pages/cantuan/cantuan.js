@@ -65,6 +65,59 @@ Page({
       ...params,
       uid
     }
+    // const context = wx.createCanvasContext('shareFrends');
+    // context.setFillStyle('#dd7432')
+    // context.fillRect(0, 0, this.data.screenWidth -30, this.data.screenHeight)
+    // context.setLineWidth(2)
+    // context.drawImage(this.data.chanxun, 20,20, 50, 50);
+    // context.setFillStyle('white');
+    // context.setFontSize(12);
+    // context.setTextAlign('center');
+    // context.fillText("微信名称", 46, 86);
+    // context.drawImage(this.data.chanxun1, 80, 20, this.data.screenWidth/1.5, 50);
+    // context.drawImage(this.data.chanpin, 20, 110, this.data.screenWidth-70, 160);
+    // context.drawImage(this.data.border, 20, 220, this.data.screenWidth - 70, 50);
+    // var text = '这是一段文字用于文本自动换行文本长度自行设置欢迎大家指出缺陷';//这是要绘制的文本
+    // var chr = text.split("");//这个方法是将一个字符串分割成字符串数组
+    // var temp = "";
+    // var row = [];
+    // context.setFontSize(12);
+    // context.setFillStyle("#000");
+    // context.setTextAlign('left');
+    // for (var a = 0; a < chr.length; a++) {
+    //   if (context.measureText(temp).width < 300) {
+    //     temp += chr[a];
+    //   }
+    //   else {
+    //     a--; //这里添加了a-- 是为了防止字符丢失，效果图中有对比
+    //     row.push(temp);
+    //     temp = "";
+    //   }
+    // }
+    // row.push(temp);
+
+    // //如果数组长度大于2 则截取前两个
+    // if (row.length > 2) {
+    //   var rowCut = row.slice(0, 2);
+    //   var rowPart = rowCut[1];
+    //   var test = "";
+    //   var empty = [];
+    //   for (var a = 0; a < rowPart.length; a++) {
+    //     if (context.measureText(test).width < 170) {
+    //       test += rowPart[a];
+    //     }
+    //     else {
+    //       break;
+    //     }
+    //   }
+    //   empty.push(test);
+    //   var group = empty[0] + "..."//这里只显示两行，超出的用...表示
+    //   rowCut.splice(1, 1, group);
+    //   row = rowCut;
+    // }
+    // for (var b = 0; b < row.length; b++) {
+    //   context.fillText(row[b], 30, 240 + b * 20, 200);
+    // }
 
     console.log('params', params);
     this.setData({
@@ -91,6 +144,19 @@ Page({
     // console.log('initErWeiMa.url', app.globalData.url + "banner/mini-code?access-token=" + e.accessToken)
     // console.log('initErWeiMa.params',shareParams);
     return util.postRequest(app.globalData.url + "banner/mini-code?access-token=" + e.accessToken, shareParams)
+    // for (var b = 0; b < row.length; b++) {
+    //   context.fillText(row[b], 250, 240 + b * 20, 80);
+    // }
+    // context.setFillStyle('white');
+    // context.fillRect(0, 280, this.data.screenWidth - 30, 200);
+    // context.setLineWidth(2);
+    // context.drawImage(this.data.neirong, 80, 290, this.data.screenWidth - 180, 24);
+    // context.drawImage(this.data.erweima, 140, 325, 80, 80);
+    // context.drawImage(this.data.canhuo, 70, 420, 36, 36);
+    // context.setFillStyle('black');
+    // context.setFontSize(14);
+    // context.fillText("此处写小程序的slogin", 120, 480);
+    // context.draw()
   },
   //参团内容
   initInvolvedContent: async function (shareParams) {
@@ -279,7 +345,6 @@ Page({
       });
     }
   },
-
   //分享
   onShareAppMessage: function (res) {
     var uid = wx.getStorageSync('uid');
@@ -365,6 +430,7 @@ Page({
       context.setFontSize(12);
       context.setFillStyle("#000");
       context.setTextAlign('left');
+      
       for (var a = 0; a < chr.length; a++) {
         if (context.measureText(temp).width < 300) {
           temp += chr[a];
@@ -375,7 +441,6 @@ Page({
         }
       }
       row.push(temp);
-
       //如果数组长度大于2 则截取前两个
       if (row.length > 2) {
         var rowCut = row.slice(0, 2);
@@ -414,7 +479,6 @@ Page({
         }
       }
       row.push(temp);
-
       //如果数组长度大于2 则截取前两个
       if (row.length > 2) {
         var rowCut = row.slice(0, 2);
@@ -442,14 +506,14 @@ Page({
       context.drawImage(that.data.neirong, 80, 290, res.screenWidth - 180, 24);
       //绘制二维码
       context.drawImage(that.data.erweimaFile, 140, 325, 80, 80);
-      context.drawImage(that.data.canhuo1, 70, 400, 36, 36);
+      context.drawImage(that.data.canhuo1, 70, 410, 36, 36);
       context.setFillStyle('black');
       context.setFontSize(14);
-      context.fillText("此处写小程序的slogin", 110, 420);
+      context.fillText("此处写小程序的slogin", 110, 430);
       context.draw()
 
       //显示分享
-      this.setData({
+      that.setData({
         hidden: false
       })
     })
@@ -480,11 +544,15 @@ Page({
   },
   baocun: function () {
     var that = this;
+  },
+  baocun:function(){
+    var that=this;
     wx.canvasToTempFilePath({
       x: 0,
       y: 0,
       width: 360,
       height: 480,
+      height:480,
       destWidth: 360,
       destHeight: 480,
       canvasId: 'shareFrends',
@@ -501,6 +569,9 @@ Page({
             }, 1000)
             that.setData({
               hidden: true
+            })
+            wx.navigateBack({
+              delta: 1
             })
           },
           fail: function (res) {
@@ -519,8 +590,6 @@ Page({
                             icon: 'none',
                             duration: 2000
                           })
-
-
                         } else {
                           wx.showToast({
                             title: '获取权限失败',

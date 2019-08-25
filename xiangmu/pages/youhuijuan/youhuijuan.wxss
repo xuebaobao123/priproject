@@ -48,6 +48,7 @@ page{
 }
 .clearfloat{
   clear:both;
+  height:50rpx;
 }
 .youhuijuan1 .right{
   overflow: hidden;
@@ -102,7 +103,6 @@ page{
 }
 .youhuijuan1 .top{
   border-bottom:1rpx solid #eeeeee;
-  padding-bottom:30rpx;
 }
 .youhuijuan{
   margin-bottom:200rpx;

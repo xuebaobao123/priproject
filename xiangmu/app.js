@@ -26,7 +26,7 @@ App({
       },
       {
         "pagePath": "../wode/wode",
-        "text": "我的会员",
+        "text": "我的账户",
         "iconPath": "../images/wode.png",
         "selectedIconPath": "../images/wode1.png"
       }
@@ -52,7 +52,7 @@ App({
       },
       {
         "pagePath": "../wode/wode",
-        "text": "我的会员",
+        "text": "我的账户",
         "iconPath": "../images/wode.png",
         "selectedIconPath": "../images/wode1.png"
       }
