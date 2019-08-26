@@ -59,7 +59,7 @@ Page({
       discount_amount: 0,
       payPrice: 0,
     },
-    zhi: 0
+    reloadFlag: false,
   },
   /**
    * 生命周期函数--监听页面加载
@@ -125,7 +125,8 @@ Page({
     })
   },
   money: function (e) {
-    if(e.detail.value.trim()===''){
+    const reloadFlag = this.data.reloadFlag
+    if(e.detail.value.trim()==='' || reloadFlag){
       this.clearData()
       return;
     }
@@ -148,8 +149,8 @@ Page({
         discount_amount: 0,
         payPrice: 0,
       },
-      youhuijuanIndex:""
-
+      youhuijuanIndex:"",
+      reloadFlag:false
     })
   },
   // 优惠券
@@ -189,7 +190,8 @@ Page({
           hidden: true,
           money: data.data.data,
           zhi: 0,
-          youhuijuanIndex: that.data.couponArray[event.currentTarget.dataset.index].content
+          youhuijuanIndex: that.data.couponArray[event.currentTarget.dataset.index].content,
+          reloadFlag:true
         })
       })
   },
