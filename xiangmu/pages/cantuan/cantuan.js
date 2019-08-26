@@ -71,8 +71,6 @@ Page({
     this.setData({
       shareParams: params,
       shouquan: !!e,
-      orUid: options.uid,
-
     })
 
     if (e) {
