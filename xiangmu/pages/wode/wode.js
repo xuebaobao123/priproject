@@ -152,7 +152,6 @@ Page({
         if (!errorMessage(data)) {
           return;
         }
-
         console.log('user.balance.data', data);
         //页面数据
         that.setData({

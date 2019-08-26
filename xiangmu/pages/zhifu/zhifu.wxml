@@ -7,8 +7,8 @@
       </view>
       <view style="height:20rpx;background:#efefef;"></view>
       <view class="nr-title">
-          <view class="left">参伙金额</view>
-          <view class="right">￥{{money.payPrice}}</view>
+          <view class="left">参伙余额</view>
+          <view class="right">￥{{loginUser.balance}}</view>
       </view>
        <view class="nr-title" bindtap="youhui">
           <view class="left">使用优惠卷</view>
@@ -17,7 +17,7 @@
           </view>
       </view>
        <view class="nr-title">
-          <view class="left">使用金额</view>
+          <view class="left">使用余额</view>
           <view class="right">￥{{money.balance}}</view>
           <view style="clear:both;margin-bottom:20rpx;"></view>
           <view class="left" style="color:red;">优惠金额</view>
@@ -25,7 +25,8 @@
       </view>
        <view class="nr-title">
           <view class="left">实际支付信息</view>
-          <view class="right">￥{{money.price}}</view>
+          <view class="right">￥{{money.payPrice}}</view>
+
       </view>
       
       <view class="mony" bindtap="zhifu">确认支付</view>

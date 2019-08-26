@@ -57,15 +57,18 @@ Page({
       price: 0,
       balance: 0,
       discount_amount: 0,
-      payPrice: 0
-    }
+      payPrice: 0,
+    },
+    zhi: 0
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    const loginUser = wx.getStorageSync("e").loginUser;
     this.setData({
-      moneyZf: 0
+      moneyZf: 0,
+      loginUser:loginUser
     })
   },
   //我的优惠券包
@@ -122,13 +125,36 @@ Page({
     })
   },
   money: function (e) {
-    console.log('moneyzf', e.detail.value)
+    if(e.detail.value.trim()===''){
+      this.clearData()
+      return;
+    }
+    let dataMoney = this.data.money;
+    dataMoney = {
+      ...dataMoney,
+      payPrice:e.detail.value
+    }
     this.setData({
-      moneyZf: e.detail.value
+      moneyZf: e.detail.value,
+      money:dataMoney
+    })
+  },
+
+  clearData:function(){
+    this.setData({
+      money:{
+        price: 0,
+        balance: 0,
+        discount_amount: 0,
+        payPrice: 0,
+      },
+      youhuijuanIndex:""
+
     })
   },
   // 优惠券
   youhuijuan: function (event) {
+    console.log(this.data.zhi)
     const e = wx.getStorageSync("e");
     const id = event.currentTarget.dataset.id;
     const currentCoupon = this.data.couponArray.filter(item=>item.id===id)[0];
@@ -162,6 +188,7 @@ Page({
         that.setData({
           hidden: true,
           money: data.data.data,
+          zhi: 0,
           youhuijuanIndex: that.data.couponArray[event.currentTarget.dataset.index].content
         })
       })
