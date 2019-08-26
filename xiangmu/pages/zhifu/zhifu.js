@@ -158,11 +158,11 @@ Page({
         if (!errorMessage(data)) {
           return;
         }
-
+        console.log(data)
         that.setData({
           hidden: true,
           money: data.data.data,
-
+          youhuijuanIndex: that.data.couponArray[event.currentTarget.dataset.index].content
         })
       })
   },

@@ -382,6 +382,11 @@ Page({
   fenxiang: function () {
     const that = this;
     const loginUser = wx.getStorageSync('e').loginUser;
+    wx.showToast({
+      title: '正在加载中',
+      icon: 'success',
+      duration: 3000
+    })
     that.initErWeiMa().then(data => {
       //绘制二维码图片
       return that.canvasErWeiMaImage(data.data.data)

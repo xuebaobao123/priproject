@@ -13,7 +13,7 @@
        <view class="nr-title" bindtap="youhui">
           <view class="left">使用优惠卷</view>
           <view class="right" >
-            <text style="color:#dd7432;">{{money.discount_amount}}</text> >
+            <text style="color:#dd7432;font-size:26rpx;">{{youhuijuanIndex}}</text> >
           </view>
       </view>
        <view class="nr-title">
@@ -35,7 +35,7 @@
    <view class="tanchuang1">
       <image src="../images/cha_03.jpg" class="cha" bindtap="guanbi"></image>
       <view class="youhuijuan">
-               <view class="youhuijuan1" wx:for="{{couponArray}}" bindtap="youhuijuan" data-id="{{item.id}}">
+               <view class="youhuijuan1" wx:for="{{couponArray}}" bindtap="youhuijuan" data-id="{{item.id}}" data-index="{{index}}">
               <view class="top">
                 <view class="left">
                     <image src="{{item.imgUrl}}" class="img1"></image>

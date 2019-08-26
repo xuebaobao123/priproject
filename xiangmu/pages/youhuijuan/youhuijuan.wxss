@@ -21,6 +21,7 @@ page{
   float:left;
   width:56%;
   margin-left:4%;
+  /* height:250rpx; */
 }
 .youhuijuan1 .top .left .img1{
   width:100%;
@@ -101,7 +102,8 @@ page{
   padding-top:10rpx;
 }
 .youhuijuan1 .top{
-  border-bottom:1rpx solid #eeeeee;
+  border-bottom:1rpx solid #797979;
+  padding-bottom:20rpx;
 }
 .youhuijuan{
   margin-bottom:200rpx;

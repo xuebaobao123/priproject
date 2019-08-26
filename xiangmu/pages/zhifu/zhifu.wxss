@@ -62,7 +62,7 @@ page{
   width:100%;
 }
 .youhuijuan1 .right .zuo view:nth-child(2){
-  margin-top:40rpx;
+  margin:40rpx 0;
 }
 .cha{
   width:40rpx;
