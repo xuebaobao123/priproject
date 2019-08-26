@@ -41,84 +41,32 @@ Page({
     const e = wx.getStorageSync("e");
     const uid = wx.getStorageSync("uid");
     let params = {}
-
     console.log('options', options);
     console.log('!!!options.shareParams', !!!options.shareParams);
     //扫描二维码进入，解析页面参数
     if (!!!options.shareParams) {
       let scene = decodeURIComponent(options.scene);
+
+      console.log('scene',scene)
       let result = {};
       if (scene.length > 0) {
         let sceneToArray = scene.split('&');
-        sceneToArray.forEach(item => {
-          let itemToArray = item.split('=');
-          let key = itemToArray[0];
-          let value = itemToArray[1];
-          params[key] = value;
-        })
+        params = {
+          uid: sceneToArray[0],
+          cid: sceneToArray[1],
+          merchants_id: sceneToArray[2],
+          tuan_id: sceneToArray[3]
+        };
       }
     } else {
       //小程序应用跳转，解析参数
-      params = JSON.parse(options.shareParams);
+     params = JSON.parse(options.shareParams);
     }
+    console.log(params)
     params = {
       ...params,
       uid
     }
-    // const context = wx.createCanvasContext('shareFrends');
-    // context.setFillStyle('#dd7432')
-    // context.fillRect(0, 0, this.data.screenWidth -30, this.data.screenHeight)
-    // context.setLineWidth(2)
-    // context.drawImage(this.data.chanxun, 20,20, 50, 50);
-    // context.setFillStyle('white');
-    // context.setFontSize(12);
-    // context.setTextAlign('center');
-    // context.fillText("微信名称", 46, 86);
-    // context.drawImage(this.data.chanxun1, 80, 20, this.data.screenWidth/1.5, 50);
-    // context.drawImage(this.data.chanpin, 20, 110, this.data.screenWidth-70, 160);
-    // context.drawImage(this.data.border, 20, 220, this.data.screenWidth - 70, 50);
-    // var text = '这是一段文字用于文本自动换行文本长度自行设置欢迎大家指出缺陷';//这是要绘制的文本
-    // var chr = text.split("");//这个方法是将一个字符串分割成字符串数组
-    // var temp = "";
-    // var row = [];
-    // context.setFontSize(12);
-    // context.setFillStyle("#000");
-    // context.setTextAlign('left');
-    // for (var a = 0; a < chr.length; a++) {
-    //   if (context.measureText(temp).width < 300) {
-    //     temp += chr[a];
-    //   }
-    //   else {
-    //     a--; //这里添加了a-- 是为了防止字符丢失，效果图中有对比
-    //     row.push(temp);
-    //     temp = "";
-    //   }
-    // }
-    // row.push(temp);
-
-    // //如果数组长度大于2 则截取前两个
-    // if (row.length > 2) {
-    //   var rowCut = row.slice(0, 2);
-    //   var rowPart = rowCut[1];
-    //   var test = "";
-    //   var empty = [];
-    //   for (var a = 0; a < rowPart.length; a++) {
-    //     if (context.measureText(test).width < 170) {
-    //       test += rowPart[a];
-    //     }
-    //     else {
-    //       break;
-    //     }
-    //   }
-    //   empty.push(test);
-    //   var group = empty[0] + "..."//这里只显示两行，超出的用...表示
-    //   rowCut.splice(1, 1, group);
-    //   row = rowCut;
-    // }
-    // for (var b = 0; b < row.length; b++) {
-    //   context.fillText(row[b], 30, 240 + b * 20, 200);
-    // }
-
     console.log('params', params);
     this.setData({
       shareParams: params,
@@ -138,33 +86,15 @@ Page({
     const shareParams = {
       merchants_id: app.globalData.merchantsId,
       page: 'pages/cantuan/cantuan',
-      scene: uid + "&" + this.data.shareParams.cid + "&" + app.globalData.merchantsId + "&" + this.data.shareParams.tuan_id
+      scene: uid+'&' + this.data.shareParams.cid + "&" + app.globalData.merchantsId + "&" + this.data.shareParams.tuan_id
     }
-
-    // console.log('initErWeiMa.url', app.globalData.url + "banner/mini-code?access-token=" + e.accessToken)
-    // console.log('initErWeiMa.params',shareParams);
     return util.postRequest(app.globalData.url + "banner/mini-code?access-token=" + e.accessToken, shareParams)
-    // for (var b = 0; b < row.length; b++) {
-    //   context.fillText(row[b], 250, 240 + b * 20, 80);
-    // }
-    // context.setFillStyle('white');
-    // context.fillRect(0, 280, this.data.screenWidth - 30, 200);
-    // context.setLineWidth(2);
-    // context.drawImage(this.data.neirong, 80, 290, this.data.screenWidth - 180, 24);
-    // context.drawImage(this.data.erweima, 140, 325, 80, 80);
-    // context.drawImage(this.data.canhuo, 70, 420, 36, 36);
-    // context.setFillStyle('black');
-    // context.setFontSize(14);
-    // context.fillText("此处写小程序的slogin", 120, 480);
-    // context.draw()
   },
   //参团内容
   initInvolvedContent: async function (shareParams) {
     const e = wx.getStorageSync("e");
     const loginUser = e.loginUser;
     var that = this;
-    // console.log('shareParams', shareParams)
-    // console.log('url', 'coupon/tuan-info')
     // 参团内容详情
     return util.postRequest(app.globalData.url + "coupon/tuan-info?access-token=" + e.accessToken, shareParams)
       .then(function (data) {

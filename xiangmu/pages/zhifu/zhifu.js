@@ -137,7 +137,6 @@ Page({
     this.computeMoney(currentCoupon,e.detail.value).then(flag=>{
       if(flag){
         const reloadFlag = this.data.reloadFlag
-        
         this.setData({
           moneyZf: e.detail.value,
         })
@@ -160,11 +159,9 @@ Page({
   },
   // 优惠券
   youhuijuan: function (event) {
-    console.log(this.data.zhi)
     const e = wx.getStorageSync("e");
-    const id = event.currentTarget.dataset.id;
+    const id = event.currentTarget.dataset.id||'';
     const currentCoupon = this.data.couponArray.filter(item=>item.id===id)[0];
-    
     this.setData({
       currentCoupon: currentCoupon
     })
@@ -173,17 +170,16 @@ Page({
 
   //计算使用余额
   computeMoney: async function (currentCoupon,price){
-
     if(!!!price)
       return
-      
     const e = wx.getStorageSync("e");
+    console.log("currentCoupon", currentCoupon)
     let params = {
       merchants_id: app.globalData.merchantsId,
       uid: e.loginUser.id,
       price: price,
     }
-    if (!!!currentCoupon.cuid) {
+    if (!!!currentCoupon.id) {
       params = {
         ...params,
         cid: currentCoupon.id
@@ -238,16 +234,14 @@ Page({
       return;
     }
 
-    this.youhuijuan();
+    // this.youhuijuan();
     //检测用户是否具有权限
     const that = this;
     userTest().then(data => {
-
       if (!data) {
         return
       }
       const e = wx.getStorageSync("e");
-      
       //支付
       util.postRequest(app.globalData.url + "checkstand/order?access-token=" + e.accessToken, that.data.params)
         .then(function (data) {
