@@ -58,6 +58,7 @@ Page({
       balance: 0,
       discount_amount: 0,
       payPrice: 0,
+      content:''
     },
     reloadFlag: false,
   },
@@ -124,21 +125,24 @@ Page({
       hidden: true
     })
   },
+
+  //请输入金额输入框
   money: function (e) {
-    const reloadFlag = this.data.reloadFlag
-    if(e.detail.value.trim()==='' || reloadFlag){
+    if (e.detail.value.trim() === '') {
       this.clearData()
       return;
     }
-    let dataMoney = this.data.money;
-    dataMoney = {
-      ...dataMoney,
-      payPrice:e.detail.value
-    }
-    this.setData({
-      moneyZf: e.detail.value,
-      money:dataMoney
-    })
+    //计算使用余额
+    const currentCoupon = this.data.currentCoupon||{}
+    this.computeMoney(currentCoupon,e.detail.value).then(flag=>{
+      if(flag){
+        const reloadFlag = this.data.reloadFlag
+        
+        this.setData({
+          moneyZf: e.detail.value,
+        })
+      }
+    });
   },
 
   clearData:function(){
@@ -148,8 +152,9 @@ Page({
         balance: 0,
         discount_amount: 0,
         payPrice: 0,
+        content:''
       },
-      youhuijuanIndex:"",
+      currentCoupon:{},
       reloadFlag:false
     })
   },
@@ -159,40 +164,61 @@ Page({
     const e = wx.getStorageSync("e");
     const id = event.currentTarget.dataset.id;
     const currentCoupon = this.data.couponArray.filter(item=>item.id===id)[0];
+    
+    this.setData({
+      currentCoupon: currentCoupon
+    })
+    this.computeMoney(currentCoupon,this.data.moneyZf);
+  },
+
+  //计算使用余额
+  computeMoney: async function (currentCoupon,price){
+
+    if(!!!price)
+      return
+      
+    const e = wx.getStorageSync("e");
     let params = {
       merchants_id: app.globalData.merchantsId,
       uid: e.loginUser.id,
-      price: this.data.moneyZf,
+      price: price,
     }
-    if(!!!currentCoupon.cuid){
+    if (!!!currentCoupon.cuid) {
       params = {
         ...params,
-        cid:currentCoupon.id
+        cid: currentCoupon.id
       }
-    }else{
-      params = {
-        ...params,
-        cuid: currentCoupon.cuid
+    } else {
+      if (currentCoupon.cuid){
+        params = {
+          ...params,
+          cuid: currentCoupon.cuid
+        }
       }
     }
-    console.log('params',params);
     this.setData({
       params: params
     })
     var that = this;
-    util.postRequest(app.globalData.url + "checkstand/price?access-token=" + e.accessToken, params)
+    return util.postRequest(app.globalData.url + "checkstand/price?access-token=" + e.accessToken, params)
       .then(function (data) {
         if (!errorMessage(data)) {
-          return;
+          return false;
         }
         console.log(data)
+        const curMoney = data.data.data
         that.setData({
           hidden: true,
-          money: data.data.data,
-          zhi: 0,
-          youhuijuanIndex: that.data.couponArray[event.currentTarget.dataset.index].content,
-          reloadFlag:true
+          money: {
+            ...curMoney,
+            discount_amount: curMoney.discount_amount||0,
+            price: curMoney.price||0,
+            content: currentCoupon ? currentCoupon.content : '',
+          },        
+          reloadFlag: true
         })
+
+        return true
       })
   },
   // 支付
