@@ -77,8 +77,10 @@ page{
   padding:30rpx 0 40rpx;
 } */
 .pic{
+ border-top:1rpx solid #797979;
   font-size:30rpx;
   display: block;
+
 }
 .hidden{
   display: none;
@@ -102,7 +104,7 @@ page{
   padding-top:10rpx;
 }
 .youhuijuan1 .top{
-  border-bottom:1rpx solid #797979;
+  /* border-bottom:1rpx solid #797979; */
   padding-bottom:20rpx;
 }
 .youhuijuan{

@@ -179,16 +179,17 @@ Page({
       uid: e.loginUser.id,
       price: price,
     }
-    if (!!!currentCoupon.id) {
+    if (!!currentCoupon.cuid) {
       params = {
         ...params,
-        cid: currentCoupon.id
+        cuid: currentCoupon.cuid
       }
-    } else {
-      if (currentCoupon.cuid){
+    }
+     else {
+      if (!!currentCoupon.id) {
         params = {
           ...params,
-          cuid: currentCoupon.cuid
+          cid: currentCoupon.id
         }
       }
     }
@@ -237,10 +238,10 @@ Page({
     // this.youhuijuan();
     //检测用户是否具有权限
     const that = this;
-    userTest().then(data => {
-      if (!data) {
-        return
-      }
+    // userTest().then(data => {
+    //   if (!data) {
+    //     return
+    //   }
       const e = wx.getStorageSync("e");
       //支付
       util.postRequest(app.globalData.url + "checkstand/order?access-token=" + e.accessToken, that.data.params)
@@ -290,6 +291,6 @@ Page({
           }
 
         })
-    });
+    // });
   }
 })
