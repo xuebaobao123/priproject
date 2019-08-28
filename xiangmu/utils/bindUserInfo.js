@@ -58,6 +58,7 @@ const initToken = () => {
 
 //获取OPENID
 const initOpenId = (data) => {
+  console.log("initOpenId",data)
     return util.postRequest(app.globalData.url + "auth/openid", data).then(function (data) {
 
         if (!(errorMessage(data))) {
