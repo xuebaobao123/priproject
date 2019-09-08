@@ -1,9 +1,12 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/kaituan/kaituan",
-    "pages/cantuan/cantuan", 
     "pages/youhuijuanfx/youhuijuanfx",
+    "pages/cantuan/cantuan",
+ 
+    "pages/kaituan/kaituan",
+ 
+  
     "pages/tixianjine/tixianjine",
     "pages/zhifu/zhifu",
     "pages/woyaocantuan/woyaocantuan",

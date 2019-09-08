@@ -27,7 +27,7 @@ Page({
       //头像
       headImg: '../images/weixin_03.png',
     }],
-    shouquan: true,
+    shouquan: false,
     chanxun: "../images/touxiang.png",
     chanxun1: "../images/wenzi_03.png",
     chanpin: "../images/xinxi.png",

@@ -145,8 +145,10 @@ Page({
   initData: function () {
     const loginUser = wx.getStorageSync("e").loginUser;
     const e = wx.getStorageSync("e");
+    const token = wx.getStorageSync("token");
     var that=this;
     console.log('loginUser', loginUser);
+    console.log('e', e);
     util.postRequest(app.globalData.url + "user/user-info?access-token=" + e.accessToken, { uid: e.loginUser.id })
       .then(function (data) {
         if (!errorMessage(data)) {

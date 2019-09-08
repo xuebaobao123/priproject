@@ -18,7 +18,33 @@
 .hide {
   display: none;
 }
-
+.tanceng image{
+  width:150rpx;
+  height:150rpx;
+  margin-top:40%;
+}
+.tanceng{
+  position: fixed;
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+  background:#ededed;
+  z-index:10000000000;
+  text-align: center;
+}
+.tanceng button{
+  background:#e17132;
+  width:80%;
+  margin:34rpx auto 20rpx;
+  height:80rpx;
+  line-height:80rpx;
+  font-size:32rpx;
+}
+.tanceng view{
+  font-size:30rpx;
+  color:#666;
+}
 .tabbar_box {
   display: flex;
   flex-direction: row;

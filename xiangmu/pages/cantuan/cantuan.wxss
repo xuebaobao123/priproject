@@ -26,23 +26,6 @@
 .cantuan{
   margin-bottom:20rpx;
 }
-
-.tanceng{
-  position: fixed;
-  left:0;
-  top:0;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.5);
-  z-index:10000000000;
-}
-.tanceng button{
-  position: relative;
-  top:40%;
-  left:0;
-  width:90%;
-  z-index:3;
-}
 .top2{
   overflow: hidden;
 }
@@ -56,22 +39,7 @@
 
 
 
-.tanceng{
-  position: fixed;
-  left:0;
-  top:0;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.5);
-  z-index:10000000000;
-}
-.tanceng button{
-  position: relative;
-  top:40%;
-  left:0;
-  width:90%;
-  z-index:3;
-}
+
 .dibu .right{
   width:51%;
   float:left;

@@ -13,7 +13,12 @@
 </view>
 <view class="support">技术支持</view>
 <view class="tanceng" hidden="{{shouquan}}">
-    <button class='bottom' type='primary' open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="bindGetUserInfo">
-      授权登录  
+    <image src="../images/logo_03.jpg"></image>
+    <button class='bottom' type='primary' open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="bindGetUserInfo" bindtap="dian">
+      微信用户快速登录  
   </button>
+  <view>本功能需要授权您的微信信息</view>
 </view>
+<!-- <view class="tanceng2" hidden="{{denglu}}">
+    <button class='bottom'>登录中...</button>
+</view> -->

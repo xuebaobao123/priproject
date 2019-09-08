@@ -12,7 +12,8 @@
 .space view text{
   display: block;
 }
-.tanceng{
+
+.tanceng2{
   position: fixed;
   left:0;
   top:0;
@@ -21,12 +22,18 @@
   background:rgba(0,0,0,0.5);
   z-index:10000000000;
 }
-.tanceng button{
+.tanceng view{
+  font-size:30rpx;
+  color:#666;
+}
+.tanceng2 button{
   position: relative;
   top:40%;
   left:0;
   width:90%;
   z-index:3;
+  background-color: #1AAD19;
+  color: #fff;
 }
 .space view{
   text-align: center;

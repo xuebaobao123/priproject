@@ -14,8 +14,9 @@ const initLoginUser = () => {
     return util.postRequest(app.globalData.url + "user/user-info?access-token=" + e.accessToken, { uid: uid })
         .then(function (data) {
             if (!errorMessage(data)) {
-                return;
+              return;
             }
+            
             console.log('loginUser', data.data.data);
             //是参伙用户，则底部导航栏显示优惠券，否则显示参伙
             app.tabbar.isJoin = data.data.data.is_canhuo === 1;
